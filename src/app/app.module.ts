@@ -8,6 +8,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { FooterComponent } from "./footer/footer.component";
 import { HeaderComponent } from "./header/header.component";
 import { WizardModule } from "./wizard/wizard.module";
+import { GuidesModule } from "./guides/guides.module";
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { WizardModule } from "./wizard/wizard.module";
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    WizardModule
+    WizardModule,
+    GuidesModule,
   ],
   declarations: [
     AppComponent,

@@ -1,0 +1,21 @@
+<div class="container-fluid">
+  <div class="padding-15">
+    <div class="cards-pf">
+      <div class="row row-cards-pf">
+        <div class="col-sm-12">
+          <pfng-card [config]="config"
+                     (onActionSelect)="handleActionSelect($event)"
+                     (onFilterSelect)="handleFilterSelect($event)">
+              <p>Mission to expose a REST Greeting endpoint using SpringBoot and Apache Tomcat in embedded mode</p>
+          </pfng-card>
+        </div>
+      </div>
+    </div>
+    <div class="row padding-top-10">
+      <div class="col-sm-12">
+        <h4 class="actions-label">Actions</h4>
+        <hr/>
+      </div>
+    </div>
+  </div>
+</div>

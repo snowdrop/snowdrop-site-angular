@@ -1,32 +1,42 @@
 <nav id="header_wrapper" class="navbar navbar-default navbar-pf navbar-static-top" [class.wizard]="wizard" role="navigation">
   <div id="header_nav" class="navbar-header">
     <a class="navbar-brand page-scroll" routerLink="/">
-      <img class="header-logo" src="../../assets/img/RHD-logo.svg" alt="Red Hat Developer Program">
+      <img class="header-logo" src="../../assets/img/snowdrop-logo-text.png" alt="Snowdrop">
     </a>
-    <ul class="nav navbar-nav navbar-right"  *ngIf="!keycloak.skip">
-      <li id="loggedout" *ngIf="!keycloak.isAuthenticated()">
-        <a id="login" href="javascript:void(0)" (click)="keycloak.login()">
-          <i class="pficon pficon-user"></i> Log In
-        </a>
-      </li>
-      <li class="dropdown" [class.open]="collapse" id="loggedin" *ngIf="keycloak.isAuthenticated()">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" (click)="collapse = !collapse">
-          <div id="header_dropdownToggle_header">
-            <span class="nav-item-icon">
-              <span class="pficon pficon-user" id="nouserimage"></span>
-              {{keycloak.user}}
-            </span>
-            <span class="nav-item-text" id="name"></span> <b class="caret"></b>
-          </div>
-        </a>
-        <ul class="dropdown-menu">
-          <li>
-            <a id="logout" href="javascript:void(0)" (click)="keycloak.logout()">
-              <span class="nav-item-text">Sign out</span>
-            </a>
-          </li>
-        </ul>
-      </li>
+    <ul class="nav navbar-nav navbar-right">
+      <ng-container *ngIf="!inLauncher">
+        <li *ngFor="let p of pages" [id]="p.id">
+          <a [id]="p.id + '-link'" [routerLink]="p.route">
+            {{p.name}}
+          </a>
+        </li>
+      </ng-container>
+
+      <ng-container *ngIf="!keycloak.skip">
+        <li id="loggedout" *ngIf="!keycloak.isAuthenticated()">
+          <a id="login" href="javascript:void(0)" (click)="keycloak.login()">
+            <i class="pficon pficon-user"></i> Log In
+          </a>
+        </li>
+        <li class="dropdown" [class.open]="collapse" id="loggedin" *ngIf="keycloak.isAuthenticated()">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" (click)="collapse = !collapse">
+            <div id="header_dropdownToggle_header">
+              <span class="nav-item-icon">
+                <span class="pficon pficon-user" id="nouserimage"></span>
+                {{keycloak.user}}
+              </span>
+              <span class="nav-item-text" id="name"></span> <b class="caret"></b>
+            </div>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a id="logout" href="javascript:void(0)" (click)="keycloak.logout()">
+                <span class="nav-item-text">Sign out</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
     </ul>
   </div>
 </nav>
