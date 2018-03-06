@@ -1,11 +1,18 @@
 img.header-logo {
-  width: 70%;
+  width: 100px;
 }
 
 .navbar {
   color: #ddd;
+  border-top: solid 5px #00cc00;
   font-size: 16px;
-  border-top: 0;
+
+  .navbar-brand {
+    padding-top: 10px;
+  }
+  li {
+      padding-top: 5px;
+    }
 }
 
 .nav-item-icon {
@@ -20,26 +27,22 @@ img.header-logo {
 }
 
 nav.wizard {
-  min-height: 40px;
-  border-top: solid 5px #00cc00;
-
-  img.header-logo {
-    width: 100px;
-  }
-  .navbar-brand {
-    padding: 0;
-  }
-
-  #header_nav {
-    min-height: 40px;
-  }
-
-  .nav.navbar-nav.navbar-right {
-    margin-top: 0;
-  }
-  .dropdown-toggle {
-    padding: 10px 20px;
-  }
+  // min-height: 40px;
+  //
+  // img.header-logo {
+  //   width: 100px;
+  // }
+  //
+  // #header_nav {
+  //   min-height: 40px;
+  // }
+  //
+  // .nav.navbar-nav.navbar-right {
+  //   margin-top: 0;
+  // }
+  // .dropdown-toggle {
+  //   padding: 10px 20px;
+  // }
 }
 
 .nav.navbar-nav.navbar-right {
