@@ -13,6 +13,9 @@
       "core-js",
       "node",
       "jasmine"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
     ]
   },
   "angularCompilerOptions": {

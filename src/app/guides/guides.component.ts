@@ -1,4 +1,5 @@
 import {Component, OnInit, OnDestroy, ViewChild} from "@angular/core";
+import {Http} from '@angular/http';
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 
@@ -11,7 +12,10 @@ import {CardAction, CardConfig, CardFilter, SparklineConfig, SparklineData} from
 })
 export class GuidesComponent implements OnInit, OnDestroy {
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private http: Http,
+  ) {
   }
 
   ngOnDestroy() {
@@ -19,44 +23,76 @@ export class GuidesComponent implements OnInit, OnDestroy {
 
 
   actionsText: string = '';
-  chartDates: any[] = ['dates'];
-  chartConfig: SparklineConfig = {
-    chartHeight: 60,
-    chartId: 'exampleSparkline',
-    tooltipType: 'default'
-  };
-  chartData: SparklineData = {
-    dataAvailable: true,
-    total: 100,
-    xData: this.chartDates,
-    yData: ['used', 10, 20, 30, 20, 30, 10, 14, 20, 25, 68, 54, 56, 78, 56, 67, 88, 76, 65, 87, 76]
-  };
-  config: CardConfig;
+  buffer: CardConfig[];
+  guides: CardConfig[];
 
   ngOnInit(): void {
-    this.config = {
-      title: 'HTTP API',
-      action: {
-        hypertext: 'Get the code',
-        url: "https://github.com/snowdrop/spring-boot-http-booster",
-        iconStyleClass: 'fa fa-code'
-      },
-      filters: [{
-        title: 'Version 1.4.7',
-        value: '30'
-      }, {
-        default: true,
-        title: 'Version 1.5.0',
-        value: '15'
-      }, {
-        title: 'Today',
-        value: 'today'
-      }],
-    } as CardConfig;
+    this.http.get("/src/assets/guides.json").toPromise().then((res)=>{
+      let guidesConfig = res.json();
+      console.log(guidesConfig);
+      this.guides = [];
 
-    let today = new Date();
-    for (let d = 20 - 1; d >= 0; d--) {
-      this.chartDates.push(new Date(today.getTime() - (d * 24 * 60 * 60 * 1000)));
+      for(let guide of guidesConfig) {
+        this.guides.push(
+        {
+          title: guide.title,
+          description: guide.description,
+          noPadding: false,
+          action: {
+            hypertext: this.getCardLabel(guide),
+            url: guide.url,
+            iconStyleClass: 'fa fa-' + this.getCardIcon(guide)
+          },
+          filters: [{
+            title: 'Version 1.4.7',
+            value: '30'
+          }, {
+            default: true,
+            title: 'Version 1.5.0',
+            value: '15'
+          }, {
+            title: 'Today',
+            value: 'today'
+          }],
+        } as CardConfig);
+      }
+
+      this.filterGuides();
+    });
+  }
+
+  getCardLabel(guide:any) {
+    let result = "Open this guide";
+    if(guide.type === "booster") {
+      result = "Run this booster";
+    }
+    return result;
+  }
+
+  getCardIcon(guide:any) {
+    let result = "code";
+    if(guide.type === "booster") {
+      result = "rocket";
+    }
+    return result;
+  }
+
+  filterGuides(filter = "") {
+    if(filter && filter.trim().length > 0) {
+      let keywords = filter.toLowerCase().split(/\s+/gi);
+      this.buffer = this.guides.filter((guide:any)=>{
+        for(let k of keywords) {
+          if(!((guide.description && (guide.description+"").toLowerCase().indexOf(k) >= 0)
+            || (guide.title && (guide.title+"").toLowerCase().indexOf(k) >= 0)
+            || (guide.keywords && (guide.keywords+"").toLowerCase().indexOf(k) >= 0)
+          )) {
+            return false;
+          }
+        }
+        return true;
+      });
+    } else {
+      this.buffer = this.guides;
     }
   }
 

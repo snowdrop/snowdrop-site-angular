@@ -1,19 +1,26 @@
-<div class="container-fluid">
+<div class="container">
   <div class="padding-15">
     <div class="cards-pf">
+      <div class="row">
+        <div class="col-sm-12 padding-15">
+          <form>
+            <label for="filter">Search guides:</label>
+            <input (keyup)="filterGuides(filter.value)" id="filter" #filter type="text" />
+          </form>
+        </div>
+      </div>
       <div class="row row-cards-pf">
-        <div class="col-sm-12">
-          <pfng-card [config]="config"
+        <div *ngFor="let guide of buffer" class="col-sm-6">
+          <pfng-card [config]="guide"
                      (onActionSelect)="handleActionSelect($event)"
                      (onFilterSelect)="handleFilterSelect($event)">
-              <p>Mission to expose a REST Greeting endpoint using SpringBoot and Apache Tomcat in embedded mode</p>
+              <p>{{guide.description}}</p>
           </pfng-card>
         </div>
       </div>
     </div>
     <div class="row padding-top-10">
       <div class="col-sm-12">
-        <h4 class="actions-label">Actions</h4>
         <hr/>
       </div>
     </div>

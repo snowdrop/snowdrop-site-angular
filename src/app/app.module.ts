@@ -1,4 +1,5 @@
 import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpModule } from "@angular/http";
 import { Logger } from "./shared/logger.service";
@@ -13,6 +14,7 @@ import { GuidesModule } from "./guides/guides.module";
 @NgModule({
   imports: [
     BrowserModule,
+    CommonModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,
