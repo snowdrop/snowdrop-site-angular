@@ -11,6 +11,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { FooterComponent } from "./footer/footer.component";
 import { HeaderComponent } from "./header/header.component";
 
+import { ComponentsModule } from "./components";
 import { DocsModule } from "./docs/docs.module";
 import { GuidesModule } from "./guides/guides.module";
 import { WizardModule } from "./wizard/wizard.module";
@@ -19,6 +20,7 @@ import { WizardModule } from "./wizard/wizard.module";
   imports: [
     BrowserModule,
     CommonModule,
+    ComponentsModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,

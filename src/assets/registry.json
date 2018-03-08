@@ -1,0 +1,78 @@
+{
+  "documentation": {
+    "url":"https://raw.githubusercontent.com/snowdrop/site/master/documentation.adoc"
+  },
+  "guides": [
+    {
+      "type":"booster",
+      "title":"HTTP API",
+      "url":"https://github.com/snowdrop/spring-boot-http-booster",
+      "description":"Mission to expose a REST Greeting endpoint using SpringBoot and Apache Tomcat in embedded mode",
+      "versions": []
+    },
+    {
+      "type":"booster",
+      "title":"Secured HTTP API",
+      "url":"https://github.com/snowdrop/spring-boot-http-secured-booster",
+      "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-secured-spring-boot",
+      "description":"Mission to expose a REST Greeting endpoint using SpringBoot & Secured by Red Hat SSO",
+      "versions": []
+    },
+    {
+      "type":"booster",
+      "title":"JPA & CRUD",
+      "url":"https://github.com/snowdrop/spring-boot-crud-booster",
+      "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-crud-spring-boot-tomcat",
+      "description":"Mission to play with Spring Boot & JPA",
+      "versions": []
+    },
+    {
+      "type":"booster",
+      "title":"Externalized Configuration",
+      "url":"https://github.com/snowdrop/spring-boot-configmap-booster",
+      "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-configmap-spring-boot-tomcat",
+      "description":"Quickstart to expose a REST Greeting endpoint using Spring Boot where the message is defined as a Kubernetes ConfigMap property",
+      "versions": []
+    },
+    {
+      "type":"booster",
+      "title":"Health Check",
+      "url":"https://github.com/snowdrop/spring-boot-health-check-booster",
+      "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-health-check-spring-boot-tomcat",
+      "description":"Quickstart to demonstrate OpenShift health probes working with Spring Boot Actuator",
+      "versions": []
+    },
+    {
+      "type":"booster",
+      "title":"Circuit Breaker",
+      "url":"https://github.com/snowdrop/spring-boot-circuit-breaker-booster",
+      "documentation": "https://appdev.openshift.io/docs/spring-boot-runtime.html#mission-circuit-breaker-spring-boot-tomcat",
+      "description":"Service implementing Hystrix Circuit Breaker",
+      "versions": []
+    },
+    {
+      "type":"guide",
+      "title":"Deploy as a WAR",
+      "url":"https://raw.githubusercontent.com/snowdrop/site/master/guides/war-jsp.adoc",
+      "documentation": "https://github.com/snowdrop/spring-boot-mvc-jsp",
+      "description":"WAR Spring Boot Application with JSP page and using JSTL",
+      "versions": []
+    },
+    {
+      "type":"booster",
+      "title":"Configure Tomcat logging",
+      "url":"https://github.com/snowdrop/spring-boot-tomcat-logging-booster",
+      "documentation": "/guides/tomcat-logging",
+      "description":"An example to demonstrate how to send Tomcat's logging information to OpenShift's console",
+      "versions": []
+    },
+    {
+      "type":"booster",
+      "title":"Create a new booster",
+      "url":"https://github.com/snowdrop/booster-archetype",
+      "documentation": "/guides/booster-archetype",
+      "description":"An example to demonstrate how to create a booster",
+      "versions": []
+    }
+  ]
+}

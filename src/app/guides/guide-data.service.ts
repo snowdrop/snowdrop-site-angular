@@ -1,19 +1,21 @@
 import {Injectable, OnInit, OnDestroy } from "@angular/core";
 import {Http} from '@angular/http';
+import {RegistryService} from '../components';
 
 @Injectable()
 export class GuideDataService implements OnInit, OnDestroy {
 
   constructor(
     private http: Http,
+    private registryService: RegistryService
   ) {
   }
 
   ngOnDestroy() {
   }
 
-  _ready: Promise<void> = null;
-  guides: any[];
+  private _ready: Promise<void> = null;
+  private guides: any[];
 
   ngOnInit(): void {
     this.ready();
@@ -22,9 +24,9 @@ export class GuideDataService implements OnInit, OnDestroy {
   public ready() {
     if(!this._ready) {
       console.log("GuideDataService starting up.");
-      this._ready = this.http.get("/src/assets/guides.json").toPromise().then((res)=>{
+      this._ready = this.registryService.getRegistry().then((registry)=>{
         console.log("GuideDataService initialized.");
-        this.guides = res.json();
+        this.guides = registry.guides;
       });
     }
     return this._ready;
@@ -77,7 +79,7 @@ export class GuideDataService implements OnInit, OnDestroy {
   getGuideURL(guide:any) {
      let result = "guides/" + this.urlify(guide.title);
      if(guide.type === "booster") {
-       result = "Run this booster";
+       result = this.urlify("deeplink-into-booster");
      }
      return result;
   }
