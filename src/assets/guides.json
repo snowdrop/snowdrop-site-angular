@@ -47,10 +47,10 @@
     "versions": []
   },
   {
-    "type":"booster",
+    "type":"guide",
     "title":"Deploy as a WAR",
-    "url":"https://github.com/snowdrop/spring-boot-mvc-jsp",
-    "documentation": "/guides/war-jsp",
+    "url":"https://raw.githubusercontent.com/snowdrop/site/master/guides/war-jsp.adoc",
+    "documentation": "https://github.com/snowdrop/spring-boot-mvc-jsp",
     "description":"WAR Spring Boot Application with JSP page and using JSTL",
     "versions": []
   },

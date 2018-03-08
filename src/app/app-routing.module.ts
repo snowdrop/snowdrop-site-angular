@@ -2,6 +2,7 @@ import { NgModule }  from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { FormComponent } from "./wizard/wizard.component";
 import { GuidesComponent } from "./guides/guides.component";
+import { GuideViewComponent } from "./guides/guide-view/guide-view.component";
 import { IntroComponent } from "./wizard/pages/intro/intro.component";
 
 const routes: Routes = [
@@ -15,6 +16,9 @@ const routes: Routes = [
     children: [{
       path: "",
       component: GuidesComponent
+    },{
+      path: ":guideId",
+      component: GuideViewComponent
     }]
   },
   {

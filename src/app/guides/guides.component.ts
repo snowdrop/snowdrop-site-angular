@@ -5,6 +5,8 @@ import {Subscription} from "rxjs";
 
 import {CardAction, CardConfig, CardFilter, SparklineConfig, SparklineData} from 'patternfly-ng';
 
+import {GuideDataService} from './guide-data.service';
+
 @Component({
   selector: "guides",
   templateUrl: "./guides.component.html",
@@ -15,66 +17,50 @@ export class GuidesComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private http: Http,
+    private guideService: GuideDataService
   ) {
   }
 
   ngOnDestroy() {
   }
 
-
   actionsText: string = '';
   buffer: CardConfig[];
   guides: CardConfig[];
 
   ngOnInit(): void {
-    this.http.get("/src/assets/guides.json").toPromise().then((res)=>{
-      let guidesConfig = res.json();
-      console.log(guidesConfig);
-      this.guides = [];
+    this.guideService.ready().then(()=>{
+      let guidesConfig = this.guideService.getGuides();
+        console.log(guidesConfig);
+        this.guides = [];
 
-      for(let guide of guidesConfig) {
-        this.guides.push(
-        {
-          title: guide.title,
-          description: guide.description,
-          noPadding: false,
-          action: {
-            hypertext: this.getCardLabel(guide),
-            url: guide.url,
-            iconStyleClass: 'fa fa-' + this.getCardIcon(guide)
-          },
-          filters: [{
-            title: 'Version 1.4.7',
-            value: '30'
-          }, {
-            default: true,
-            title: 'Version 1.5.0',
-            value: '15'
-          }, {
-            title: 'Today',
-            value: 'today'
-          }],
-        } as CardConfig);
-      }
+        for(let guide of guidesConfig) {
+          this.guides.push(
+          {
+            title: guide.title,
+            description: guide.description,
+            noPadding: false,
+            action: {
+              hypertext: this.guideService.getGuideLabel(guide),
+              url: this.guideService.getGuideURL(guide),
+              iconStyleClass: 'fa fa-' + this.guideService.getGuideIcon(guide)
+            },
+            filters: [{
+              title: 'Version 1.4.7',
+              value: '30'
+            }, {
+              default: true,
+              title: 'Version 1.5.0',
+              value: '15'
+            }, {
+              title: 'Today',
+              value: 'today'
+            }],
+          } as CardConfig);
+        }
 
-      this.filterGuides();
+        this.filterGuides();
     });
-  }
-
-  getCardLabel(guide:any) {
-    let result = "Open this guide";
-    if(guide.type === "booster") {
-      result = "Run this booster";
-    }
-    return result;
-  }
-
-  getCardIcon(guide:any) {
-    let result = "code";
-    if(guide.type === "booster") {
-      result = "rocket";
-    }
-    return result;
   }
 
   filterGuides(filter = "") {
