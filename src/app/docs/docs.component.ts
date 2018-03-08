@@ -19,21 +19,21 @@ export class DocsComponent implements OnInit, OnDestroy {
       console.log("Got an anchor change", value);
       this.ready().then(()=>{
         setTimeout(()=>{
-            let matches = document.querySelectorAll(`a[href="#${value}"]`);
-            if(matches){
-              let scrolled = false;
-              matches.forEach((element)=>{
-                if(!scrolled){
-                  scrolled = true;
-                  console.log("Matches",element);
-                  element.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                  });
-                }
-              });
-            }
-        }, 250);
+          let matches = document.querySelectorAll(`a[href="#${value}"]`);
+          if(matches){
+            let scrolled = false;
+            matches.forEach((element)=>{
+              if(!scrolled){
+                scrolled = true;
+                console.log("Matches",element);
+                element.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            });
+          }
+        }, 150);
       });
     });
   }
