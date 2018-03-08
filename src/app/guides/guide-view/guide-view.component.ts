@@ -1,10 +1,6 @@
 import {Component, OnInit, OnDestroy, ViewChild} from "@angular/core";
 import {Http} from '@angular/http';
 import {ActivatedRoute} from "@angular/router";
-import {Subscription} from "rxjs";
-import * as asciidoctor from "asciidoctor.js";
-
-import {CardAction, CardConfig, CardFilter, SparklineConfig, SparklineData} from 'patternfly-ng';
 
 import {GuideDataService} from '../guide-data.service';
 
@@ -37,7 +33,7 @@ export class GuideViewComponent implements OnInit, OnDestroy {
         this.guide = this.guideService.getGuideByTitle(this.guideId);
         console.log(`Loading ${this.guideId}`, this.guide);
         this.guideService.render(this.guide).then((source)=>{
-          this.source = asciidoctor().convert(source);
+          this.source = source;
         });
       })
     })

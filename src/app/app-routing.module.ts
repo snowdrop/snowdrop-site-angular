@@ -1,6 +1,7 @@
 import { NgModule }  from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { FormComponent } from "./wizard/wizard.component";
+import { DocsComponent } from "./docs/docs.component";
 import { GuidesComponent } from "./guides/guides.component";
 import { GuideViewComponent } from "./guides/guide-view/guide-view.component";
 import { IntroComponent } from "./wizard/pages/intro/intro.component";
@@ -10,6 +11,13 @@ const routes: Routes = [
     path: "",
     redirectTo: "filtered-wizard/all",
     pathMatch: "full",
+  },
+  {
+    path: "docs",
+    children: [{
+      path: "",
+      component: DocsComponent
+    }]
   },
   {
     path: "guides",

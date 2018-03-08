@@ -2,16 +2,19 @@ import {APP_INITIALIZER, NgModule} from "@angular/core";
 
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+
+import { CardModule } from 'patternfly-ng';
+import { ComponentsModule } from '../components';
+
 import { GuidesComponent } from './guides.component';
 import { GuideViewComponent } from './guide-view/guide-view.component';
 import { GuideDataService } from './guide-data.service';
-
-import { CardModule } from 'patternfly-ng';
 
 @NgModule({
   imports: [
     CardModule,
     CommonModule,
+    ComponentsModule,
     FormsModule
   ],
   declarations: [

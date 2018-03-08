@@ -15,7 +15,12 @@ export class LaunchConfig extends Config {
     return this.http.get('settings.json').toPromise().then((settings) => {
       LaunchConfig.settings = Object.assign(LaunchConfig.settings, settings.json());
     }).catch(() => {
-      console.info('settings.json not found ignoring');
+      console.info('settings.json not found, retrying src/');
+      return this.http.get('/src/assets/settings.json').toPromise().then((settings) => {
+        LaunchConfig.settings = Object.assign(LaunchConfig.settings, settings.json());
+      }).catch(() => {
+        console.info('src/assets/settings.json not found, ignoring');
+      });
     }).then(() => {
       let backendUrl = LaunchConfig.settings['backend_url'];
       if (!backendUrl) {

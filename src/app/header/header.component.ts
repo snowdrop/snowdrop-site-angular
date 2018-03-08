@@ -32,7 +32,7 @@ export class HeaderComponent {
     {
     id: "docs",
     name: "Documentation",
-    route: "/documentation"
+    route: "/docs"
   },
     {
     id: "blog",
