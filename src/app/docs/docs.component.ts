@@ -16,7 +16,6 @@ export class DocsComponent implements OnInit, OnDestroy {
     private http: Http,
   ) {
     this.route.fragment.subscribe((value)=>{
-      console.log("Got an anchor change", value);
       this.ready().then(()=>{
         setTimeout(()=>{
           let matches = document.querySelectorAll(`a[href="#${value}"]`);
@@ -25,7 +24,6 @@ export class DocsComponent implements OnInit, OnDestroy {
             matches.forEach((element)=>{
               if(!scrolled){
                 scrolled = true;
-                console.log("Matches",element);
                 element.scrollIntoView({
                   behavior: "smooth",
                   block: "start",
@@ -50,12 +48,9 @@ export class DocsComponent implements OnInit, OnDestroy {
 
   private ready() {
     if(!this._ready){
-      console.log(`Handle route data`);
       this._ready = new Promise((resolve, reject)=>{
         this.route.paramMap.subscribe((params)=>{
-          console.log("Params initialized.", params);
           return this.registryService.getRegistry().then((registry)=>{
-            console.log("GuideDataService initialized.");
             let docsUrl = registry.documentation.url;
             return this.http.get(docsUrl).toPromise().then((res)=>{
               this.source = res.text();

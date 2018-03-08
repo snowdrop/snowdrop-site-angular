@@ -27,7 +27,6 @@ export class AsciidoctorComponent implements OnInit, OnDestroy {
     this.rendered = asciidoctor().convert(source);
     let prefix = window.location.pathname;
     this.rendered = this.rendered.replace(/<a(?!.*class="anchor"[^>])([^>]+)href\s*=\s*([\"\'])(#[^\'\"]+)([\"\'])/g,`<a$1href=$2${prefix}$3$4`)
-    // console.log(this.rendered);
   }
 
   get source() {
