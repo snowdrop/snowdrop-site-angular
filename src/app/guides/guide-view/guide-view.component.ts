@@ -16,6 +16,25 @@ export class GuideViewComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private http: Http,
   ) {
+      this.route.fragment.subscribe((value)=>{
+        this.ready().then(()=>{
+          setTimeout(()=>{
+            let matches = document.querySelectorAll(`a[href="#${value}"]`);
+            if(matches){
+              let scrolled = false;
+              matches.forEach((element)=>{
+                if(!scrolled){
+                  scrolled = true;
+                  element.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+                }
+              });
+            }
+          }, 150);
+        });
+      });
   }
 
   ngOnDestroy() {
@@ -24,19 +43,29 @@ export class GuideViewComponent implements OnInit, OnDestroy {
   guide: any;
   guideId: string;
   source: string = "Loading...";
+  _ready:Promise<void> = null;
 
   ngOnInit(): void {
-    console.log(`Handle route data`);
-    this.route.paramMap.subscribe((params)=>{
-      this.guideId = params.get("guideId");
-      this.guideService.ready().then(()=>{
-        this.guide = this.guideService.getGuideByTitle(this.guideId);
-        console.log(`Loading ${this.guideId}`, this.guide);
-        this.guideService.render(this.guide).then((source)=>{
-          this.source = source;
-        });
-      })
-    })
+    this.ready();
+  }
+
+  ready() {
+    if(!this._ready) {
+      this._ready = new Promise((resolve, reject)=>{
+        console.log(`Handle route data`);
+        this.route.paramMap.subscribe((params)=>{
+          this.guideId = params.get("guideId");
+          return this.guideService.ready().then(()=>{
+            this.guide = this.guideService.getGuideByTitle(this.guideId);
+            console.log(`Loading ${this.guideId}`, this.guide);
+            return this.guideService.render(this.guide).then((source)=>{
+              this.source = source;
+            });
+          })
+        })
+      });
+    }
+    return this._ready;
   }
 
 }

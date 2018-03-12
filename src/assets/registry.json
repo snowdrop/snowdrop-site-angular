@@ -6,7 +6,7 @@
     {
       "type":"booster",
       "title":"HTTP API",
-      "url":"https://github.com/snowdrop/spring-boot-http-booster",
+      "url":"https://forge.api.prod-preview.openshift.io/api/launcher/zip?groupId=io.openshift.booster&mission=health-check&runtime=vert.x&runtimeVersion=community&artifactId=app",
       "description":"Mission to expose a REST Greeting endpoint using SpringBoot and Apache Tomcat in embedded mode",
       "versions": []
     },
