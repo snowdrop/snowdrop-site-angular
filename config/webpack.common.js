@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');
@@ -42,7 +41,7 @@ module.exports = {
         test: /\.json$/,
         loader: 'json'
       },
-      {
+      { 
         test: /\.index$/,
         loader: "asciidoctorindex?plain=true&document-attributes=https://raw.githubusercontent.com/openshiftio/appdev-documentation/master/docs/topics/templates/document-attributes.adoc"
       },

@@ -11,11 +11,9 @@
       </div>
       <div class="row row-cards-pf">
         <div *ngFor="let guide of buffer" class="col-sm-6">
-          <pfng-card [config]="guide"
-                     (onActionSelect)="handleActionSelect($event)"
-                     (onFilterSelect)="handleFilterSelect($event)">
+          <div>
               <p>{{guide.description}}</p>
-          </pfng-card>
+          </div>
         </div>
       </div>
     </div>

@@ -1,26 +1,41 @@
 <div class="content">
 <section id="intro">
   <div class="container">
-    <h2>Spring Boot</h2>
+    <h2>launch</h2>
     <h1>
-      Cloud Native Development.
+      Continuous application delivery,
     </h1>
     <h1>
-      Get it done fast.
+      built and deployed on OpenShift.
     </h1>
-    <a class="btn btn-lg" (click)="launch()">Download project template now</a>
+    <a class="btn btn-lg" (click)="launch()">Launch your Project</a>
+    <div class="try-box">
+      <a href="javascript:void(0)" class="try" (click)="launchNew()">Do a secondary CTA</a>
+    </div>
   </div>
 </section>
 
 <section id="runtimes">
   <div class="container">
+    <!-- <div class="row">
+      <div class="col-md-12">
+        <h1>Supported Runtimes</h1>
+      </div>
+    </div> -->
     <div class="row">
-    </div>
-    <div class="row">
-      <div class="col-sm-2 runtime">
+      <div class="col-sm-1 runtime">
+        <!-- <div class="fa icon swarm"></div>
+        <p>
+          WildFly Swarm offers an innovative approach to packaging and running
+          Java EE applications by packaging them with just enough of the server
+          runtime to "java -jar" your application.
+        </p>
+        <a href="http://wildfly-swarm.io" target="_blank">
+          Learn more <i class="glyphicon glyphicon-triangle-right"></i>
+        </a> -->
       </div>
 
-      <div class="col-sm-8 runtime">
+      <div class="col-sm-9 runtime">
         <div class="fa icon boot"></div>
         <p>
           Spring Boot makes it easy to create stand-alone,
@@ -31,8 +46,39 @@
         </a>
       </div>
 
-      <div class="col-sm-2 runtime">
+      <div class="col-sm-1 runtime">
+        <!-- <div class="fa icon vertx"></div>
+        <p>
+          Eclipse Vert.x is a tool-kit for building reactive applications on the JVM.
+        </p>
+        <a href="https://projects.eclipse.org/projects/rt.vertx" target="_blank">
+          Learn more <i class="glyphicon glyphicon-triangle-right"></i>
+        </a> -->
       </div>
+    </div>
+    <div class="preview row">
+      <!-- <div class="col-sm-offset-2 col-sm-4 runtime">
+        <div class="fa icon fuse"></div>
+        <div class="ribbon ribbon-top-right"><span>technology preview</span></div>
+        <p>
+            Red Hat® Fuse is a lightweight, flexible integration platform that uses Apache Camel at his core.
+        </p>
+        <a href="https://developers.redhat.com/products/fuse/overview/" target="_blank">
+          Learn more <i class="glyphicon glyphicon-triangle-right"></i>
+        </a>
+      </div>
+
+      <div class="col-sm-4 runtime">
+        <div class="fa icon node"></div>
+        <p>
+            Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.
+            Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.
+        </p>
+        <a href="https://nodejs.org/" target="_blank">
+          Learn more <i class="glyphicon glyphicon-triangle-right"></i>
+        </a>
+      </div>
+      <div class="col-sm-2"></div> -->
     </div>
   </div>
 </section>

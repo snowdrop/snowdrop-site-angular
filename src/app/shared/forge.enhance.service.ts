@@ -4,8 +4,9 @@ import { Http } from "@angular/http";
 import {ForgeService, TokenProvider} from "ngx-forge";
 import { History } from "ngx-forge";
 import { Gui, MetaData, Input } from "ngx-forge";
-import { AsciidocService } from "ngx-forge";
 import { Config } from "ngx-forge";
+
+import { AsciidocService } from "../wizard/components/asciidoc/asciidoc.service";
 
 @Injectable()
 export class EnhancedForgeService extends ForgeService {
@@ -13,7 +14,7 @@ export class EnhancedForgeService extends ForgeService {
 
   constructor(protected _http: Http, protected config: Config, private token: TokenProvider,
               private asciidoc: AsciidocService) {
-    super(_http, config, token);
+    super(_http as any, config, token);
   }
 
   commandInfo(command: string): Promise<Gui> {
@@ -60,7 +61,10 @@ export class EnhancedForgeService extends ForgeService {
           if (input.valueChoices) {
             input.valueChoices.forEach(choice => {
               let key = input.name + (choice.key ? choice.key : choice.id);
-              choice.description = this.asciidoc.generateHtml(key);
+              let asciidocDescription = this.asciidoc.generateHtml(key);
+              if (asciidocDescription) {
+                choice.description = asciidocDescription;
+              }
             });
           }
         });

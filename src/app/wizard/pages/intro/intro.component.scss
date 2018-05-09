@@ -1,5 +1,5 @@
 @import url(https://overpass-30e2.kxcdn.com/overpass.css);
-$assetPath : "../../../../assets/img/project-select-icons/";
+$assetPath: "../../../../assets/img/project-select-icons/";
 
 .content {
   display: flex;
@@ -9,7 +9,7 @@ $assetPath : "../../../../assets/img/project-select-icons/";
 }
 
 #intro {
-  background-image: url("../../../../assets/img/backdrop-g.png");
+  background-image: url("../../../../assets/img/backdrop.png");
   background-size: cover;
 
   .container {
@@ -22,25 +22,35 @@ $assetPath : "../../../../assets/img/project-select-icons/";
     font-size: 20pt;
     font-weight: bold;
   }
+
   h2 {
     color: #fff;
     font-weight: bold;
     text-transform: uppercase;
     font-size: 3em;
   }
+
   .row {
     margin-top: 5px;
   }
+
   .btn {
     background: #fff none;
     border-color: #fff;
     color: #c00;
     padding: 9px 40px;
     margin-top: 40px;
-    margin-bottom: 30px;
     line-height: 1.44;
     font-size: 18px;
     text-transform: uppercase;
+  }
+
+  .try-box {
+    margin-bottom: 30px;
+  }
+
+  .try {
+    color: #fff;
   }
 }
 
@@ -49,54 +59,68 @@ $assetPath : "../../../../assets/img/project-select-icons/";
   background-color: #f5f5f5;
   padding-top: 10px;
   padding-bottom: 10px;
+
   h1 {
     color: #c00;
     font-weight: bold;
   }
+
   a:hover {
     color: #0088ce;
   }
+
   .row + .row {
     display: flex;
   }
+
   .runtime {
     flex-grow: 1;
     background-color: white;
-    margin: 0 20px;
+    margin-right: 20px;
     display: flex;
     flex-direction: column;
     padding: 40px 20px;
+
     p {
       flex-grow: 2;
     }
   }
 }
 
+.preview.row {
+  margin-top: 30px;
+}
+
 .icon {
   background: no-repeat center;
   margin: auto;
   width: 100%;
-  height:110px;
+  height: 110px;
 }
+
 .boot {
-  background-image: url(#{$assetPath}spring-boot-logo.png);
+  background-image: url("#{$assetPath}spring-boot-logo.png");
   background-size: 25%;
 }
 
 .swarm {
-  background-image: url(#{$assetPath}../swarm.svg);
+  background-image: url("#{$assetPath}../swarm.svg");
 }
 
 .vertx {
-  background-image: url(#{$assetPath}vertx.svg);
-  background-size: 80%;
-}
-
-.node {
-  background-image: url(#{$assetPath}nodejs-logo.png);
+  background-image: url("#{$assetPath}vertx.svg");
   background-size: 60%;
 }
 
+.node {
+  background-image: url("#{$assetPath}nodejs-logo.png");
+  background-size: 45%;
+}
+
+.fuse {
+  background-image: url("#{$assetPath}fuse-logo.png");
+  background-size: 45%;
+}
 $red_berry: #8e0000;
 $red_base: #c00;
 $black_10: rgba(0,0,0,.1);
@@ -116,6 +140,7 @@ $black_20: rgba(0,0,0,.2);
   height: 120px;
   overflow: hidden;
   position: absolute;
+
   span {
     position: absolute;
     display: block;
@@ -129,26 +154,32 @@ $black_20: rgba(0,0,0,.2);
     text-align: center;
   }
 }
+
 .ribbon::before {
   @extend %ribbon-base;
 }
+
 .ribbon::after {
   @extend %ribbon-base;
 }
+
 .ribbon-top-right {
   top: -10px;
   right: -10px;
+
   span {
     left: -45px;
     top: 30px;
     transform: rotate(45deg);
   }
+
   &::before {
     border-top-color: transparent;
     border-right-color: transparent;
     top: 0;
     left: 0;
   }
+
   &::after {
     border-top-color: transparent;
     border-right-color: transparent;
@@ -156,57 +187,63 @@ $black_20: rgba(0,0,0,.2);
     right: 0;
   }
 }
-
 @media (max-width: 425px) {
   #runtimes .row + .row {
     display: initial;
   }
+
   .content {
     height: inherit;
   }
+
   #intro {
     margin-top: 0;
+
     h1 {
       font-size: 22pt;
     }
   }
+
   #runtimes {
     padding-top: 0;
+
     .runtime {
       padding: 10px;
       margin: 5px;
     }
   }
 }
-
 @media (max-width: 768px) and (min-width: 426px) {
   .content {
     height: inherit;
   }
+
   #intro {
     margin-top: 0;
+
     h1 {
       font-size: 28pt;
     }
   }
+
   #runtimes {
     padding-top: 20px;
+
     .runtime {
       padding: 20px;
       margin: 5px;
     }
   }
 }
-
 @media (max-width: 1024px) and (min-width: 769px) {
   #intro h1 {
     font-size: 35pt;
   }
+
   #runtimes .runtime .inner {
     padding: 20px 50px;
   }
 }
-
 @media (max-width: 1200px) and (min-width: 1025px) {
   #intro {
     margin-top: 0;
