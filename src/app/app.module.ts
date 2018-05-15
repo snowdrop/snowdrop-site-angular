@@ -10,6 +10,7 @@ import { AppRoutingModule } from "./app-routing.module";
 
 import { FooterComponent } from "./footer/footer.component";
 import { HeaderComponent } from "./header/header.component";
+import { HomeComponent } from "./home/home.component";
 
 import { ComponentsModule } from "./components";
 import { DocsModule } from "./docs/docs.module";
@@ -17,25 +18,26 @@ import { GuidesModule } from "./guides/guides.module";
 import { WizardModule } from "./wizard/wizard.module";
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    CommonModule,
-    ComponentsModule,
-    FormsModule,
-    HttpModule,
-    AppRoutingModule,
-    WizardModule,
-    DocsModule,
-    GuidesModule,
-  ],
-  declarations: [
-    AppComponent,
-    FooterComponent,
-    HeaderComponent
-  ],
-  providers: [
-    Logger
-  ],
-  bootstrap: [ AppComponent ]
+	imports: [
+		BrowserModule,
+		CommonModule,
+		ComponentsModule,
+		FormsModule,
+		HttpModule,
+		AppRoutingModule,
+		WizardModule,
+		DocsModule,
+		GuidesModule,
+	],
+	declarations: [
+		AppComponent,
+		FooterComponent,
+		HeaderComponent,
+		HomeComponent
+	],
+	providers: [
+		Logger
+	],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }

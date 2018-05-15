@@ -2,19 +2,22 @@ import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 
 @Component({
-	selector: "intro",
-	templateUrl: "./intro.component.html",
-	styleUrls: ["./intro.component.scss"],
+	selector: "home",
+	templateUrl: "./home.component.html",
+	styleUrls: ["./home.component.scss"],
 })
-export class IntroComponent {
+export class HomeComponent {
 	constructor(private router: Router) { }
 
 	launch() {
 		this.router.navigate(["/wizard", "launchpad-new-project", 1, "e30="]);
 	}
 
-	launchNew() {
-		console.log("Launched new thing")
-		this.router.navigate(["/new-wizard"]);
+	scrollDown() {
+		window.scrollBy({
+			left: 0,
+			top: 400,
+			behavior: 'smooth'
+		});
 	}
 }
