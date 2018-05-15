@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { FormComponent } from "./wizard/wizard.component";
+import { AboutComponent } from "./about/about.component";
 import { DocsComponent } from "./docs/docs.component";
 import { HomeComponent } from "./home/home.component";
 import { GuidesComponent } from "./guides/guides.component";
@@ -13,6 +14,12 @@ const routes: Routes = [
 		children: [{
 			path: "",
 			component: HomeComponent
+		}]
+	}, {
+		path: "about",
+		children: [{
+			path: "",
+			component: AboutComponent
 		}]
 	},
 	{

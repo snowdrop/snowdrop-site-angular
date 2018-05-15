@@ -10,6 +10,7 @@ import { AppRoutingModule } from "./app-routing.module";
 
 import { FooterComponent } from "./footer/footer.component";
 import { HeaderComponent } from "./header/header.component";
+import { AboutComponent } from "./about/about.component";
 import { HomeComponent } from "./home/home.component";
 
 import { ComponentsModule } from "./components";
@@ -33,6 +34,7 @@ import { WizardModule } from "./wizard/wizard.module";
 		AppComponent,
 		FooterComponent,
 		HeaderComponent,
+		AboutComponent,
 		HomeComponent
 	],
 	providers: [

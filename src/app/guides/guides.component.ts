@@ -37,23 +37,11 @@ export class GuidesComponent implements OnInit, OnDestroy {
 					{
 						title: guide.title,
 						description: guide.description,
-						noPadding: false,
 						action: {
-							hypertext: this.guideService.getGuideLabel(guide),
+							label: this.guideService.getGuideLabel(guide),
 							url: this.guideService.getGuideURL(guide),
-							iconStyleClass: 'fa fa-' + this.guideService.getGuideIcon(guide)
-						},
-						filters: [{
-							title: 'Version 1.4.7',
-							value: '30'
-						}, {
-							default: true,
-							title: 'Version 1.5.0',
-							value: '15'
-						}, {
-							title: 'Today',
-							value: 'today'
-						}],
+							iconClass: 'fa fa-' + this.guideService.getGuideIcon(guide)
+						}
 					});
 			}
 
@@ -78,16 +66,6 @@ export class GuidesComponent implements OnInit, OnDestroy {
 		} else {
 			this.buffer = this.guides;
 		}
-	}
-
-	// Actions
-
-	handleActionSelect($event): void {
-		this.actionsText = $event.hypertext + ' selected\r\n' + this.actionsText;
-	}
-
-	handleFilterSelect($event): void {
-		this.actionsText = $event.title + ' selected\r\n' + this.actionsText;
 	}
 
 }
