@@ -1,22 +1,22 @@
 kind: Template
 apiVersion: v1
 metadata:
-  name: launcher-frontend
+  name: snowdrop-site-angular
   annotations:
-    openshift.io/display-name: "Fabric8 Launch - Frontend"
-    description: This application contains the Frontend web service for the Launcher
-    tags: instant-app,fabric8-launcher
+    openshift.io/display-name: "Snowdrop Site - Angular"
+    description: This application contains the website for the Snowdrop project
+    tags: instant-app,snowdrop-site
     iconClass: icon-shadowman
-    template.openshift.io/long-description: This application contains the Frontend web service
+    template.openshift.io/long-description: This application contains the website for the Snowdrop project
     template.openshift.io/provider-display-name: Red Hat, Inc.
-    template.openshift.io/documentation-url: https://github.com/fabric8-launcher
+    template.openshift.io/documentation-url: https://github.com/snowdrop/snowdrop-site-angular
     template.openshift.io/support-url: https://access.redhat.com
-message: "The following service has been created in your project: launcher-frontend.\n\nFor more information about using this template, including OpenShift considerations, see https://github.com/fabric8-launcher"
+message: "The following service has been created in your project: snowdrop-site-angular.\n\nFor more information about using this template, including OpenShift considerations, see https://github.com/snowdrop/snowdrop-site-angular"
 labels:
-  template: launcher-frontend
+  template: snowdrop-site-angular
 parameters:
 - name: IMAGE
-  value: fabric8/launcher-frontend
+  value: snowdrop/snowdrop-site-angular
   required: true
 - name: IMAGE_TAG
   value: latest
@@ -25,13 +25,13 @@ objects:
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
-    name: launcher-frontend
+    name: snowdrop-site-angular
     annotations:
       configmap.fabric8.io/update-on-change: "launcher"
   spec:
     replicas: 1
     selector:
-      service: launcher-frontend
+      service: snowdrop-site-angular
     strategy:
       resources: {}
       rollingParams:
@@ -44,12 +44,12 @@ objects:
     template:
       metadata:
         labels:
-          service: launcher-frontend
+          service: snowdrop-site-angular
       spec:
         containers:
         - image: ${IMAGE}:${IMAGE_TAG}
           imagePullPolicy: Always
-          name: launcher-frontend
+          name: snowdrop-site-angular
           ports:
           - containerPort: 8080
             protocol: TCP
@@ -106,8 +106,8 @@ objects:
   apiVersion: v1
   metadata:
     labels:
-      service: launcher-frontend
-    name: launcher-frontend
+      service: snowdrop-site-angular
+    name: snowdrop-site-angular
   spec:
     ports:
     - name: "8080"
@@ -115,7 +115,6 @@ objects:
       protocol: TCP
       targetPort: 8080
     selector:
-      service: launcher-frontend
+      service: snowdrop-site-angular
     sessionAffinity: None
     type: ClusterIP
-
