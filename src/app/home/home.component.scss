@@ -13,7 +13,7 @@ $assetPath: "../../assets/img/project-select-icons/";
 }
 
 #intro {
-  background-image: url("../../assets/img/backdrop.png");
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url("../../assets/img/backdrop.png");
   background-size: cover;
 
   .container {
@@ -31,7 +31,6 @@ $assetPath: "../../assets/img/project-select-icons/";
   h3 {
     color: #fff;
     font-weight: bold;
-    text-transform: uppercase;
   }
 
   .row {
@@ -57,6 +56,12 @@ $assetPath: "../../assets/img/project-select-icons/";
   .try {
     cursor: pointer;
     color: #fff;
+  }
+}
+
+#actions {
+  .action {
+    text-align: center;
   }
 }
 
