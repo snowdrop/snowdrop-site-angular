@@ -86,7 +86,7 @@ const routes: Routes = [
 			}
 		]
 	},
-	{ path: '**', redirectTo: '/filtered-wizard/all', pathMatch: 'full' }
+	{ path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
 
 @NgModule({
