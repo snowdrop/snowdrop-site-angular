@@ -30,6 +30,10 @@ $ export LAUNCHER_MISSIONCONTROL_URL=ws://localhost:8080
 
 More details on running a local version of the backend are available [here][2].
 
+## Documentation and Guides settings
+
+These parts of the site can be configured using the [registry.json][3] file, which contains a list of documents to be displayed.
+
 ## Production Build
 
 Location of the [backend][2] can be determined at runtime (via `settings.json`) or at build time.
@@ -46,5 +50,6 @@ npm run build:prod
 
 The build output will be under `dist` directory.
 
-[1]: https://github.com/fabric8-launcher/launcher-frontend/blob/master/src/assets/settings.json
+[1]: https://github.com/snowdrop/snowdrop-site-angular/blob/master/src/assets/settings.json
 [2]: https://github.com/fabric8-launcher/launcher-backend
+[3]: https://github.com/snowdrop/snowdrop-site-angular/blob/master/src/assets/registry.json
