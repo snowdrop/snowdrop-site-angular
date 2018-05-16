@@ -22,7 +22,7 @@ export class HeaderComponent {
 		{
 			id: "get-started",
 			name: "Get Started",
-			route: "/wizard/all"
+			route: "/filtered-wizard/all/launchpad-new-project/1/e30="
 		},
 		{
 			id: "guides",

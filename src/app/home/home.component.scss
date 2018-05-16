@@ -60,9 +60,16 @@ $assetPath: "../../assets/img/project-select-icons/";
 }
 
 #actions {
+  background-color: rgba(0,0,0,0.1);
+  margin-top: 20px;
+
   .action {
     text-align: center;
   }
+}
+
+#video {
+  padding-bottom: 50px;
 }
 
 #followup,
@@ -97,6 +104,10 @@ $assetPath: "../../assets/img/project-select-icons/";
       flex-grow: 2;
     }
   }
+}
+
+#followup {
+  padding-bottom: 40px;
 }
 
 .preview.row {
