@@ -15,106 +15,170 @@ message: "The following service has been created in your project: snowdrop-site-
 labels:
   template: snowdrop-site-angular
 parameters:
-- name: IMAGE
-  value: snowdrop/snowdrop-site-angular
-  required: true
-- name: IMAGE_TAG
-  value: latest
-  required: true
+  - name: SOURCE_REPOSITORY_URL
+    description: The source URL for the application
+    displayName: Source URL
+    required: true
+    value: https://github.com/snowdrop/snowdrop-site-angular
+  - name: SOURCE_REPOSITORY_REF
+    description: The branch name for the application
+    displayName: Source Branch
+    value: master
+    required: true
 objects:
-- kind: DeploymentConfig
-  apiVersion: v1
-  metadata:
-    name: snowdrop-site-angular
-    annotations:
-      configmap.fabric8.io/update-on-change: "launcher"
-  spec:
-    replicas: 1
-    selector:
-      service: snowdrop-site-angular
-    strategy:
+  - apiVersion: v1
+    kind: ImageStream
+    metadata:
+      name: snowdrop-site-angular
+    spec: {}
+  - apiVersion: v1
+    kind: ImageStream
+    metadata:
+      name: runtime
+    spec:
+      tags:
+        - name: latest
+          from:
+            kind: DockerImage
+            name: 'bucharestgold/centos7-s2i-nodejs:10.x'
+  - apiVersion: v1
+    kind: BuildConfig
+    metadata:
+      name: snowdrop-site-angular
+    spec:
+      output:
+        to:
+          kind: ImageStreamTag
+          name: 'snowdrop-site-angular:latest'
+      postCommit: {}
       resources: {}
-      rollingParams:
-        intervalSeconds: 1
-        maxSurge: 25%
-        maxUnavailable: 25%
-        timeoutSeconds: 600
-        updatePeriodSeconds: 1
-      type: Rolling
-    template:
-      metadata:
-        labels:
-          service: snowdrop-site-angular
-      spec:
-        containers:
-        - image: ${IMAGE}:${IMAGE_TAG}
-          imagePullPolicy: Always
-          name: snowdrop-site-angular
-          ports:
-          - containerPort: 8080
-            protocol: TCP
-          env:
-          - name: LAUNCHER_BACKEND_URL
-            valueFrom:
-              configMapKeyRef:
-                name: launcher
-                key: launcher.backend.url
-          - name: LAUNCHER_MISSIONCONTROL_URL
-            valueFrom:
-              configMapKeyRef:
-                name: launcher
-                key: launcher.missioncontrol.url
-          - name: LAUNCHER_KEYCLOAK_URL
-            valueFrom:
-              configMapKeyRef:
-                name: launcher
-                key: launcher.keycloak.url
-          - name: LAUNCHER_KEYCLOAK_REALM
-            valueFrom:
-              configMapKeyRef:
-                name: launcher
-                key: launcher.keycloak.realm
-          - name: LAUNCHER_TRACKER_SEGMENT_TOKEN
-            valueFrom:
-              configMapKeyRef:
-                name: launcher
-                key: launcher.tracker.segment.token
-          resources: {}
-          terminationMessagePath: /dev/termination-log
-          readinessProbe:
-            httpGet:
-              path: /launch/wizard
-              port: 8080
-            initialDelaySeconds: 15
-            timeoutSeconds: 10
-            periodSeconds: 20
-          livenessProbe:
-            httpGet:
-              path: /launch/wizard
-              port: 8080
-            initialDelaySeconds: 30
-            timeoutSeconds: 10
-            periodSeconds: 20
-        restartPolicy: Always
-        dnsPolicy: ClusterFirst
-        securityContext: {}
-        terminationGracePeriodSeconds: 30
-    test: false
-    triggers:
-    - type: ConfigChange
-- kind: Service
-  apiVersion: v1
-  metadata:
-    labels:
-      service: snowdrop-site-angular
-    name: snowdrop-site-angular
-  spec:
-    ports:
-    - name: "8080"
-      port: 8080
-      protocol: TCP
-      targetPort: 8080
-    selector:
-      service: snowdrop-site-angular
-    sessionAffinity: None
-    type: ClusterIP
+      source:
+        git:
+          uri: '${SOURCE_REPOSITORY_URL}'
+          ref: '${SOURCE_REPOSITORY_REF}'
+        type: Git
+      strategy:
+        type: Source
+        sourceStrategy:
+          from:
+            kind: ImageStreamTag
+            name: 'runtime:latest'
+          incremental: true
+      triggers:
+        - github:
+            secret: '${GITHUB_WEBHOOK_SECRET}'
+          type: GitHub
+        - type: ConfigChange
+        - imageChange: {}
+          type: ImageChange
+    status:
+      lastVersion: 0            
+  - kind: DeploymentConfig
+    apiVersion: v1
+    metadata:
+      name: snowdrop-site-angular
+      annotations:
+        configmap.fabric8.io/update-on-change: "launcher"
+    spec:
+      replicas: 1
+      selector:
+        service: snowdrop-site-angular
+      strategy:
+        resources: {}
+        rollingParams:
+          intervalSeconds: 1
+          maxSurge: 25%
+          maxUnavailable: 25%
+          timeoutSeconds: 600
+          updatePeriodSeconds: 1
+        type: Rolling
+      template:
+        metadata:
+          labels:
+            service: snowdrop-site-angular
+        spec:
+          containers:
+          - image: snowdrop-site-angular
+            imagePullPolicy: Always
+            name: snowdrop-site-angular
+            ports:
+            - containerPort: 8080
+              protocol: TCP
+            env:
+            - name: LAUNCHER_BACKEND_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: launcher
+                  key: launcher.backend.url
+                  optional: true
+            - name: LAUNCHER_KEYCLOAK_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: launcher
+                  key: launcher.keycloak.url
+                  optional: true
+            - name: LAUNCHER_KEYCLOAK_REALM
+              valueFrom:
+                configMapKeyRef:
+                  name: launcher
+                  key: launcher.keycloak.realm
+                  optional: true
+            - name: LAUNCHER_TRACKER_SEGMENT_TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  name: launcher
+                  key: launcher.tracker.segment.token
+                  optional: true
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            readinessProbe:
+              httpGet:
+                path: /launch/wizard
+                port: 8080
+              initialDelaySeconds: 15
+              timeoutSeconds: 10
+              periodSeconds: 20
+            livenessProbe:
+              httpGet:
+                path: /launch/wizard
+                port: 8080
+              initialDelaySeconds: 30
+              timeoutSeconds: 10
+              periodSeconds: 20
+          restartPolicy: Always
+          dnsPolicy: ClusterFirst
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+      test: false
+      triggers:
+      - type: ConfigChange
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      labels:
+        service: snowdrop-site-angular
+      name: snowdrop-site-angular
+    spec:
+      ports:
+      - name: "8080"
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+      selector:
+        service: snowdrop-site-angular
+      sessionAffinity: None
+      type: ClusterIP
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      labels:
+        project: snowdrop-site-angular
+        provider: nodeshift
+        version: 2.0.0
+      name: snowdrop-site-angular
+    spec:
+      port:
+        targetPort: 8080
+      to:
+        kind: Service
+        name: snowdrop-site-angular
