@@ -32,6 +32,13 @@ More details on running a local version of the backend are available [here][2].
 
 These parts of the site can be configured using the [registry.json][3] file, which contains a list of documents to be displayed.
 
+## Deploy with S2I
+
+```
+find . | grep openshiftio | grep application | xargs -n 1 oc apply -f
+oc new-app --template=snowdrop-site-angular
+```
+
 ## Production Build
 
 Location of the [backend][2] can be determined at runtime (via `settings.json`) or at build time.
