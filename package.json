@@ -18,7 +18,7 @@
     "build": "export TZ=GMT && webpack --config config/webpack.dev.js",
     "build:prod": "webpack --config config/webpack.prod.js -p",
     "check-coverage": "istanbul check-coverage --statements 23 --branches 5 --functions 9 --lines 24",
-    "clean-and-copy": "npm run clean-dist && npm run copy-files",
+    "clean-and-copy": "npm run setup && npm run clean-dist && npm run copy-files",
     "clean-dist": "rimraf dist",
     "copy-files": "cpy src/favicon.ico src/assets/settings.json dist",
     "docker:run": "webpack-dev-server --inline --progress --port 8080",
