@@ -1,1 +1,2 @@
 NPM_RUN=start:openshift
+NODE_ENV=development
