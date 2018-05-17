@@ -72,7 +72,7 @@ objects:
         - imageChange: {}
           type: ImageChange
     status:
-      lastVersion: 0            
+      lastVersion: 0
   - kind: DeploymentConfig
     apiVersion: v1
     metadata:
@@ -133,14 +133,14 @@ objects:
             terminationMessagePath: /dev/termination-log
             readinessProbe:
               httpGet:
-                path: /launch/wizard
+                path: /
                 port: 8080
               initialDelaySeconds: 15
               timeoutSeconds: 10
               periodSeconds: 20
             livenessProbe:
               httpGet:
-                path: /launch/wizard
+                path: /
                 port: 8080
               initialDelaySeconds: 30
               timeoutSeconds: 10
@@ -152,6 +152,14 @@ objects:
       test: false
       triggers:
       - type: ConfigChange
+      - imageChangeParams:
+          automatic: true
+          containerNames:
+          - snowdrop-site-angular
+          from:
+            kind: ImageStreamTag
+            name: snowdrop-site-angular:latest
+        type: ImageChange
   - kind: Service
     apiVersion: v1
     metadata:
