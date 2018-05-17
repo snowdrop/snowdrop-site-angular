@@ -6,7 +6,7 @@ var helpers = require('./helpers');
 
 const ENV = process.env.ENV || process.env.NODE_ENV || 'development';
 // if env is 'inmemory', the inmemory debug resource is used
-const LAUNCHER_BACKEND_URL = process.env.LAUNCHER_BACKEND_URL || 'http://localhost:8080/api';
+const LAUNCHER_BACKEND_URL = process.env.LAUNCHER_BACKEND_URL || 'https://forge.api.prod-preview.openshift.io/api';
 const LAUNCHER_MISSIONCONTROL_URL = process.env.LAUNCHER_MISSIONCONTROL_URL || 'ws://localhost:8080';
 const PUBLIC_PATH = process.env.PUBLIC_PATH || '/';
 
