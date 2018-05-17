@@ -33,6 +33,7 @@
     "reinstall": "rm -rf node_modules && npm cache clean && npm install",
     "setup": "npm install",
     "start": "webpack-dev-server --inline --hot --progress --host 0.0.0.0 --port 8088",
+    "start:openshift":"npm setup && npm build:prod",
     "stats": "webpack --profile --json > stats.json",
     "test": "npm-run-all test:unit",
     "test:func": "./run_functional_tests.sh",
