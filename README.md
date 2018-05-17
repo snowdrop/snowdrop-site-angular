@@ -35,7 +35,7 @@ These parts of the site can be configured using the [registry.json][3] file, whi
 ## Deploy with S2I
 
 ```
-find . | grep openshiftio | grep application | xargs -n 1 oc apply -f
+find . | grep openshift | grep template | xargs -n 1 oc apply -f
 oc new-app --template=snowdrop-site-angular
 ```
 
