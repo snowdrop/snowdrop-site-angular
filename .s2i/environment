@@ -1,2 +1,2 @@
-NPM_RUN=build:prod
-NODE_ENV=development
+NPM_RUN=start:prod
+NODE_ENV=production
