@@ -31,7 +31,7 @@
     "prebuild": "npm run clean-and-copy",
     "prebuild:prod": "npm run clean-and-copy",
     "reinstall": "rm -rf node_modules && npm cache clean && npm install",
-    "start": "npm run build:prod && npm run start:prod",
+    "start": "npm run start:prod",
     "start:dev": "webpack-dev-server --inline --hot --progress --host 0.0.0.0 --port 8088",
     "start:prod": "node scripts/prod-server.js",
     "check-coverage": "istanbul check-coverage --statements 23 --branches 5 --functions 9 --lines 24",
