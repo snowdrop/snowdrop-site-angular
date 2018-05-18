@@ -35,8 +35,9 @@ These parts of the site can be configured using the [registry.json][3] file, whi
 ## Deploy with S2I
 
 ```
+oc new-project <any project name>
 find . | grep openshift | grep template | xargs -n 1 oc apply -f
-oc new-app --template=snowdrop-site-angular
+oc new-app --template=snowdrop-site-angular -p GITHUB_WEBHOOK_SECRET="<your secret>"
 ```
 
 ## Production Build

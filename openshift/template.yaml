@@ -30,9 +30,9 @@ parameters:
     value: changeme
     required: false
   - name: NODE_ENV
-    description: NODE env var used during buildConfig build. Default is development
+    description: NODE env var used during BuildConfig build. Default is development
     value: development
-    requiyred: false
+    required: false
 objects:
   - apiVersion: v1
     kind: ImageStream
@@ -72,11 +72,9 @@ objects:
             kind: ImageStreamTag
             name: 'runtime:latest'
           incremental: true
-        env:
-          - name: "NODE_ENV"
-            value: '${NODE_ENV}'
-          - name: "DEV_MODE"
-            value: "true"
+          env:
+            - name: "NODE_ENV"
+              value: '${NODE_ENV}'
       triggers:
         - github:
             secret: '${GITHUB_WEBHOOK_SECRET}'
