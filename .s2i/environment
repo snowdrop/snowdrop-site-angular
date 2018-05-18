@@ -1,2 +1,2 @@
-NPM_RUN=start:openshift
+NPM_RUN=build:prod
 NODE_ENV=development

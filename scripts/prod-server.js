@@ -8,4 +8,8 @@ app.use(morgan(':remote-addr [:date[clf]] ":method :url HTTP/:http-version" :sta
 app.use("/", express.static('dist'));
 app.use(express.static(path.join(__dirname, 'dist')));
 
+app.get("*", function(req, res) {
+	res.sendfile(path.resolve(__dirname, "..", "dist", "index.html"));
+});
+
 app.listen(8080, () => { console.log("Server listening on port 8080"); });

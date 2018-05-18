@@ -1,6 +1,6 @@
 {
   "name": "launcher-frontend",
-  "version": "0.0.7",
+  "version": "1.0.0-Alpha1",
   "description": "A frontend for a launcher, microservices booster generator",
   "homepage": "https://developers.redhat.com/launch/",
   "repository": {
@@ -8,6 +8,10 @@
     "url": "https://github.com/fabric-launcher"
   },
   "contributors": [
+    {
+      "name": "Lincoln Baxter, III",
+      "email": "lincoln@redhat.com"
+    },
     {
       "name": "Erik Jan de Wit",
       "email": "edewit@redhat.com"
@@ -17,23 +21,21 @@
   "scripts": {
     "build": "export TZ=GMT && webpack --config config/webpack.dev.js",
     "build:prod": "webpack --config config/webpack.prod.js -p",
-    "check-coverage": "istanbul check-coverage --statements 23 --branches 5 --functions 9 --lines 24",
-    "clean-and-copy": "npm run clean-dist && npm run copy-files",
-    "clean-dist": "rimraf dist",
-    "copy-files": "cpy src/favicon.ico src/assets/settings.json dist",
-    "docker:run": "webpack-dev-server --inline --progress --port 8080",
+    "clean-and-copy": "rimraf dist && npm run copy-files",
+    "copy-files": "cpy src/favicon.ico src/assets/settings.json src/assets/registry.json dist",
     "functests": "npm-run-all -p webdriver-start testserver-start protractor",
-    "lint": "find src -name '*.ts' | xargs tslint -c tslint.json --force",
     "openshift": "nodeshift --strictSSL=false --nodeVersion=10.x",
     "postinstall": "echo 'All done!'",
     "prestart": "echo 'Starting the server.'",
     "prebuild": "npm run clean-and-copy",
     "prebuild:prod": "npm run clean-and-copy",
-    "protractor": "sleep 15 && ./node_modules/protractor/bin/protractor protractor.config.js",
     "reinstall": "rm -rf node_modules && npm cache clean && npm install",
-    "setup": "npm install",
-    "start": "npm run build:prod && node scripts/prod-server.js",
+    "start": "npm run build:prod && npm run start:prod",
     "start:dev": "webpack-dev-server --inline --hot --progress --host 0.0.0.0 --port 8088",
+    "start:prod": "node scripts/prod-server.js",
+    "check-coverage": "istanbul check-coverage --statements 23 --branches 5 --functions 9 --lines 24",
+    "lint": "find src -name '*.ts' | xargs tslint -c tslint.json --force",
+    "protractor": "sleep 15 && ./node_modules/protractor/bin/protractor protractor.config.js",
     "stats": "webpack --profile --json > stats.json",
     "test": "npm-run-all test:unit",
     "test:func": "./run_functional_tests.sh",
