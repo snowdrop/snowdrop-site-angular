@@ -29,6 +29,10 @@ parameters:
     description: Secret to be used by Github and BuildConfig to trigger a build from Github
     value: changeme
     required: false
+  - name: NODE_ENV
+    description: NODE env var used during buildConfig build. Default is development
+    value: development
+    requiyred: false
 objects:
   - apiVersion: v1
     kind: ImageStream
@@ -69,10 +73,10 @@ objects:
             name: 'runtime:latest'
           incremental: true
         env:
-        - name: "NODE_ENV"
-          value: "development"
-        - name: "DEV_MODE"
-          value: "true"
+          - name: "NODE_ENV"
+            value: '${NODE_ENV}'
+          - name: "DEV_MODE"
+            value: "true"
       triggers:
         - github:
             secret: '${GITHUB_WEBHOOK_SECRET}'
