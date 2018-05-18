@@ -68,6 +68,11 @@ objects:
             kind: ImageStreamTag
             name: 'runtime:latest'
           incremental: true
+        env:
+        - name: "NODE_ENV"
+          value: "development"
+        - name: "DEV_MODE"
+          value: "true"
       triggers:
         - github:
             secret: '${GITHUB_WEBHOOK_SECRET}'
@@ -109,6 +114,8 @@ objects:
             - containerPort: 8080
               protocol: TCP
             env:
+            - name: "NODE_ENV"
+              value: "production"
             - name: LAUNCHER_BACKEND_URL
               valueFrom:
                 configMapKeyRef:
