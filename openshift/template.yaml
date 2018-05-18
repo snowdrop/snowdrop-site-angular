@@ -25,6 +25,10 @@ parameters:
     displayName: Source Branch
     value: master
     required: true
+  - name: GITHUB_WEBHOOK_SECRET
+    description: Secret to be used by Github and BuildConfig to trigger a build from Github
+    value: changeme
+    required: false
 objects:
   - apiVersion: v1
     kind: ImageStream
