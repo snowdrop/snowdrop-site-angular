@@ -8,7 +8,22 @@ import { GuidesComponent } from "./guides/guides.component";
 import { GuideViewComponent } from "./guides/guide-view/guide-view.component";
 import { IntroComponent } from "./wizard/pages/intro/intro.component";
 
+/* New Wizard */
+import { WizardComponent } from "./wizard/new-wizard.component";
+import { GettingStartedComponent } from "./wizard/pages/getting-started/getting-started.component";
+
 const routes: Routes = [
+	{
+		path: 'new-wizard/:projectName',
+		component: WizardComponent,
+		pathMatch: 'full'
+
+	},
+	{
+		path: "new-wizard",
+		component: GettingStartedComponent,
+		pathMatch: 'full'
+	},
 	{
 		path: "",
 		children: [{

@@ -32,12 +32,21 @@ More details on running a local version of the backend are available [here][2].
 
 These parts of the site can be configured using the [registry.json][3] file, which contains a list of documents to be displayed.
 
-## Deploy with S2I
+## Link to download a prepared project zip
 
+https://forge.api.openshift.io/api/launcher/zip?mission=cache&runtime=vert.x&runtimeVersion=community&groupId=io.openshift.booster&artifactId=app
+
+## Deploy with S2I
 ```
 oc new-project <any project name>
 find . | grep openshift | grep template | xargs -n 1 oc apply -f
 oc new-app --template=snowdrop-site-angular -p GITHUB_WEBHOOK_SECRET="<your secret>"
+```
+
+To filter to a single runtime, ensure the launcher-backend is configured with:
+```
+LAUNCHER_BOOSTER_CATALOG_FILTER
+booster.runtime.id == 'spring-boot'
 ```
 
 ## Production Build

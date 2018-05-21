@@ -40,6 +40,7 @@ export class GuidesComponent implements OnInit, OnDestroy {
 						action: {
 							label: this.guideService.getGuideLabel(guide),
 							url: this.guideService.getGuideURL(guide),
+							docurl: guide.documentation ? guide.documentation.trim() : null,
 							iconClass: 'fa fa-' + this.guideService.getGuideIcon(guide)
 						}
 					});

@@ -9,6 +9,21 @@ import { GuidesComponent } from './guides.component';
 import { GuideViewComponent } from './guide-view/guide-view.component';
 import { GuideDataService } from './guide-data.service';
 
+
+import { LaunchConfig } from "../shared/config.component";
+import { Config, HelperService } from "ngx-forge";
+
+export class Helper extends HelperService {
+	constructor(config: Config) {
+		super(config);
+	}
+
+	getBackendUrl(): string {
+		let url = super.getBackendUrl();
+		return url.substr(0, url.indexOf('launchpad'));
+	}
+}
+
 @NgModule({
 	imports: [
 		CommonModule,
@@ -20,7 +35,9 @@ import { GuideDataService } from './guide-data.service';
 		GuideViewComponent,
 	],
 	providers: [
-		GuideDataService
+		GuideDataService,
+		LaunchConfig,
+		{ provide: HelperService, useClass: Helper, deps: [LaunchConfig] },
 	]
 })
 export class GuidesModule {
