@@ -36,6 +36,7 @@ export class GuidesComponent implements OnInit, OnDestroy {
 				this.guides.push(
 					{
 						title: guide.title,
+						type: guide.type,
 						description: guide.description,
 						action: {
 							label: this.guideService.getGuideLabel(guide),
