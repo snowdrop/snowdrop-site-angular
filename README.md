@@ -40,6 +40,7 @@ https://forge.api.openshift.io/api/launcher/zip?mission=cache&runtime=vert.x&run
 ```
 oc new-project <any project name>
 find . | grep openshift | grep template | xargs -n 1 oc apply -f
+oc new-app --template=snowdrop-site-configmap
 oc new-app --template=snowdrop-site-angular -p GITHUB_WEBHOOK_SECRET="<your secret>"
 ```
 
@@ -51,7 +52,7 @@ booster.runtime.id == 'spring-boot'
 
 ## Production Build
 
-Location of the [backend][2] can be determined at runtime (via `settings.json`) or at build time.
+Location of the [backend][2] can be determined at runtime (via `settings.json`) or at BUILD time.
 If `LAUNCHER_BACKEND_URL` environment variable is set at build time, this value will be used to connect to the backend.
 Otherwise [settings.json][1] will be fetched at runtime and the contents used connect to the backend.
 
@@ -68,3 +69,10 @@ The build output will be under `dist` directory.
 [1]: https://github.com/snowdrop/snowdrop-site-angular/blob/master/src/assets/settings.json
 [2]: https://github.com/fabric8-launcher/launcher-backend
 [3]: https://github.com/snowdrop/snowdrop-site-angular/blob/master/src/assets/registry.json
+
+## Hosting
+
+Remember to expose a public route for the domain:
+
+domain: beta.snowdrop.me
+target port: 8080

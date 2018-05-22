@@ -75,6 +75,8 @@ objects:
           env:
             - name: "NODE_ENV"
               value: '${NODE_ENV}'
+            - name: "LAUNCHER_BACKEND_URL"
+              value: 'http://backend-public-devex.195.201.87.126.nip.io/api'
       triggers:
         - github:
             secret: '${GITHUB_WEBHOOK_SECRET}'
@@ -118,26 +120,6 @@ objects:
             env:
             - name: "NODE_ENV"
               value: "production"
-            - name: LAUNCHER_BACKEND_URL
-              value: http://backend-public-devex.195.201.87.126.nip.io/api
-            - name: LAUNCHER_KEYCLOAK_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: launcher
-                  key: launcher.keycloak.url
-                  optional: true
-            - name: LAUNCHER_KEYCLOAK_REALM
-              valueFrom:
-                configMapKeyRef:
-                  name: launcher
-                  key: launcher.keycloak.realm
-                  optional: true
-            - name: LAUNCHER_TRACKER_SEGMENT_TOKEN
-              valueFrom:
-                configMapKeyRef:
-                  name: launcher
-                  key: launcher.tracker.segment.token
-                  optional: true
             resources: {}
             terminationMessagePath: /dev/termination-log
             readinessProbe:
