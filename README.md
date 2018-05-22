@@ -37,11 +37,13 @@ These parts of the site can be configured using the [registry.json][3] file, whi
 https://forge.api.openshift.io/api/launcher/zip?mission=cache&runtime=vert.x&runtimeVersion=community&groupId=io.openshift.booster&artifactId=app
 
 ## Deploy with S2I
+
+Replace parameter values with your own:
+
 ```
 oc new-project <any project name>
 find . | grep openshift | grep template | xargs -n 1 oc apply -f
-oc new-app --template=snowdrop-site-configmap
-oc new-app --template=snowdrop-site-angular -p GITHUB_WEBHOOK_SECRET="<your secret>"
+oc new-app --template=snowdrop-site-angular -p GITHUB_WEBHOOK_SECRET="<your secret>" -p LAUNCHER_BACKEND_URL=https://forge.api.openshift.io/api/
 ```
 
 To filter to a single runtime, ensure the launcher-backend is configured with:
