@@ -120,6 +120,8 @@ objects:
             env:
             - name: "NODE_ENV"
               value: "production"
+            - name: "LAUNCHER_BACKEND_URL"
+              value: 'http://backend-public-devex.195.201.87.126.nip.io/api'
             resources: {}
             terminationMessagePath: /dev/termination-log
             readinessProbe:
