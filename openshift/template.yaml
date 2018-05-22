@@ -119,11 +119,7 @@ objects:
             - name: "NODE_ENV"
               value: "production"
             - name: LAUNCHER_BACKEND_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: launcher
-                  key: launcher.backend.url
-                  optional: true
+              value: http://backend-public-devex.195.201.87.126.nip.io/api
             - name: LAUNCHER_KEYCLOAK_URL
               valueFrom:
                 configMapKeyRef:
