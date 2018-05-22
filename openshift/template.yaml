@@ -33,6 +33,11 @@ parameters:
     description: NODE env var used during BuildConfig build. Default is development
     value: development
     required: false
+  - name: LAUNCHER_BACKEND_URL
+    description: The backend URL for launcher functionality
+    displayName: Launcher Backend URL
+    required: true
+    value: http://backend-public-devex.195.201.87.126.nip.io/api
 objects:
   - apiVersion: v1
     kind: ImageStream
@@ -76,7 +81,7 @@ objects:
             - name: "NODE_ENV"
               value: '${NODE_ENV}'
             - name: "LAUNCHER_BACKEND_URL"
-              value: 'http://backend-public-devex.195.201.87.126.nip.io/api'
+              value: '${LAUNCHER_BACKEND_URL}'
       triggers:
         - github:
             secret: '${GITHUB_WEBHOOK_SECRET}'
@@ -121,7 +126,7 @@ objects:
             - name: "NODE_ENV"
               value: "production"
             - name: "LAUNCHER_BACKEND_URL"
-              value: 'http://backend-public-devex.195.201.87.126.nip.io/api'
+              value: '${LAUNCHER_BACKEND_URL}'
             resources: {}
             terminationMessagePath: /dev/termination-log
             readinessProbe:
