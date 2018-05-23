@@ -16,7 +16,7 @@ $ npm run reinstall
 Start the app by executing the following.
 
 ```bash
-$ npm start
+$ npm run start:dev
 ```
 
 If you want the UI to use a local version of the backend, you need to set the following environment variables:
@@ -36,6 +36,10 @@ These parts of the site can be configured using the [registry.json][3] file, whi
 
 https://forge.api.openshift.io/api/launcher/zip?mission=cache&runtime=vert.x&runtimeVersion=community&groupId=io.openshift.booster&artifactId=app
 
+-and documentation can dynamically link-
+
+http://launcher.fabric8.io/redirect?version=community&runtime=spring-boot&mission=rest-http
+
 ## Deploy with S2I
 
 Replace parameter values with your own:
@@ -44,12 +48,6 @@ Replace parameter values with your own:
 oc new-project <any project name>
 find . | grep openshift | grep template | xargs -n 1 oc apply -f
 oc new-app --template=snowdrop-site-angular -p GITHUB_WEBHOOK_SECRET="<your secret>" -p LAUNCHER_BACKEND_URL=https://forge.api.openshift.io/api/
-```
-
-To filter to a single runtime, ensure the launcher-backend is configured with:
-```
-LAUNCHER_BOOSTER_CATALOG_FILTER
-booster.runtime.id == 'spring-boot'
 ```
 
 ## Production Build
@@ -74,7 +72,18 @@ The build output will be under `dist` directory.
 
 ## Hosting
 
-Remember to expose a public route for the domain:
+###Remember to expose a public route for the domain in the OpenShift namespace where the site is deployed:
 
 domain: beta.snowdrop.me
 target port: 8080
+
+###Ensure the launcher-backend instance is properly configured:
+
+When running the launcher install Ansible script, the following parameters need to be provided:
+
+```
+./ansible {launcher install playbook} \
+   -e launcher_catalog_git_repo="https://github.com/fabric8-launcher/launcher-booster-catalog.git" \
+   -e launcher_catalog_git_branch="latest"
+   -e launcher_catalog_filter="booster.runtime.id === 'spring-boot'"
+```
