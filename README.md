@@ -84,6 +84,6 @@ When running the launcher install Ansible script, the following parameters need 
 ```
 ./ansible {launcher install playbook} \
    -e launcher_catalog_git_repo="https://github.com/fabric8-launcher/launcher-booster-catalog.git" \
-   -e launcher_catalog_git_branch="latest"
+   -e launcher_catalog_git_branch="latest" \
    -e launcher_catalog_filter="booster.runtime.id === 'spring-boot'"
 ```
