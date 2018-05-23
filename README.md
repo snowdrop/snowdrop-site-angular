@@ -72,12 +72,12 @@ The build output will be under `dist` directory.
 
 ## Hosting
 
-###Remember to expose a public route for the domain in the OpenShift namespace where the site is deployed:
+### Remember to expose a public route for the domain in the OpenShift namespace where the site is deployed:
 
 domain: beta.snowdrop.me
 target port: 8080
 
-###Ensure the launcher-backend instance is properly configured:
+### Ensure the launcher-backend instance is properly configured:
 
 When running the launcher install Ansible script, the following parameters need to be provided:
 
