@@ -33,7 +33,13 @@ export class HeaderComponent {
 			id: "docs",
 			name: "Documentation",
 			route: "/docs"
-		}, {
+		},
+		{
+			id: "news",
+			name: "News",
+			route: "/news"
+		},
+		{
 			id: "about",
 			name: "About",
 			route: "/about"

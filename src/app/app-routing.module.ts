@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { FormComponent } from "./wizard/wizard.component";
 import { AboutComponent } from "./about/about.component";
 import { DocsComponent } from "./docs/docs.component";
+import { NewsComponent } from "./news/news.component";
 import { HomeComponent } from "./home/home.component";
 import { GuidesComponent } from "./guides/guides.component";
 import { GuideViewComponent } from "./guides/guide-view/guide-view.component";
@@ -42,6 +43,13 @@ const routes: Routes = [
 		children: [{
 			path: "",
 			component: DocsComponent
+		}]
+	},
+	{
+		path: "news",
+		children: [{
+			path: "",
+			component: NewsComponent
 		}]
 	},
 	{

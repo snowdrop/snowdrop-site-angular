@@ -2,6 +2,9 @@
   "documentation": {
     "url":"https://raw.githubusercontent.com/snowdrop/site/master/documentation.adoc"
   },
+  "news" : {
+    "url":"https://raw.githubusercontent.com/snowdrop/site/master/news.adoc"
+  },
   "guides": [
     {
       "type":"booster",

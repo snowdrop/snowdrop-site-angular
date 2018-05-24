@@ -15,6 +15,7 @@ import { HomeComponent } from "./home/home.component";
 
 import { ComponentsModule } from "./components";
 import { DocsModule } from "./docs/docs.module";
+import { NewsModule } from "./news/news.module";
 import { GuidesModule } from "./guides/guides.module";
 import { WizardModule } from "./wizard/wizard.module";
 
@@ -28,6 +29,7 @@ import { WizardModule } from "./wizard/wizard.module";
 		AppRoutingModule,
 		WizardModule,
 		DocsModule,
+		NewsModule,
 		GuidesModule,
 	],
 	declarations: [
