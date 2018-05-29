@@ -1,9 +1,9 @@
 {
   "documentation": {
-    "url":"https://raw.githubusercontent.com/snowdrop/site/master/documentation.adoc"
+    "url":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/documentation.adoc"
   },
   "news" : {
-    "url":"https://raw.githubusercontent.com/snowdrop/site/master/news.adoc"
+    "url":"https://raw.githubusercontent.com/snowdrop/snowdrop-docs/master/site/news.adoc"
   },
   "guides": [
     {
