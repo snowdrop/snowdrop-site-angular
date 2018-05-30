@@ -1,4 +1,4 @@
-$assetPath : "../../assets/img/";
+$assetPath: "../../assets/img/";
 
 footer {
   background-color: #010101;
@@ -6,14 +6,16 @@ footer {
   height: 60px;
   padding: 15px 0;
   width: 100%;
+
   .conditions {
     a:first-child {
       margin-left: 70px;
     }
   }
+
   .logo {
     a {
-      background: url(#{$assetPath}redhat.svg) no-repeat;
+      background: url("#{$assetPath}redhat.svg") no-repeat;
       height: 34px;
       width: 94px;
       margin: 0;
@@ -22,11 +24,13 @@ footer {
       display: inline-block;
     }
   }
+
   a {
     color: #858585;
     top: 7px;
     position: relative;
     margin-left: 15px;
+
     &.legal {
       border-right: 1px solid #858585;
       padding-right: 15px;
@@ -37,10 +41,12 @@ footer {
   footer {
     .conditions {
       font-size: 12px;
+
       a:first-child {
         margin-left: 35px;
       }
     }
+
     .social {
       display: none;
     }
@@ -51,6 +57,7 @@ footer {
     .conditions {
       display: none;
     }
+
     a {
       &.legal {
         &:nth-child(2n) {
@@ -59,6 +66,7 @@ footer {
       }
     }
   }
+
   .footer-content {
     a:first-child {
       position: absolute;

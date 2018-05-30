@@ -10,9 +10,10 @@ img.header-logo {
   .navbar-brand {
     padding-top: 10px;
   }
+
   li {
-      padding-top: 5px;
-    }
+    padding-top: 5px;
+  }
 }
 
 .nav-item-icon {
@@ -26,24 +27,7 @@ img.header-logo {
   border: 0;
 }
 
-nav.wizard {
-  // min-height: 40px;
-  //
-  // img.header-logo {
-  //   width: 100px;
-  // }
-  //
-  // #header_nav {
-  //   min-height: 40px;
-  // }
-  //
-  // .nav.navbar-nav.navbar-right {
-  //   margin-top: 0;
-  // }
-  // .dropdown-toggle {
-  //   padding: 10px 20px;
-  // }
-}
+nav.wizard {}
 
 .nav.navbar-nav.navbar-right {
   margin-top: 10px;
@@ -53,8 +37,7 @@ nav.wizard {
   padding: 15px 20px;
   margin: 0;
 }
-
-@media (max-width: 768px){
+@media (max-width: 768px) {
   .dropdown {
     font-size: smaller;
   }
@@ -63,9 +46,11 @@ nav.wizard {
     position: fixed;
     top: auto;
   }
+
   .navbar-collapse {
     max-height: none;
   }
+
   body {
     margin: 0;
   }

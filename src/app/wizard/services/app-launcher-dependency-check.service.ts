@@ -5,6 +5,7 @@ import { DependencyCheck, DependencyCheckService } from 'ngx-forge';
 
 @Injectable()
 export class AppLauncherDependencyCheckService implements DependencyCheckService {
+  
   /**
    * Returns project dependencies
    *
@@ -14,7 +15,7 @@ export class AppLauncherDependencyCheckService implements DependencyCheckService
     return Observable.of({
       mavenArtifact: 'booster',
       groupId: 'io.openshift.booster',
-      projectName: 'app-test-1',
+      projectName: '',
       projectVersion: '1.0.0-SNAPSHOT',
       spacePath: '/myspace'
     });
@@ -65,5 +66,9 @@ export class AppLauncherDependencyCheckService implements DependencyCheckService
     // allows '.' and '-'
     const pattern = /^[a-z][a-z0-9-.]{3,63}$/;
     return pattern.test(projectVersion);
+  }
+
+  getApplicationsInASpace(spaceId: string): Observable<any[]> {
+    return Observable.of([]);
   }
 }

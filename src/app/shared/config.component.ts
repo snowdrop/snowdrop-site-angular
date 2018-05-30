@@ -1,45 +1,66 @@
 import { Injectable } from "@angular/core";
 import { Location } from "@angular/common";
 import { Config } from "ngx-forge";
-import { Http } from "@angular/http";
+
+declare var settings: object;
 
 @Injectable()
 export class LaunchConfig extends Config {
-  static settings = {};
+	protected readonly settings = {
+		origin: 'launcher',
+		backend_url: process.env.LAUNCHER_BACKEND_URL,
+		keycloak_url: process.env.LAUNCHER_KEYCLOAK_URL,
+		keycloak_realm: process.env.LAUNCHER_KEYCLOAK_REALM,
+		keycloak_client_id: process.env.LAUNCHER_KEYCLOAK_CLIENT_ID,
+		sentry_dsn: process.env.LAUNCHER_FRONTEND_SENTRY_DSN
+	};
 
-  constructor(private http: Http) {
-    super();
-  }
+	constructor() {
+		super();
+		this.processInitConfig();
+		this.postProcessSettings();
+		console.info("LaunchConfig is: " + JSON.stringify(this.settings));
+	}
 
-  load(): Promise<any> {
-    return this.http.get('settings.json').toPromise().then((settings) => {
-      LaunchConfig.settings = Object.assign(LaunchConfig.settings, settings.json());
-    }).catch(() => {
-      console.info('settings.json not found ignoring');
-    }).then(() => {
-      let backendUrl = LaunchConfig.settings['backend_url'];
-      if (!backendUrl) {
-        backendUrl = process.env.LAUNCHER_BACKEND_URL;
-      }
+	private processInitConfig(settings?) {
+		if (settings) {
+			for (const property in settings) {
+				if (settings.hasOwnProperty(property) && settings[property]) {
+					this.settings[property] = settings[property];
+				}
+			}
+		}
+	}
 
-      LaunchConfig.settings['backend_url'] = Location.stripTrailingSlash(backendUrl) + '/launchpad';
-      LaunchConfig.settings['origin'] = 'launcher';
+	private postProcessSettings() {
+		const backendApiUrl = Location.stripTrailingSlash(this.settings['backend_url']);
 
-      let missionControl = LaunchConfig.settings['mission_control_url'];
-      if (!missionControl) {
-        missionControl = process.env.LAUNCHER_MISSIONCONTROL_URL;
-      }
+		if (!backendApiUrl) {
+			throw new Error("Invalid backend_url: " + backendApiUrl);
+		}
 
-      if (missionControl && (missionControl.startsWith("/") || missionControl.startsWith(":"))) {
-        missionControl = (missionControl.startsWith(":") ? location.hostname : location.host) + missionControl;
-        missionControl = (location.protocol === "https:" ? "wss://" : "ws://") + missionControl;
-      }
+		this.settings['backend_api_url'] = backendApiUrl;
+		this.settings['backend_websocket_url'] = this.createBackendWebsocketUrl(backendApiUrl);
 
-      LaunchConfig.settings['mission_control_url'] = missionControl;
-    });
-  }
+		//Used by old wizard
+		this.settings['backend_url'] = backendApiUrl + '/launchpad';
+	}
 
-  get(key: string): string {
-    return LaunchConfig.settings[key];
-  }
+	private createBackendWebsocketUrl(backendApiUrl: string) {
+		let url = backendApiUrl.substring(0, backendApiUrl.indexOf('/api'));
+		if (url.indexOf('https') !== -1) {
+			return url.replace('https', 'wss');
+		} else if (url.indexOf('http') !== -1) {
+			return url.replace('http', 'ws');
+		} else if (url.startsWith("/") || url.startsWith(":")) {
+			// /launch/api
+			url = (url.startsWith(":") ? location.hostname : location.host) + url;
+			return (location.protocol === "https:" ? "wss://" : "ws://") + url;
+		}
+		throw new Error("Error while creating websocket url from backend url: " + backendApiUrl);
+	}
+
+	get(key: string): string {
+		return this.settings[key];
+	}
 }

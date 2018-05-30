@@ -1,21 +1,26 @@
-import {Component} from "@angular/core";
-import {ForgeService} from "ngx-forge";
+import { Component } from "@angular/core";
+import { Router } from "@angular/router";
+import { ForgeService } from "ngx-forge";
 
 @Component({
-  selector: "app-footer",
-  templateUrl: "./footer.component.html",
-  styleUrls: ["./footer.component.scss"],
+	selector: "app-footer",
+	templateUrl: "./footer.component.html",
+	styleUrls: ["./footer.component.scss"],
 })
 
 export class FooterComponent {
-  version: string;
+	version: string;
+	wizard: boolean;
 
-  constructor(private forgeService: ForgeService) {
-  }
+	constructor(private forgeService: ForgeService, private router: Router) {
+		router.events.subscribe((url: any) => {
+			this.wizard = url.url.indexOf('wizard') > -1;
+		});
+	}
 
-  ngOnInit() {
-    this.forgeService.version().then(version => {
-      this.version = version.backendVersion;
-    });
-  }
+	ngOnInit() {
+		this.forgeService.version().then(version => {
+			this.version = version.backendVersion;
+		});
+	}
 }

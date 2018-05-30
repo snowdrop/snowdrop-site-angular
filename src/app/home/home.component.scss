@@ -12,6 +12,10 @@ $assetPath: "../../assets/img/project-select-icons/";
   font-family: 'Overpass', sans-serif;
 }
 
+.link {
+  cursor: pointer;
+}
+
 #intro {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url("../../assets/img/backdrop.png");
   background-size: cover;

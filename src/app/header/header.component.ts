@@ -22,7 +22,7 @@ export class HeaderComponent {
 		{
 			id: "get-started",
 			name: "Get Started",
-			route: "/filtered-wizard/all/launchpad-new-project/1/e30="
+			route: "/wizard"
 		},
 		{
 			id: "guides",
@@ -48,7 +48,7 @@ export class HeaderComponent {
 
 	constructor(private router: Router, private keycloak: KeycloakService) {
 		router.events.subscribe((url: any) => {
-			this.wizard = url.url !== "/" && url.url !== "/wizard";
+			this.wizard = url.url.indexOf("wizard") > -1;
 		});
 	}
 }

@@ -10,7 +10,15 @@ export class HomeComponent {
 	constructor(private router: Router) { }
 
 	launch() {
-		this.router.navigate(["/wizard", "launchpad-new-project", 1, "e30="]);
+		this.router.navigate(["/wizard"]);
+	}
+
+	goToGuides() {
+		this.router.navigate(["/guides"]);
+	}
+
+	openURL(url) {
+		window.open(url, '_blank');
 	}
 
 	scrollDown() {

@@ -4,7 +4,7 @@
       <img class="project-logo" src="../../assets/img/snowdrop-logo-text.png" alt="Snowdrop">
       <h1>Your path to Cloud Native</h1>
       <h3>
-        Create production-ready Spring Boot applications with all the benefits, best practices, and established patterns of the cloud.
+        Create production-grade Spring Boot applications with all the benefits, best practices, and established patterns of the cloud.
       </h3>
       <a class="btn btn-lg" (click)="launch()">Get Started</a>
       <div class="try-box">
@@ -16,26 +16,26 @@
   <section id="workflow">
     <div class="container">
       <div class="preview row">
-        <div class="col-sm-12 runtime">
+        <div class="col-sm-12">
           <h3 class="align-center">
-            Snowdrop makes it easy to create stand-alone, production-grade Spring based Applications that you can "just run".
+            Snowdrop makes it easy to create production-grade Spring-based Applications that you can "just run".
           </h3>
         </div>
       </div>
       <div class="preview row">
-        <div class="col-sm-4 runtime">
+        <div (click)="openURL('https://docs.openshift.org/latest/minishift/getting-started/preparing-to-install.html')" class="col-sm-4 runtime link">
           <h3 class="align-center">
-            Run a live example.
+            Get Cloud Ready.
           </h3>
         </div>
-        <div class="col-sm-4 runtime">
+        <div (click)="launch()" class="col-sm-4 runtime link">
           <h3 class="align-center">
-            Download the code.
+            Get Started.
           </h3>
         </div>
-        <div class="col-sm-4 runtime">
+        <div (click)="goToGuides()" class="col-sm-4 runtime link">
           <h3 class="align-center">
-            Push changes.
+            Use Best Practices.
           </h3>
         </div>
       </div>
