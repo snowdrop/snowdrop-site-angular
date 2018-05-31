@@ -33,11 +33,11 @@ export class LaunchConfig extends Config {
 	}
 
 	private postProcessSettings() {
-		const backendApiUrl = Location.stripTrailingSlash(this.settings['backend_url']);
-
+		let backendApiUrl = this.settings['backend_url'];
 		if (!backendApiUrl) {
 			throw new Error("Invalid backend_url: " + backendApiUrl);
 		}
+		backendApiUrl = Location.stripTrailingSlash(backendApiUrl);
 
 		this.settings['backend_api_url'] = backendApiUrl;
 		this.settings['backend_websocket_url'] = this.createBackendWebsocketUrl(backendApiUrl);

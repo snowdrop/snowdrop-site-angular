@@ -10,7 +10,8 @@ export class LaunchHelper extends HelperService {
 	}
 
 	getBackendUrl(): string {
-		return Location.stripTrailingSlash(this.launchConfig.get('backend_api_url'));
+		let url = this.launchConfig.get('backend_api_url') ? this.launchConfig.get('backend_api_url') : "";
+		return Location.stripTrailingSlash(url);
 	}
 
 	getOrigin(): string {
