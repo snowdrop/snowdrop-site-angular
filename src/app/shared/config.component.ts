@@ -35,7 +35,7 @@ export class LaunchConfig extends Config {
 	private postProcessSettings() {
 		let backendApiUrl = this.settings['backend_url'];
 		if (!backendApiUrl) {
-			throw new Error("Invalid backend_url: " + backendApiUrl);
+			backendApiUrl = 'http://backend-public-devex.195.201.87.126.nip.io/api';
 		}
 		backendApiUrl = Location.stripTrailingSlash(backendApiUrl);
 
