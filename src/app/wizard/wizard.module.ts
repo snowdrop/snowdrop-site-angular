@@ -1,6 +1,7 @@
 import { APP_INITIALIZER, ErrorHandler, NgModule } from "@angular/core";
 import { CommonModule, APP_BASE_HREF } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
 	Config, ForgeService, History, NgxForgeModule, TokenProvider, MissionRuntimeService, HelperService, DependencyCheckService,
@@ -44,6 +45,7 @@ import { errorHandlerFactory } from "../shared/error.component";
 
 @NgModule({
 	imports: [
+		BrowserAnimationsModule,
 		CommonModule,
 		FormsModule,
 		ProjectNameInputModule,
