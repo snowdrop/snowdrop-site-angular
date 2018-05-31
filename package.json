@@ -22,7 +22,7 @@
     "build": "export TZ=GMT && webpack --config config/webpack.dev.js",
     "build:prod": "webpack --config config/webpack.prod.js -p",
     "clean": "rimraf dist",
-    "copy-files": "cpy src/favicon.ico src/assets/settings.json src/assets/registry.json dist",
+    "copy-files": "cpy src/favicon.ico src/assets/registry.json dist",
     "functests": "npm-run-all -p webdriver-start testserver-start protractor",
     "postinstall": "npm run build:prod",
     "prestart": "echo 'Starting the dev server.'",

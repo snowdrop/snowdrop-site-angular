@@ -5,14 +5,150 @@
     <meta charset="UTF-8">
     <meta http-equiv="Cache-control" content="NO-CACHE">
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-    <!-- Add segment tracking -->
+
     <script>
+      try {
+        const jsonSettings = "${LAUNCHER_JSON_SETTINGS}";
+        window.settings = JSON.parse(jsonSettings);
+        console.info("Injected settings contains: " + jsonSettings);
+      } catch (e) {
+        window.settings = undefined;
+        console.info("Injected settings are undefined");
+      }
+
+      <!-- Add segment tracking -->
       !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="4.0.0";
       analytics.load("{SegmentTrackerToken}");
       }}();
     </script>
+
+    <style>
+      #loading-screen .main {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      #loading-screen .header {
+        background-color: #030303;
+        border-top: solid 5px #00cc00;
+        height: 82px;
+      }
+
+      #loading-screen .title {
+        background-color: #c00;
+        width: 100%;
+        height: 550px;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url('/assets/backdrop.2611ea7139d86297fb7b13bed73f1896.png');
+        background-size: cover;
+      }
+
+      #loading-screen .title-logo {
+        display:block;
+        margin: 0 auto;
+        padding-top: 40px;
+      }
+
+      #loading-screen .title .title-text {
+        background-color: white;
+        height: 3em;
+        width: 200px;
+        margin: auto;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        position: relative;
+        top: 80px;
+        font-family: 'Overpass', sans-serif;
+        text-align: center;
+        line-height: 3.2em;
+      }
+
+      #loading-screen .example-runtimes {
+        flex: 1;
+        background-color: #f5f5f5;
+        padding: 50px
+      }
+
+      #loading-screen .example-runtime {
+        width: 30%;
+        background-color: white;
+        height: 200px;
+        float: left;
+        margin-right: 20px;
+        padding-top: 40px;
+      }
+
+      #loading-screen .text {
+        height: 2em;
+        background-color: #8a8a8a;
+        margin: 20px;
+      }
+
+      #loading-screen .small {
+        width: 8em;
+      }
+
+      #loading-screen .small2 {
+        width: 6em;
+      }
+
+      #loading-screen .lds-dual-ring {
+        width: 64px;
+        height: 64px;
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        margin-left: -24px;
+      }
+
+      #loading-screen .lds-dual-ring:after {
+        content: " ";
+        display: block;
+        width: 46px;
+        height: 46px;
+        margin: 1px;
+        border-radius: 50%;
+        border: 5px solid #fff;
+        border-color: #fff transparent #fff transparent;
+        animation: lds-dual-ring 1.2s linear infinite;
+      }
+
+      @keyframes lds-dual-ring {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
   </head>
   <body>
-    <app></app>
+    <app>
+      <div class="main" id="loading-screen">
+        <div class="header"></div>
+        <div class="title">
+          <img alt="Snowdrop" class="title-logo" src="/assets/snowdrop-logo-text.90329a1cb3aaab092f55dcebd028418d.png">
+          <div class="title-text">
+            Loading...
+          </div>
+        </div>
+        <div class="lds-dual-ring"></div>
+        <div class="example-runtimes">
+          <div class="example-runtime">
+            <div class="text"></div>
+            <div class="text small2"></div>
+          </div>
+          <div class="example-runtime">
+            <div class="text"></div>
+            <div class="text"></div>
+          </div>
+          <div class="example-runtime">
+            <div class="text"></div>
+            <div class="text small"></div>
+          </div>
+        </div>
+      </div>
+    </app>
   </body>
 </html>

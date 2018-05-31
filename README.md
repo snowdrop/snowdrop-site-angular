@@ -52,12 +52,10 @@ oc new-app --template=snowdrop-site-angular -p GITHUB_WEBHOOK_SECRET="<your secr
 
 ## Production Build
 
-Location of the [backend][2] can be determined at runtime (via `settings.json`) or at BUILD time.
 If `LAUNCHER_BACKEND_URL` environment variable is set at build time, this value will be used to connect to the backend.
-Otherwise [settings.json][1] will be fetched at runtime and the contents used connect to the backend.
 
 To generate production build, set the backend url (the host and port of where
-[backend][2] is deployed) either in the [settings.json][1] or as `LAUNCHER_BACKEND_URL` environment variable
+[backend][2] is deployed)  as `LAUNCHER_BACKEND_URL` environment variable
 and run the `npm` command as given below:
 
 ```bash
@@ -66,7 +64,6 @@ npm run build:prod
 
 The build output will be under `dist` directory.
 
-[1]: https://github.com/snowdrop/snowdrop-site-angular/blob/master/src/assets/settings.json
 [2]: https://github.com/fabric8-launcher/launcher-backend
 [3]: https://github.com/snowdrop/snowdrop-site-angular/blob/master/src/assets/registry.json
 
