@@ -2,6 +2,7 @@ import { APP_INITIALIZER, NgModule } from "@angular/core";
 
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { RouterModule, Routes } from '@angular/router';
 
 import { ComponentsModule } from '../components';
 
@@ -28,7 +29,8 @@ export class Helper extends HelperService {
 	imports: [
 		CommonModule,
 		ComponentsModule,
-		FormsModule
+		FormsModule,
+		RouterModule
 	],
 	declarations: [
 		GuidesComponent,

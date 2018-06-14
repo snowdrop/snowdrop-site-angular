@@ -79,7 +79,7 @@ export class GuideDataService implements OnInit, OnDestroy {
 	}
 
 	getGuideURL(guide: any) {
-		let result = "guides/" + this.urlify(guide.title);
+		let result = this.urlify(guide.title);
 		if (guide.type === "booster") {
 			result = this.helper.getBackendUrl() + "launcher/zip?" + guide.url;
 		}
