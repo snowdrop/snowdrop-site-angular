@@ -1,68 +1,73 @@
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { Http } from '@angular/http';
 import { ActivatedRoute } from "@angular/router";
-import { RegistryService } from "../components";
+import { Subscription } from "rxjs";
+
+import { NewsDataService } from './news-data.service';
 
 @Component({
-	selector: "news-component",
+	selector: "news",
 	templateUrl: "./news.component.html",
 	styleUrls: ["./news.component.scss"]
 })
 export class NewsComponent implements OnInit, OnDestroy {
 
 	constructor(
-		private registryService: RegistryService,
 		private route: ActivatedRoute,
 		private http: Http,
+		private newsService: NewsDataService
 	) {
-		this.route.fragment.subscribe((value) => {
-			this.ready().then(() => {
-				setTimeout(() => {
-					let matches = Array.from(document.querySelectorAll(`a[href="#${value}"]`));
-					if (matches) {
-						let scrolled = false;
-						matches.forEach((element) => {
-							if (!scrolled) {
-								scrolled = true;
-								element.scrollIntoView({
-									behavior: "smooth",
-									block: "start",
-								});
-							}
-						});
-					}
-				}, 150);
-			});
-		});
 	}
 
 	ngOnDestroy() {
 	}
 
-	source: string = "Loading...";
-	private _ready: Promise<any> = null;
+	actionsText: string = '';
+	buffer: any[];
+	news: any[];
 
 	ngOnInit(): void {
-		this.ready();
+		this.newsService.ready().then(() => {
+			let articles = this.newsService.getArticles();
+			console.log(articles);
+			this.news = [];
+
+			for (let news of articles) {
+				this.news.push(
+					{
+						title: news.title,
+						description: news.description,
+						author: news.author,
+						published: news.published,
+						tags: news.tags,
+						label: this.newsService.getArticleLabel(news),
+						url: this.newsService.getArticleURL(news),
+					});
+			}
+
+			this.filterNews();
+		});
 	}
 
-	private ready() {
-		if (!this._ready) {
-			this._ready = new Promise((resolve, reject) => {
-				this.route.paramMap.subscribe((params) => {
-					return this.registryService.getRegistry().then((registry) => {
-						let newsUrl = registry.news.url;
-						return this.http.get(newsUrl).toPromise().then((res) => {
-							this.source = res.text();
-							resolve();
-						});
-					}).catch((err) => {
-						reject(err);
-					});
-				});
-			})
+	filterNews(filter = "") {
+		if (filter && filter.trim().length > 0) {
+			let keywords = filter.toLowerCase().split(/\s+/gi);
+			this.buffer = this.news.filter((news: any) => {
+				for (let k of keywords) {
+					if (!((news.description && (news.description + "").toLowerCase().indexOf(k) >= 0)
+						|| (news.title && (news.title + "").toLowerCase().indexOf(k) >= 0)
+						|| (news.tags && (news.tags + "").toLowerCase().indexOf(k) >= 0)
+						|| (news.author && (news.author + "").toLowerCase().indexOf(k) >= 0)
+						|| (news.keywords && (news.keywords + "").toLowerCase().indexOf(k) >= 0)
+					)) {
+						return false;
+					}
+				}
+				return true;
+			});
+		} else {
+			this.buffer = this.news;
 		}
-		return this._ready;
 	}
 
 }

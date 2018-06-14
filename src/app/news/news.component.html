@@ -1,12 +1,26 @@
 <div class="container">
   <div class="padding-15">
-    <div class="documentation">
-      <div class="row">
-        <h1>News & Updates</h1>
-      </div>
+    <div class="cards-pf">
       <div class="row">
         <div class="col-sm-12 padding-15">
-          <asciidoctor [source]="source"></asciidoctor>
+          <form>
+            <label for="filter">Search news:</label>
+            <input (keyup)="filterArticles(filter.value)" id="filter" #filter type="text" />
+          </form>
+        </div>
+      </div>
+      <div class="row row-cards-pf">
+        <div *ngFor="let news of buffer" class="col-8 col-offset-2 news-block">
+          <div>
+            <h3 class="title"><a [routerLink]="[news.url]">{{news.title}}</a></h3>
+            <p class="byline">{{news.published ? news.published : ""}} {{news.author ? "by " + news.author : ""}}</p>
+            <p class="description">{{news.description}}</p>
+            <p *ngIf="news.url">
+              <a [routerLink]="[news.url]">
+                &raquo; Read more
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="padding-15">
+    <div class="documentation">
+      <div class="row">
+        <h1>{{article?.title}}</h1>
+        <p>{{article?.description}}</p>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 padding-15">
+          <asciidoctor [source]="source"></asciidoctor>
+        </div>
+      </div>
+    </div>
+    <div class="row padding-top-10">
+      <div class="col-sm-12">
+        <hr/>
+      </div>
+    </div>
+  </div>
+</div>
