@@ -2,12 +2,47 @@
   <div class="padding-15">
     <div class="documentation">
       <div class="row">
-        <h1>{{guide?.title}}</h1>
-        <p>{{guide?.description}}</p>
-      </div>
-      <div class="row">
-        <div class="col-sm-12 padding-15">
+        <div class="col-sm-8 padding-15">
+
+          <div class="row">
+            <h1>{{guide?.title}}</h1>
+            <p>{{guide?.description}}</p>
+            <p class="tags">
+              <span *ngFor="let t of guide?.tags" class="tag {{t}}">{{t}}</span>
+            </p>
+          </div>
+
           <asciidoctor [source]="source"></asciidoctor>
+        </div>
+        <div class="col-sm-4 padding-15">
+
+          <div class="row" *ngIf="relatedGuides?.length > 0">
+            <div class="col-sm-12">
+              <h2>Keep learning</h2>
+            </div>
+          </div>
+
+          <div class="row row-cards-pf guides">
+            <div *ngFor="let guide of relatedGuides" class="col-sm-12 guide-block">
+              <div>
+                <h3 class="title">{{guide.title}}</h3>
+                <p class="description">{{guide.description}}</p>
+                <p class="actions" *ngIf="guide.action?.url">
+                  <a *ngIf="guide.type === 'booster'" class="btn btn-lg btn-primary" href="{{guide.action.url}}">
+                    <i [class]="guide.action.iconClass"></i>
+                    {{guide.action.label ? guide.action.label : "Learn more"}}
+                  </a>
+                  <a *ngIf="guide.type === 'guide'" class="btn btn-lg btn-primary" [routerLink]="[guide.action.url]">
+                    <i [class]="guide.action.iconClass"></i>
+                    {{guide.action.label ? guide.action.label : "Learn more"}}
+                  </a>
+                  <a *ngIf="guide.action?.docurl" class="btn btn-lg btn-secondary" href="{{guide.action?.docurl}}">
+                    {{guide.type === 'booster' ? 'Guide' : "Source" }}
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

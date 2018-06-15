@@ -28,24 +28,7 @@ export class GuidesComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.guideService.ready().then(() => {
-			let guidesConfig = this.guideService.getGuides();
-			this.guides = [];
-
-			for (let guide of guidesConfig) {
-				this.guides.push(
-					{
-						title: guide.title,
-						type: guide.type,
-						description: guide.description,
-						tags: this.guideService.getGuideTags(guide),
-						action: {
-							label: this.guideService.getGuideLabel(guide),
-							url: this.guideService.getGuideURL(guide),
-							docurl: guide.documentation ? guide.documentation.trim() : null,
-							iconClass: 'fa fa-' + this.guideService.getGuideIcon(guide)
-						}
-					});
-			}
+			this.guides = this.guideService.getGuides();
 
 			console.log(this.guides);
 

@@ -3,7 +3,29 @@
 }
 
 .documentation {
-  h1,h2,h3,h4,h5,h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-weight: 800 !important;
+  }
+}
+
+.row-cards-pf.guides {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #e2e2e2;
+}
+
+.tags {
+  .tag {
+    background-color: #e2e2e2;
+    background-image: none;
+    border-radius: 10px;
+    padding: 5px;
+    margin-right: 5px;
+    cursor: pointer;
   }
 }

@@ -43,10 +43,10 @@ export class GuideDataService implements OnInit, OnDestroy {
 		});
 	}
 
-	getGuideByTitle(title: string) {
+	public getGuideByTitle(title: string) {
 		if (this.guides && title && title.trim().length > 0) {
 			title = this.urlify(title);
-			for (let guide of this.guides) {
+			for (let guide of this.getGuides()) {
 				if (guide && this.urlify(guide.title) === title) {
 					return guide;
 				}
@@ -55,11 +55,33 @@ export class GuideDataService implements OnInit, OnDestroy {
 		return null;
 	}
 
-	getGuides() {
-		return this.guides || [];
+	public getGuides() {
+		let result = [];
+
+		if (this.guides) {
+			for (let guide of this.guides) {
+				result.push(
+					{
+						title: guide.title,
+						type: guide.type,
+						description: guide.description,
+						tags: this.getGuideTags(guide),
+						action: {
+							label: this.getGuideLabel(guide),
+							url: this.getGuideURL(guide),
+							docurl: guide.documentation ? guide.documentation.trim() : null,
+							iconClass: 'fa fa-' + this.getGuideIcon(guide)
+						},
+						url: guide.url
+					}
+				);
+			}
+		}
+
+		return result;
 	}
 
-	getGuideIcon(guide: any) {
+	private getGuideIcon(guide: any) {
 		let result = "code";
 		if (guide && guide.type === "booster") {
 			result = "rocket";
@@ -70,7 +92,7 @@ export class GuideDataService implements OnInit, OnDestroy {
 		return result;
 	}
 
-	getGuideLabel(guide: any) {
+	private getGuideLabel(guide: any) {
 		let result = "Open this guide";
 		if (guide && guide.type === "booster") {
 			result = "Download";
@@ -78,7 +100,7 @@ export class GuideDataService implements OnInit, OnDestroy {
 		return result;
 	}
 
-	getGuideTags(guide: any) {
+	private getGuideTags(guide: any) {
 		let result = [];
 		if (guide && guide.tags) {
 			result = guide.tags.toLowerCase().split(",").map(t => t.trim());
@@ -86,7 +108,7 @@ export class GuideDataService implements OnInit, OnDestroy {
 		return result;
 	}
 
-	getGuideURL(guide: any) {
+	private getGuideURL(guide: any) {
 		let result = this.urlify(guide.title);
 		if (guide && guide.type === "booster") {
 			result = this.helper.getBackendUrl() + "launcher/zip?" + guide.url;
