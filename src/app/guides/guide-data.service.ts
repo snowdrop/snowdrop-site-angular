@@ -56,15 +56,15 @@ export class GuideDataService implements OnInit, OnDestroy {
 	}
 
 	getGuides() {
-		return this.guides;
+		return this.guides || [];
 	}
 
 	getGuideIcon(guide: any) {
 		let result = "code";
-		if (guide.type === "booster") {
+		if (guide && guide.type === "booster") {
 			result = "rocket";
 		}
-		if (guide.type === "guide") {
+		if (guide && guide.type === "guide") {
 			result = "book";
 		}
 		return result;
@@ -72,15 +72,23 @@ export class GuideDataService implements OnInit, OnDestroy {
 
 	getGuideLabel(guide: any) {
 		let result = "Open this guide";
-		if (guide.type === "booster") {
+		if (guide && guide.type === "booster") {
 			result = "Download";
+		}
+		return result;
+	}
+
+	getGuideTags(guide: any) {
+		let result = [];
+		if (guide && guide.tags) {
+			result = guide.tags.toLowerCase().split(",").map(t => t.trim());
 		}
 		return result;
 	}
 
 	getGuideURL(guide: any) {
 		let result = this.urlify(guide.title);
-		if (guide.type === "booster") {
+		if (guide && guide.type === "booster") {
 			result = this.helper.getBackendUrl() + "launcher/zip?" + guide.url;
 		}
 		return result;

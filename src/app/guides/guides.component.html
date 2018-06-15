@@ -10,11 +10,11 @@
         </div>
       </div>
       <div class="row row-cards-pf">
-        <div *ngFor="let guide of buffer" class="col-sm-4 guide-block">
+        <div *ngFor="let guide of buffer" class="col-sm-6 guide-block">
           <div>
-              <h3>{{guide.title}}</h3>
-              <p>{{guide.description}}</p>
-              <p *ngIf="guide.action?.url">
+              <h3 class="title">{{guide.title}}</h3>
+              <p class="description">{{guide.description}}</p>
+              <p class="actions" *ngIf="guide.action?.url">
                 <a *ngIf="guide.type === 'booster'" class="btn btn-lg btn-primary" href="{{guide.action.url}}">
                   <i [class]="guide.action.iconClass"></i>
                   {{guide.action.label ? guide.action.label : "Learn more"}}
@@ -26,6 +26,9 @@
                 <a *ngIf="guide.action?.docurl" class="btn btn-lg btn-secondary" href="{{guide.action?.docurl}}">
                   {{guide.type === 'booster' ? 'Guide' : "Source" }}
                 </a>
+              </p>
+              <p class="tags">
+                <span *ngFor="let t of guide.tags" class="tag {{t}}" (click)="filter.value = t; filterGuides(t)">{{t}}</span>
               </p>
           </div>
         </div>

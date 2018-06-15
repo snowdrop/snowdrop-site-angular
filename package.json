@@ -60,7 +60,7 @@
     "express": "^4.16.3",
     "jssha": "2.3.1",
     "morgan": "^1.9.0",
-    "ngx-forge": "0.2.14",
+    "ngx-forge": "0.3.0",
     "ngx-modal": "0.0.29",
     "patternfly": "3.24.0",
     "raven-js": "3.24.2",

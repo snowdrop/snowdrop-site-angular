@@ -1,8 +1,23 @@
 .guide-block {
-  min-height: 200px;
-  height: 200px;
+  min-height: 230px;
+  height: 230px;
+}
+
+#filter {
+  padding: 5px;
 }
 
 .padding-15 {
   padding: 15px;
+}
+
+.tags {
+  .tag {
+    background-color: #e2e2e2;
+    background-image: none;
+    border-radius: 10px;
+    padding: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
 }

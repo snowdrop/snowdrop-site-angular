@@ -29,7 +29,6 @@ export class GuidesComponent implements OnInit, OnDestroy {
 	ngOnInit(): void {
 		this.guideService.ready().then(() => {
 			let guidesConfig = this.guideService.getGuides();
-			console.log(guidesConfig);
 			this.guides = [];
 
 			for (let guide of guidesConfig) {
@@ -38,6 +37,7 @@ export class GuidesComponent implements OnInit, OnDestroy {
 						title: guide.title,
 						type: guide.type,
 						description: guide.description,
+						tags: this.guideService.getGuideTags(guide),
 						action: {
 							label: this.guideService.getGuideLabel(guide),
 							url: this.guideService.getGuideURL(guide),
@@ -46,6 +46,8 @@ export class GuidesComponent implements OnInit, OnDestroy {
 						}
 					});
 			}
+
+			console.log(this.guides);
 
 			this.filterGuides();
 		});
@@ -58,6 +60,7 @@ export class GuidesComponent implements OnInit, OnDestroy {
 				for (let k of keywords) {
 					if (!((guide.description && (guide.description + "").toLowerCase().indexOf(k) >= 0)
 						|| (guide.title && (guide.title + "").toLowerCase().indexOf(k) >= 0)
+						|| (guide.tags && (guide.tags + "").toLowerCase().indexOf(k) >= 0)
 						|| (guide.keywords && (guide.keywords + "").toLowerCase().indexOf(k) >= 0)
 					)) {
 						return false;
