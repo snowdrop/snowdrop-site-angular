@@ -93,7 +93,7 @@ export class GuideDataService implements OnInit, OnDestroy {
 	}
 
 	private getGuideLabel(guide: any) {
-		let result = "Open this guide";
+		let result = "Read guide";
 		if (guide && guide.type === "booster") {
 			result = "Download";
 		}

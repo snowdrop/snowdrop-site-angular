@@ -28,18 +28,23 @@
                 <div>
                   <h3 class="title">{{guide.title}}</h3>
                   <p class="description">{{guide.description}}</p>
-                  <p class="actions" *ngIf="guide.action?.url">
-                    <a *ngIf="guide.type === 'booster'" class="btn btn-lg btn-primary" href="{{guide.action.url}}">
-                      <i [class]="guide.action.iconClass"></i>
-                      {{guide.action.label ? guide.action.label : "Learn more"}}
-                    </a>
-                    <a *ngIf="guide.type === 'guide'" class="btn btn-lg btn-primary" [routerLink]="[guide.action.url]">
-                      <i [class]="guide.action.iconClass"></i>
-                      {{guide.action.label ? guide.action.label : "Learn more"}}
-                    </a>
-                    <a *ngIf="guide.action?.docurl" class="btn btn-lg btn-secondary" href="{{guide.action?.docurl}}">
-                      {{guide.type === 'booster' ? 'Guide' : "Source" }}
-                    </a>
+                  <p class="actions">
+                    <ng-container *ngIf="guide.type === 'booster'">
+                      <a *ngIf="guide.action?.docurl" class="btn btn-lg btn-primary" href="{{guide.action?.docurl}}">
+                        <i class="fa fa-book"></i>
+                        Read guide
+                      </a>
+                      <a  *ngIf="guide.action?.url" class="btn btn-lg btn-secondary" href="{{guide.action.url}}">
+                        <i [class]="guide.action.iconClass"></i>
+                        {{guide.action.label ? guide.action.label : "Learn more"}}
+                      </a>
+                    </ng-container>
+                    <ng-container *ngIf="guide.type === 'guide'">
+                      <a *ngIf="guide.action?.url" class="btn btn-lg btn-primary" [routerLink]="[guide.action.url]">
+                        <i [class]="guide.action.iconClass"></i>
+                        {{guide.action.label ? guide.action.label : "Learn more"}}
+                      </a>
+                    </ng-container>
                   </p>
                 </div>
               </div>
