@@ -4,8 +4,18 @@ import { FormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
-	Config, ForgeService, History, NgxForgeModule, TokenProvider, MissionRuntimeService, HelperService, DependencyCheckService,
-	GitProviderService, PipelineService, ProjectProgressService, ProjectSummaryService, TargetEnvironmentService, AuthHelperService,
+	AuthHelperService,
+	Config,
+	DependencyCheckService,
+	GitProviderService,
+	HelperService,
+	LauncherModule,
+	MissionRuntimeService,
+	PipelineService,
+	ProjectProgressService,
+	ProjectSummaryService,
+	TargetEnvironmentService,
+	TokenProvider,
 	TokenService
 } from "ngx-forge";
 
@@ -15,11 +25,8 @@ import { TokenService as LegacyTokenService } from "../shared/token.service";
 
 import { WizardComponent } from './wizard.component';
 import { LaunchConfig } from "../shared/config.component";
-import { StepComponent } from "./components/step/step.component";
-import { ButtonComponent } from "./components/button/button.component";
-import { AsciidocComponent } from "./components/asciidoc/asciidoc.component";
-import { AsciidocService } from "./components/asciidoc/asciidoc.service";
-import { ProjectNameInputModule } from "./components/project-name-input/project-name-input.component";
+
+import { IntroComponent } from "./pages/intro/intro.component";
 
 import { AuthAPIProvider } from './services/app-launcher-authprovider.service';
 import { AppLauncherGitproviderService } from './services/app-launcher-gitprovider.service';
@@ -36,8 +43,6 @@ import { AuthenticationDirective } from "../shared/authentication.directive";
 import { ModalModule } from "ngx-modal";
 import { PopoverModule } from 'ngx-bootstrap/popover';
 
-import { LauncherModule } from "ngx-forge";
-import { AsciidocIndex } from "./components/asciidoc/asciidoc.index";
 import { GettingStartedComponent } from "./pages/getting-started/getting-started.component";
 
 import { LaunchHelper } from "../shared/helper.component";
@@ -45,26 +50,20 @@ import { errorHandlerFactory } from "../shared/error.component";
 
 @NgModule({
 	imports: [
-		BrowserAnimationsModule,
 		CommonModule,
 		FormsModule,
-		ProjectNameInputModule,
-		NgxForgeModule,
 		ModalModule,
+		LauncherModule,
+		BrowserAnimationsModule,
 		PopoverModule.forRoot(),
-		LauncherModule
 	],
 	declarations: [
-		GettingStartedComponent,
-		WizardComponent,
-		AsciidocComponent,
-		StepComponent,
-		ButtonComponent,
 		AuthenticationDirective,
+		GettingStartedComponent,
+		IntroComponent,
+		WizardComponent,
 	],
 	providers: [
-		AsciidocService,
-		AsciidocIndex,
 		KeycloakService,
 		{ provide: APP_INITIALIZER, useFactory: (keycloak: KeycloakService) => () => keycloak.init(), deps: [KeycloakService], multi: true },
 		{ provide: TokenProvider, useFactory: (keycloak: KeycloakService) => new KeycloakTokenProvider(keycloak), deps: [KeycloakService] },
