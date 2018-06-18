@@ -30,11 +30,6 @@ export class HeaderComponent {
 			route: "/guides"
 		},
 		{
-			id: "docs",
-			name: "Documentation",
-			route: "/docs"
-		},
-		{
 			id: "news",
 			name: "News",
 			route: "/news"
