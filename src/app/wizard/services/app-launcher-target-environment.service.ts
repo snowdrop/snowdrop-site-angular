@@ -12,7 +12,7 @@ export class AppLauncherTargetEnvironmentService implements TargetEnvironmentSer
 	 * @returns {Observable<TargetEnvironment>} The target environments
 	 */
 	getTargetEnvironments(): Observable<TargetEnvironment[]> {
-		const targetEnvironments = [, {
+		const targetEnvironments = [{
 			description: 'When you build and run locally, you will receive a .zip file ' +
 				'containing the setup you have established for your application.',
 			benefits: [
