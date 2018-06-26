@@ -10,6 +10,8 @@ import { RegistryService } from "../components";
 })
 export class AboutComponent implements OnInit, OnDestroy {
 
+	builds: any[] = [];
+
 	constructor(
 		private registryService: RegistryService,
 		private route: ActivatedRoute,
@@ -18,7 +20,11 @@ export class AboutComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-
+		this.registryService.getRegistry().then((config) => {
+			if (config && config.builds) {
+				this.builds = config.builds;
+			}
+		});
 	}
 
 	ngOnDestroy() {

@@ -1,7 +1,7 @@
 <div class="container">
-  <div class="padding-15">
+  <div class="padding-15 align-center">
     <div class="about">
-      <div class="row">
+      <div class="row align-center">
         <h1>About Snowdrop</h1>
       </div>
       <div class="row">
@@ -11,8 +11,18 @@
       </div>
     </div>
     <div class="row padding-top-10">
-      <div class="col-sm-12">
-        <hr/>
+      <div class="col-sm-12 align-center">
+        <h3>Build status</h3>
+      </div>
+    </div>
+    <div class="row builds padding-top-10">
+      <div *ngFor="let build of builds" class="col-sm-3 padding-15 align-center build">
+        <a href="https://github.com/snowdrop/{{build.repo}}" target="_blank">
+          <div class="build-inner">
+            {{build.repo}}<br />
+            <img src="https://circleci.com/gh/snowdrop/{{build.repo}}.svg?style=svg" />
+          </div>
+        </a>
       </div>
     </div>
   </div>
