@@ -3,15 +3,30 @@
     <div class="documentation">
       <div class="row">
         <div class="col-sm-8 padding-15">
-
-          <div class="row">
-            <h1>{{guide?.title}}</h1>
-            <p>{{guide?.description}}</p>
+          <div>
+            <h1>{{ guide?.title }}</h1>
+            <p>{{ guide?.description }}</p>
             <p class="tags">
               <span *ngFor="let t of guide?.tags" class="tag {{t}}">{{t}}</span>
             </p>
           </div>
-
+          <hr />
+          <ng-container *ngIf="prerequisites?.length > 0">
+            <div class="prerequisites">
+              <div class="prereq prereq-label">
+                <span class="label">Prerequisites</span>
+              </div>
+              <div *ngFor="let p of prerequisites" class="prereq">
+                <a *ngIf="p.action?.url" class="link" [routerLink]="['../', p.action.url]">
+                  <h1 class="title">{{ p?.title | slice:0:34 }}{{p?.title.length > 34 ? '...' : ''}}</h1>
+                  <p class="description">
+                    {{ p?.description | slice:0:80 }}{{p?.description.length > 80 ? '...' : ''}}
+                  </p>
+                </a>
+              </div>
+            </div>
+            <hr />
+          </ng-container>
           <asciidoctor [source]="source"></asciidoctor>
         </div>
         <div class="col-sm-4 padding-15">

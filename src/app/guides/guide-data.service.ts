@@ -66,6 +66,7 @@ export class GuideDataService implements OnInit, OnDestroy {
 						type: guide.type,
 						description: guide.description,
 						tags: this.getGuideTags(guide),
+						prerequisites: this.getGuidePrerequisiteTags(guide),
 						action: {
 							label: this.getGuideLabel(guide),
 							url: this.getGuideURL(guide),
@@ -79,6 +80,47 @@ export class GuideDataService implements OnInit, OnDestroy {
 		}
 
 		return result;
+	}
+
+	public getPrerequisiteGuides(guide: any) {
+		let guides = this.getGuides();
+		let prereqs = [];
+		if (guide && guide.prerequisites) {
+			prereqs = guides.filter((g) => {
+				let matched = false;
+				for (let p of guide.prerequisites) {
+					let include = true;
+					if (p.indexOf("-") === 0) {
+						include = false;
+						p = p.substr(1, p.length - 1);
+					}
+					if (g.tags && g.tags.indexOf(p) >= 0) {
+						if (include) {
+							matched = true;
+						} else {
+							return false;
+						}
+					}
+				}
+				return matched;
+			});
+		}
+		return prereqs;
+	}
+
+	public getRelatedGuides(guide: any) {
+		let guides = this.getGuides();
+		let related = [];
+		if (guide && guide.tags) {
+			related = guides.filter((g) => {
+				for (let t of g.tags) {
+					if (guide.tags && guide.tags.indexOf(t) >= 0)
+						return guide.title !== g.title;
+				}
+				return false;
+			});
+		}
+		return related;
 	}
 
 	private getGuideIcon(guide: any) {
@@ -96,6 +138,14 @@ export class GuideDataService implements OnInit, OnDestroy {
 		let result = "Read guide";
 		if (guide && guide.type === "booster") {
 			result = "Download";
+		}
+		return result;
+	}
+
+	private getGuidePrerequisiteTags(guide: any) {
+		let result = [];
+		if (guide && guide.prerequisites) {
+			result = guide.prerequisites.toLowerCase().split(",").map(t => t.trim());
 		}
 		return result;
 	}

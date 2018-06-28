@@ -2,6 +2,13 @@
   padding: 15px;
 }
 
+hr {
+  border: 0;
+  height: 1px;
+  background: #888;
+  background-image: linear-gradient(to right, #ccc, #888, #ccc);
+}
+
 .documentation {
   h1,
   h2,
@@ -17,6 +24,73 @@
   padding: 10px;
   border-radius: 10px;
   background-color: #e2e2e2;
+}
+
+.prerequisites {
+  height: 140px;
+  overflow-y: hidden;
+  overflow-x: auto;
+
+  .prereq {
+    display: inline-block;
+    width: 140px;
+    height: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 3px;
+    background-color: #b3ffa0;
+    border-radius: 5px;
+    padding: 10px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #a3ef90;
+    }
+
+    .link {
+      display: block;
+      height: 100%;
+      width: 100%;
+      text-decoration: none;
+      color: #363636;
+    }
+
+    .title {
+      margin-top: 0 !important;
+      margin-bottom: 5px !important;
+      min-height: 30px;
+      font-size: 12px;
+    }
+
+    .description {
+      display: block;
+      font-size: 11px !important;
+    }
+  }
+
+  .prereq.prereq-label {
+    background-color: #46a74c;
+    width: 18px;
+    margin-right: 0;
+
+    .label {
+      color: #fff;
+      display: block;
+      transform: rotate(-90deg);
+      height: 40px;
+      width: 169px;
+      position: relative;
+      left: -75px;
+      bottom: -40px;
+      text-transform: uppercase;
+    }
+  }
 }
 
 .tags {

@@ -12,6 +12,7 @@ import { GuideDataService } from '../guide-data.service';
 export class GuideViewComponent implements OnInit, OnDestroy {
 
 	relatedGuides: any[] = [];
+	prerequisites: any[] = [];
 
 	constructor(
 		private guideService: GuideDataService,
@@ -51,21 +52,6 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 		this.ready();
 	}
 
-	getRelatedGuides() {
-		let guides = this.guideService.getGuides();
-		if (this.guide) {
-			this.relatedGuides = guides.filter((g) => {
-				console.log("Related?", g, g.tags);
-				for (let t of g.tags) {
-					if (this.guide.tags && this.guide.tags.indexOf(t) >= 0)
-						return this.guide.title !== g.title;
-				}
-				return false;
-			})
-		}
-		console.log("Related guides", this.relatedGuides);
-	}
-
 	ready() {
 		if (!this._ready) {
 			this._ready = new Promise((resolve, reject) => {
@@ -75,7 +61,8 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 					return this.guideService.ready().then(() => {
 						this.guide = this.guideService.getGuideByTitle(this.guideId);
 						console.log(`Loading ${this.guideId}`, this.guide);
-						this.getRelatedGuides()
+						this.relatedGuides = this.guideService.getRelatedGuides(this.guide);
+						this.prerequisites = this.guideService.getPrerequisiteGuides(this.guide);
 						return this.guideService.render(this.guide).then((source) => {
 							this.source = source;
 						});
