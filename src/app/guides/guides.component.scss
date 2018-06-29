@@ -10,6 +10,14 @@
   border-radius: 15px;
   background-color: #e6e6e6;
   padding: 15px;
+
+  .title {
+    margin-top: 0;
+  }
+
+  .description {
+    min-height: 55px;
+  }
 }
 
 #filter {
@@ -22,9 +30,10 @@
 
 .tags {
   .tag {
-    background-color: #e2e2e2;
+    font-size: 9px;
+    background-color: #d2d2d2;
     background-image: none;
-    border-radius: 10px;
+    border-radius: 3px;
     padding: 5px;
     margin-right: 5px;
     cursor: pointer;

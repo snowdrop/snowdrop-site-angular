@@ -12,8 +12,11 @@
       <div class="row row-cards-pf">
         <div *ngFor="let guide of buffer" class="col-sm-6 guide-block">
           <div class="guide-inner">
-            <h3 class="title">{{guide.title}}</h3>
-            <p class="description">{{guide.description}}</p>
+            <h3 class="title">{{ guide?.title | slice:0:50 }}{{guide?.title.length > 50 ? '...' : ''}}</h3>
+            <p class="tags">
+              <span *ngFor="let t of guide.tags" class="tag {{t}}" (click)="filter.value = t; filterGuides(t)">{{t}}</span>
+            </p>
+            <p class="description">{{ guide?.description | slice:0:150 }}{{guide?.description.length > 150 ? '...' : ''}}</p>
             <p class="actions">
               <a *ngIf="guide.urls?.local" class="btn btn-lg btn-primary" [routerLink]="[guide.urls.local]">
                 <i class="fa fa-book"></i>
@@ -23,9 +26,6 @@
                 <i class="fa rocket"></i>
                 Download ZIP
               </a>
-            </p>
-            <p class="tags">
-              <span *ngFor="let t of guide.tags" class="tag {{t}}" (click)="filter.value = t; filterGuides(t)">{{t}}</span>
             </p>
           </div>
         </div>
