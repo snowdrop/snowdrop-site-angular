@@ -3,7 +3,11 @@
     <div class="documentation">
       <div class="row">
         <div class="col-sm-8 padding-15">
-          <div>
+          <div class="guide-header">
+            <a *ngIf="guide.urls?.booster" class="download" href="{{guide.urls.booster}}" target="_blank">
+              <i class="fa rocket"></i>
+              Download ZIP
+            </a>
             <h1>{{ guide?.title }}</h1>
             <p>{{ guide?.description }}</p>
             <p class="tags">
@@ -48,13 +52,12 @@
         </div>
         <div class="col-sm-4 padding-15">
 
-          <div class="row" *ngIf="relatedGuides?.length > 0">
+          <div *ngIf="relatedGuides?.length > 0" class="row row-cards-pf guides">
             <div class="col-sm-12">
               <h2>Keep learning</h2>
+              <hr />
             </div>
-          </div>
 
-          <div class="row row-cards-pf guides">
             <ng-container *ngFor="let guide of relatedGuides; let i = index">
               <div *ngIf="i < 4" class="col-sm-12 guide-block">
                 <div>
