@@ -18,6 +18,7 @@ export class GuideDataService implements OnInit, OnDestroy {
 
 	private _ready: Promise<void> = null;
 	private guides: any[];
+	private registry: any;
 
 	ngOnInit(): void {
 		this.ready();
@@ -28,17 +29,18 @@ export class GuideDataService implements OnInit, OnDestroy {
 			console.log("GuideDataService starting up.");
 			this._ready = this.registryService.getRegistry().then((registry) => {
 				console.log("GuideDataService initialized.");
-				this.guides = registry.guides;
+				this.registry = registry;
+				this.getGuides();
 			});
 		}
 		return this._ready;
 	}
 
 	public render(guide: any): Promise<string> {
-		if (!guide || !guide.url) {
+		if (!guide || !guide.urls.content) {
 			return Promise.resolve("Guide content could not be rendered.");
 		}
-		return this.http.get(guide.url).toPromise().then((res) => {
+		return this.http.get(guide.urls.content).toPromise().then((res) => {
 			return <string>res.text("iso-8859").toString();
 		});
 	}
@@ -56,69 +58,96 @@ export class GuideDataService implements OnInit, OnDestroy {
 	}
 
 	public getGuides() {
-		let result = [];
+		if (!this.guides) {
+			let result = [];
+			let notNullOrEmpty = (value) => {
+				return value && value.trim() !== 0;
+			};
 
-		if (this.guides) {
-			for (let guide of this.guides) {
-				result.push(
-					{
+			if (this.registry) {
+				for (let guide of this.registry.guides) {
+					let g: any = {
 						title: guide.title,
 						type: guide.type,
 						description: guide.description,
-						tags: this.getGuideTags(guide),
-						prerequisites: this.getGuidePrerequisiteTags(guide),
-						action: {
-							label: this.getGuideLabel(guide),
-							url: this.getGuideURL(guide),
-							docurl: guide.documentation ? guide.documentation.trim() : null,
-							iconClass: 'fa fa-' + this.getGuideIcon(guide)
+						urls: {
+							local: this.urlify(guide.title),
+							content: this.registryService.getDefaultValue([guide.type, "urls", "content"])
 						},
-						url: guide.url
+						tags: this.getGuideTags(guide, "tags"),
+						prerequisites: this.getGuideTags(guide, "prerequisites"),
+						enablements: this.getGuideTags(guide, "enablements")
 					}
-				);
-			}
-		}
-
-		return result;
-	}
-
-	public getPrerequisiteGuides(guide: any) {
-		let guides = this.getGuides();
-		let prereqs = [];
-		if (guide && guide.prerequisites) {
-			prereqs = guides.filter((g) => {
-				let matched = false;
-				for (let p of guide.prerequisites) {
-					let include = true;
-					if (p.indexOf("-") === 0) {
-						include = false;
-						p = p.substr(1, p.length - 1);
-					}
-					if (g.tags && g.tags.indexOf(p) >= 0) {
-						if (include) {
-							matched = true;
-						} else {
-							return false;
+					if (guide.urls) {
+						let urls = guide.urls;
+						if (notNullOrEmpty(urls.booster)) {
+							g.urls.booster = this.helper.getBackendUrl() + "launcher/zip?" + guide.urls.booster;
+						}
+						if (notNullOrEmpty(urls.source)) {
+							g.urls.source = urls.source.trim();
+						}
+						if (notNullOrEmpty(urls.documentation)) {
+							g.urls.documentation = urls.documentation.trim();
+						}
+						if (notNullOrEmpty(urls.content)) {
+							g.urls.content = urls.content.trim();
 						}
 					}
+					result.push(g);
 				}
-				return matched;
-			});
+			}
+			this.guides = result;
 		}
-		return prereqs;
+
+		return this.guides;
 	}
 
-	public getRelatedGuides(guide: any) {
+
+	public getGuideEnablements(guide: any) {
+		return this.getRelatedGuides(guide, "enablements");
+	}
+
+	public getGuidePrerequisites(guide: any) {
+		return this.getRelatedGuides(guide, "prerequisites");
+	}
+
+	public getRelatedGuides(guide: any, type?: string) {
 		let guides = this.getGuides();
 		let related = [];
-		if (guide && guide.tags) {
-			related = guides.filter((g) => {
-				for (let t of g.tags) {
-					if (guide.tags && guide.tags.indexOf(t) >= 0)
-						return guide.title !== g.title;
-				}
-				return false;
-			});
+		if (type) {
+			let guides = this.getGuides();
+			let prereqs = [];
+			if (guide && guide[type]) {
+				prereqs = guides.filter((g) => {
+					let matched = false;
+					for (let p of guide[type]) {
+						let include = true;
+						if (p.indexOf("-") === 0) {
+							include = false;
+							p = p.substr(1, p.length - 1);
+						}
+						if (g.tags && g.tags.indexOf(p) >= 0) {
+							if (include) {
+								matched = true;
+							} else {
+								return false;
+							}
+						}
+					}
+					return matched;
+				});
+			}
+			return prereqs;
+		} else {
+			if (guide && guide.tags) {
+				related = guides.filter((g) => {
+					for (let t of g.tags) {
+						if (guide.tags && guide.tags.indexOf(t) >= 0)
+							return guide.title !== g.title;
+					}
+					return false;
+				});
+			}
 		}
 		return related;
 	}
@@ -142,29 +171,17 @@ export class GuideDataService implements OnInit, OnDestroy {
 		return result;
 	}
 
-	private getGuidePrerequisiteTags(guide: any) {
+	private getGuideTags(guide: any, prop: string) {
 		let result = [];
-		if (guide && guide.prerequisites) {
-			result = guide.prerequisites.toLowerCase().split(",").map(t => t.trim());
+		if (guide && guide.tags && prop) {
+			let tags = guide[prop.trim()];
+			if (tags) {
+				result = tags.toLowerCase().split(",").map(t => t.trim());
+			}
 		}
 		return result;
 	}
 
-	private getGuideTags(guide: any) {
-		let result = [];
-		if (guide && guide.tags) {
-			result = guide.tags.toLowerCase().split(",").map(t => t.trim());
-		}
-		return result;
-	}
-
-	private getGuideURL(guide: any) {
-		let result = this.urlify(guide.title);
-		if (guide && guide.type === "booster") {
-			result = this.helper.getBackendUrl() + "launcher/zip?" + guide.url;
-		}
-		return result;
-	}
 
 	getFilteredGuides(filter = "") {
 		if (filter && filter.trim().length > 0) {
@@ -187,6 +204,6 @@ export class GuideDataService implements OnInit, OnDestroy {
 
 	private urlify(value: string) {
 		if (!value) return value;
-		return value.toLowerCase().replace(/[^a-z0-9]/gi, "-");
+		return value.toLowerCase().replace(/[^a-z0-9]/gi, "-").replace("-+", "-");
 	}
 }

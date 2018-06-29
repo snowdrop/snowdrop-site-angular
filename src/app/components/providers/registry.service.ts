@@ -34,4 +34,17 @@ export class RegistryService {
 			return this.registry;
 		});
 	}
+
+	public getDefaultValue(path: string[]) {
+		let base = this.registry.defaults;
+		if (path && path.length > 0) {
+			for (let seg of path) {
+				base = base[seg];
+				if (!base) {
+					break;
+				}
+			}
+		}
+		return base;
+	}
 }

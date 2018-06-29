@@ -13,6 +13,7 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 
 	relatedGuides: any[] = [];
 	prerequisites: any[] = [];
+	enablements: any[] = [];
 
 	constructor(
 		private guideService: GuideDataService,
@@ -62,8 +63,10 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 						this.guide = this.guideService.getGuideByTitle(this.guideId);
 						console.log(`Loading ${this.guideId}`, this.guide);
 						this.relatedGuides = this.guideService.getRelatedGuides(this.guide);
-						this.prerequisites = this.guideService.getPrerequisiteGuides(this.guide);
+						this.prerequisites = this.guideService.getGuidePrerequisites(this.guide);
+						this.enablements = this.guideService.getGuideEnablements(this.guide);
 						return this.guideService.render(this.guide).then((source) => {
+							console.log(this.guide, source);
 							this.source = source;
 						});
 					})

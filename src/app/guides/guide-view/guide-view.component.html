@@ -17,7 +17,7 @@
                 <span class="label">Prerequisites</span>
               </div>
               <div *ngFor="let p of prerequisites" class="prereq">
-                <a *ngIf="p.action?.url" class="link" [routerLink]="['../', p.action.url]">
+                <a *ngIf="p.urls?.local" class="link" [routerLink]="['../', p.urls.local]">
                   <h1 class="title">{{ p?.title | slice:0:34 }}{{p?.title.length > 34 ? '...' : ''}}</h1>
                   <p class="description">
                     {{ p?.description | slice:0:80 }}{{p?.description.length > 80 ? '...' : ''}}
@@ -28,6 +28,23 @@
             <hr />
           </ng-container>
           <asciidoctor [source]="source"></asciidoctor>
+
+          <hr />
+          <ng-container *ngIf="enablements?.length > 0">
+            <div class="prerequisites enablements">
+              <div class="prereq prereq-label">
+                <span class="label">Now try this</span>
+              </div>
+              <div *ngFor="let p of enablements" class="prereq enablement">
+                <a *ngIf="p.urls?.local" class="link" [routerLink]="['../', p.urls.local]">
+                  <h1 class="title">{{ p?.title | slice:0:34 }}{{p?.title.length > 34 ? '...' : ''}}</h1>
+                  <p class="description">
+                    {{ p?.description | slice:0:80 }}{{p?.description.length > 80 ? '...' : ''}}
+                  </p>
+                </a>
+              </div>
+            </div>
+          </ng-container>
         </div>
         <div class="col-sm-4 padding-15">
 
@@ -44,22 +61,10 @@
                   <h3 class="title">{{guide.title}}</h3>
                   <p class="description">{{guide.description}}</p>
                   <p class="actions">
-                    <ng-container *ngIf="guide.type === 'booster'">
-                      <a *ngIf="guide.action?.docurl" class="btn btn-lg btn-primary" href="{{guide.action?.docurl}}">
-                        <i class="fa fa-book"></i>
-                        Read guide
-                      </a>
-                      <a  *ngIf="guide.action?.url" class="btn btn-lg btn-secondary" href="{{guide.action.url}}">
-                        <i [class]="guide.action.iconClass"></i>
-                        {{guide.action.label ? guide.action.label : "Learn more"}}
-                      </a>
-                    </ng-container>
-                    <ng-container *ngIf="guide.type === 'guide'">
-                      <a *ngIf="guide.action?.url" class="btn btn-lg btn-primary" [routerLink]="[guide.action.url]">
-                        <i [class]="guide.action.iconClass"></i>
-                        {{guide.action.label ? guide.action.label : "Learn more"}}
-                      </a>
-                    </ng-container>
+                    <a *ngIf="guide.urls?.local" class="btn btn-lg btn-primary" [routerLink]="['../',guide.urls.local]">
+                      <i class="fa fa-book"></i>
+                      View guide
+                    </a>
                   </p>
                 </div>
               </div>

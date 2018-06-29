@@ -93,6 +93,20 @@ hr {
   }
 }
 
+.enablements {
+  .enablement {
+    background-color: #c8d4ff;
+
+    &:hover {
+      background-color: #90efa3;
+    }
+  }
+
+  .prereq.prereq-label {
+    background-color: #4671a7;
+  }
+}
+
 .tags {
   .tag {
     background-color: #e2e2e2;

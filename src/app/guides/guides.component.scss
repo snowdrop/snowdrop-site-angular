@@ -1,6 +1,15 @@
 .guide-block {
   min-height: 230px;
   height: 230px;
+  padding: 15px;
+}
+
+.guide-inner {
+  height: 100%;
+  width: 100%;
+  border-radius: 15px;
+  background-color: #e6e6e6;
+  padding: 15px;
 }
 
 #filter {
