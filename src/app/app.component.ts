@@ -1,43 +1,43 @@
-import { Component } from "@angular/core";
-import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
+import { Component, HostBinding } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
-  selector: "body",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"],
-  host: {
-    "[class.cards-pf]": "intro"
-  }
+	selector: 'body',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private router: Router, private route: ActivatedRoute) {
-    router.events.subscribe((url: any) => {
-      this.intro = url.url !== "/" && url.url !== "/wizard";
-    });
+	@HostBinding('class.cards-pf') private intro: boolean;
 
-    router.events.distinctUntilChanged((previous: any, current: any) => {
-      if (current instanceof NavigationEnd) {
-        return previous.url === current.url;
-      }
-      return true;
-    }).subscribe((x: any) => {
-      let snapshot = route.snapshot;
-      let activated = route.firstChild;
-      if (activated != null) {
-        while (activated != null) {
-          snapshot = activated.snapshot;
-          activated = activated.firstChild;
-        }
-      }
+	constructor(private router: Router, private route: ActivatedRoute) {
+		router.events.subscribe((url: any) => {
+			this.intro = url.url !== '/' && url.url !== '/wizard';
+			window.scrollTo(0, 0);
+		});
 
-      if (window['analytics']) {
-        window['analytics'].page({
-          name: snapshot.data.name + (snapshot.params.step || ''),
-          properties: snapshot.params
-        });
-      }
-    });
-  }
+		router.events.pipe(distinctUntilChanged(((previous: any, current: any) => {
+			if (current instanceof NavigationEnd) {
+				return previous.url === current.url;
+			}
+			return true;
+		}))).subscribe(() => {
+			let snapshot = route.snapshot;
+			let activated = route.firstChild;
+			if (activated != null) {
+				while (activated != null) {
+					snapshot = activated.snapshot;
+					activated = activated.firstChild;
+				}
+			}
 
-  intro: boolean;
+			if (window['analytics']) {
+				window['analytics'].page({
+					name: snapshot.data.name + (snapshot.params.step || ''),
+					properties: snapshot.params
+				});
+			}
+		});
+	}
+
 }

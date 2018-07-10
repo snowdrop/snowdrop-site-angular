@@ -1,13 +1,12 @@
 import { Injectable, OnInit, OnDestroy } from "@angular/core";
+import { Location } from '@angular/common';
 import { Http } from '@angular/http';
 import { RegistryService } from '../components';
-import { HelperService } from "ngx-forge";
 
 @Injectable()
 export class GuideDataService implements OnInit, OnDestroy {
 
 	constructor(
-		private helper: HelperService,
 		private http: Http,
 		private registryService: RegistryService
 	) {
@@ -22,6 +21,10 @@ export class GuideDataService implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.ready();
+	}
+
+	getBackendUrl() {
+		return process.env.LAUNCHER_BACKEND_URL ? Location.stripTrailingSlash(process.env.LAUNCHER_BACKEND_URL) : "";
 	}
 
 	public ready() {
@@ -81,7 +84,7 @@ export class GuideDataService implements OnInit, OnDestroy {
 					if (guide.urls) {
 						let urls = guide.urls;
 						if (notNullOrEmpty(urls.booster)) {
-							g.urls.booster = this.helper.getBackendUrl() + "launcher/zip?" + guide.urls.booster;
+							g.urls.booster = this.getBackendUrl() + "launcher/zip?" + guide.urls.booster;
 						}
 						if (notNullOrEmpty(urls.source)) {
 							g.urls.source = urls.source.trim();

@@ -1,47 +1,51 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { BrowserModule } from "@angular/platform-browser";
-import { HttpModule } from "@angular/http";
-import { Logger } from "./shared/logger.service";
-import { FormsModule } from "@angular/forms";
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { Logger } from './shared/logger.service';
+import { FormsModule } from '@angular/forms';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { Broadcaster } from 'ngx-base';
 
-import { AppComponent } from "./app.component";
-import { AppRoutingModule } from "./app-routing.module";
 
-import { FooterComponent } from "./footer/footer.component";
-import { HeaderComponent } from "./header/header.component";
-import { AboutComponent } from "./about/about.component";
 import { HomeComponent } from "./home/home.component";
 
-import { ComponentsModule } from "./components";
+import { AboutModule } from "./about/about.module";
+import { ComponentsModule } from "./components/components.module";
 import { DocsModule } from "./docs/docs.module";
 import { NewsModule } from "./news/news.module";
 import { GuidesModule } from "./guides/guides.module";
-import { WizardModule } from "./wizard/wizard.module";
 
 @NgModule({
 	imports: [
 		BrowserModule,
-		CommonModule,
-		ComponentsModule,
 		FormsModule,
-		HttpModule,
+		HttpClientModule,
 		AppRoutingModule,
-		WizardModule,
+
+		//Page modules
+		ComponentsModule.forRoot(),
+
+		AboutModule,
 		DocsModule,
 		NewsModule,
-		GuidesModule,
+		GuidesModule
 	],
 	declarations: [
 		AppComponent,
-		FooterComponent,
 		HeaderComponent,
-		AboutComponent,
+		FooterComponent,
+
+		//Pages
 		HomeComponent
 	],
 	providers: [
-		Logger
+		Broadcaster,
+		Logger,
 	],
 	bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

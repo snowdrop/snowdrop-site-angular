@@ -11,8 +11,7 @@ import { GuideViewComponent } from './guide-view/guide-view.component';
 import { GuideDataService } from './guide-data.service';
 
 
-import { LaunchConfig } from "../shared/config.component";
-import { Config, HelperService } from "ngx-forge";
+import { Config, HelperService } from "ngx-launcher";
 
 export class Helper extends HelperService {
 	constructor(config: Config) {
@@ -38,8 +37,6 @@ export class Helper extends HelperService {
 	],
 	providers: [
 		GuideDataService,
-		LaunchConfig,
-		{ provide: HelperService, useClass: Helper, deps: [LaunchConfig] },
 	]
 })
 export class GuidesModule {

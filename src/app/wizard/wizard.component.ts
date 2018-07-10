@@ -1,16 +1,16 @@
-import { Component } from "@angular/core";
-import { Router } from "@angular/router";
-import { KeycloakService } from "../shared/keycloak.service";
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
-	selector: "wizard",
-	templateUrl: "./wizard.component.html",
-	styleUrls: ["./wizard.component.scss"]
+  selector: 'wizard',
+  templateUrl: './wizard.component.html'
 })
 export class WizardComponent {
-	constructor(private router: Router) { }
 
-	back(): void {
-		this.router.navigate(['/']);
-	}
+  constructor(private router: Router) {
+  }
+
+  public back(): void {
+    this.router.navigate(['/']);
+  }
 }

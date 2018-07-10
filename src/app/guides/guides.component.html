@@ -12,17 +12,17 @@
       <div class="row row-cards-pf">
         <div *ngFor="let guide of buffer" class="col-sm-6 guide-block">
           <div class="guide-inner">
-            <h3 class="title">{{ guide?.title | slice:0:50 }}{{guide?.title.length > 50 ? '...' : ''}}</h3>
+            <h3 class="title"><a class="link" [routerLink]="[guide?.urls?.local]">{{ guide?.title | slice:0:50 }}{{guide?.title.length > 50 ? '...' : ''}}</a></h3>
             <p class="tags">
-              <span *ngFor="let t of guide.tags" class="tag {{t}}" (click)="filter.value = t; filterGuides(t)">{{t}}</span>
+              <span *ngFor="let t of guide?.tags" class="tag {{t}}" (click)="filter.value = t; filterGuides(t)">{{t}}</span>
             </p>
             <p class="description">{{ guide?.description | slice:0:150 }}{{guide?.description.length > 150 ? '...' : ''}}</p>
             <p class="actions">
-              <a *ngIf="guide.urls?.local" class="btn btn-lg btn-primary" [routerLink]="[guide.urls.local]">
+              <a *ngIf="guide?.urls?.local" class="btn btn-lg btn-primary" [routerLink]="[guide?.urls?.local]">
                 <i class="fa fa-book"></i>
                 Read guide
               </a>
-              <a *ngIf="guide.urls?.booster" class="btn btn-lg btn-secondary" href="{{guide.urls.booster}}" target="_blank">
+              <a *ngIf="guide?.urls?.booster" class="btn btn-lg btn-secondary" href="{{guide?.urls?.booster}}" target="_blank">
                 <i class="fa rocket"></i>
                 Download ZIP
               </a>

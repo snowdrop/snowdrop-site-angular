@@ -3,24 +3,40 @@
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
-    "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "removeComments": false,
-    "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "noEmitHelpers": true,
+    "importHelpers": true,
+    "strictNullChecks": false,
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "baseUrl": "./src",
+    "paths": {
+      "@angular/*": ["../node_modules/@angular/*"]
+    },
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "types": [
-      "core-js",
-      "node",
-      "jasmine"
+      "node"
     ]
   },
   "exclude": [
     "node_modules",
     "dist",
-    "**/*.spec.ts"
+    "src/**/*.spec.ts",
+    "src/**/*.e2e.ts"
   ],
   "angularCompilerOptions": {
-    "genDir": "./ngfactory"
+    "skipMetadataEmit": true
+  },
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "atom": {
+    "rewriteTsconfig": false
   }
 }

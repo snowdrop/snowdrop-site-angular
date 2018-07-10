@@ -12,7 +12,8 @@
         </li>
       </ng-container>
 
-      <ng-container *ngIf="!keycloak.skip">
+      <ng-container *ngIf="false">
+        <!-- TODO Use this for an example of dropdown support for mobile? -->
         <li id="loggedout" *ngIf="!keycloak.isAuthenticated()">
           <a id="login" href="javascript:void(0)" (click)="keycloak.login()">
             <i class="pficon pficon-user"></i> Log In

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-
-import { TargetEnvironment, TargetEnvironmentService } from 'ngx-forge';
+import { of } from 'rxjs';
+import { Observable } from 'rxjs-compat';
+import { TargetEnvironment, TargetEnvironmentService } from 'ngx-launcher';
 
 @Injectable()
 export class AppLauncherTargetEnvironmentService implements TargetEnvironmentService {
@@ -11,7 +11,7 @@ export class AppLauncherTargetEnvironmentService implements TargetEnvironmentSer
 	 *
 	 * @returns {Observable<TargetEnvironment>} The target environments
 	 */
-	getTargetEnvironments(): Observable<TargetEnvironment[]> {
+	public getTargetEnvironments(): Observable<TargetEnvironment[]> {
 		const targetEnvironments = [{
 			description: 'When you build and run locally, you will receive a .zip file ' +
 				'containing the setup you have established for your application.',
@@ -28,6 +28,6 @@ export class AppLauncherTargetEnvironmentService implements TargetEnvironmentSer
 			styleClass: 'card-pf-footer--logo-zip'
 			/* tslint:enable */
 		}] as TargetEnvironment[];
-		return Observable.from([targetEnvironments]);
+		return of(targetEnvironments);
 	}
 }

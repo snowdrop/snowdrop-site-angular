@@ -1,7 +1,7 @@
 <div class="container">
   <div class="padding-15">
     <div class="documentation">
-      <div class="row">
+      <div *ngIf="guide" class="row">
         <div class="padding-15" [class.col-sm-8]="relatedGuides?.length" [class.col-sm-12]="!relatedGuides?.length">
           <div class="guide-header">
             <a *ngIf="guide.urls?.booster" class="download" href="{{guide.urls.booster}}" target="_blank">

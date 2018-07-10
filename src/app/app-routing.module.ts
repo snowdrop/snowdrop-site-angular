@@ -8,69 +8,64 @@ import { HomeComponent } from "./home/home.component";
 import { GuidesComponent } from "./guides/guides.component";
 import { GuideViewComponent } from "./guides/guide-view/guide-view.component";
 
-/* New Wizard */
-import { WizardComponent } from "./wizard/wizard.component";
-import { GettingStartedComponent } from "./wizard/pages/getting-started/getting-started.component";
-
 const routes: Routes = [
 	{
-		path: 'wizard/:projectName',
-		component: WizardComponent,
-		pathMatch: 'full'
-
-	},
-	{
-		path: "wizard",
-		component: GettingStartedComponent,
-		pathMatch: 'full'
+		path: 'wizard',
+		loadChildren: './wizard/wizard.module#WizardModule'
 	},
 	{
 		path: "",
 		children: [{
 			path: "",
-			component: HomeComponent
+			component: HomeComponent,
+			pathMatch: 'full'
 		}]
-	}, {
+	},
+	{
 		path: "about",
 		children: [{
 			path: "",
-			component: AboutComponent
+			component: AboutComponent,
+			pathMatch: 'full'
 		}]
 	},
 	{
 		path: "docs",
 		children: [{
 			path: "",
-			component: DocsComponent
+			component: DocsComponent,
+			pathMatch: 'full'
 		}]
 	},
 	{
 		path: "news",
 		children: [{
 			path: "",
-			component: NewsComponent
+			component: NewsComponent,
+			pathMatch: 'full'
 		}, {
 			path: ":articleId",
-			component: NewsViewComponent
+			component: NewsViewComponent,
+			pathMatch: 'full'
 		}]
 	},
 	{
 		path: "guides",
 		children: [{
 			path: "",
-			component: GuidesComponent
+			component: GuidesComponent,
+			pathMatch: 'full'
 		}, {
 			path: ":guideId",
-			component: GuideViewComponent
+			component: GuideViewComponent,
+			pathMatch: 'full'
 		}]
 	},
 	{ path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes, {
-		useHash: false
-	})],
+	imports: [RouterModule.forRoot(routes)],
 	exports: [RouterModule]
 })
 export class AppRoutingModule { }

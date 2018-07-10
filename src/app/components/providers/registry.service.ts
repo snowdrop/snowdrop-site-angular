@@ -1,4 +1,4 @@
-import { Injectable, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { Injectable, OnInit, OnDestroy } from "@angular/core";
 import { Http } from '@angular/http';
 
 @Injectable()

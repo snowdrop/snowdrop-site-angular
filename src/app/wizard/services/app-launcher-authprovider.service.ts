@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { AuthHelperService } from 'ngx-forge';
+import { AuthHelperService } from 'ngx-launcher';
 
 @Injectable()
 export class AuthAPIProvider extends AuthHelperService {
@@ -9,7 +9,7 @@ export class AuthAPIProvider extends AuthHelperService {
     super();
   }
 
-  getAuthApiURl(): any {
+  public getAuthApiURl(): any {
     return this.apiUrl;
   }
 }

@@ -11,6 +11,7 @@ templates/template_old.yml
 # dependencies
 /node_modules
 /bower_components
+/webpack-cache
 
 # IDEs and editors
 /.idea
@@ -41,4 +42,8 @@ unit_tests.log
 Thumbs.db
 
 # Package manager files
-package-lock.json
+npm-shrinkwrap.json
+yarn-error.log
+
+# misc
+.history

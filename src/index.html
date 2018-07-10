@@ -8,11 +8,18 @@
 
     <script>
       try {
+        Function.prototype.bind = Function.prototype.bind || function (thisp) {
+            var fn = this;
+            return function () {
+                return fn.apply(thisp, arguments);
+            };
+        };
+
         const jsonSettings = "${LAUNCHER_JSON_SETTINGS}";
-        window.settings = JSON.parse(jsonSettings);
+        window.injectedSettings = JSON.parse(jsonSettings);
         console.info("Injected settings contains: " + jsonSettings);
       } catch (e) {
-        window.settings = undefined;
+        window.injectedSettings = undefined;
         console.info("Injected settings are undefined");
       }
 
@@ -21,6 +28,10 @@
       analytics.load("{SegmentTrackerToken}");
       }}();
     </script>
+
+    <link rel="stylesheet" href="/assets/css/patternfly/patternfly.min.css">
+    <link rel="stylesheet" href="/assets/css/patternfly/patternfly-additions.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
       #loading-screen .main {
@@ -127,13 +138,13 @@
     <app>
       <div class="main" id="loading-screen">
         <div class="header"></div>
-        <div class="title">
+        <!-- <div class="title">
           <img alt="Snowdrop" class="title-logo" src="/assets/snowdrop-logo-text.90329a1cb3aaab092f55dcebd028418d.png">
           <div class="title-text">
             Loading...
           </div>
         </div>
-        <div class="lds-dual-ring"></div>
+        <div class="lds-dual-ring"></div> -->
         <div class="example-runtimes">
           <div class="example-runtime">
             <div class="text"></div>
@@ -151,4 +162,6 @@
       </div>
     </app>
   </body>
+
+  <script async src="/assets/js/asciidoctor.min.js"></script>
 </html>

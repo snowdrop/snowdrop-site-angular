@@ -1,13 +1,11 @@
 import { Injectable, OnInit, OnDestroy } from "@angular/core";
 import { Http } from '@angular/http';
 import { RegistryService } from '../components';
-import { HelperService } from "ngx-forge";
 
 @Injectable()
 export class NewsDataService implements OnInit, OnDestroy {
 
 	constructor(
-		private helper: HelperService,
 		private http: Http,
 		private registryService: RegistryService
 	) {
@@ -80,9 +78,6 @@ export class NewsDataService implements OnInit, OnDestroy {
 
 	getArticleURL(article: any) {
 		let result = this.urlify(article.title);
-		if (article.type === "booster") {
-			result = this.helper.getBackendUrl() + "launcher/zip?" + article.url;
-		}
 		return result;
 	}
 

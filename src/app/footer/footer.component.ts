@@ -13,7 +13,9 @@ export class FooterComponent {
 
 	constructor(private router: Router) {
 		router.events.subscribe((url: any) => {
-			this.wizard = url.url.indexOf('wizard') > -1;
+			if (url && url.url) {
+				this.wizard = url.url.indexOf("wizard") > -1;
+			}
 		});
 	}
 

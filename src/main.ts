@@ -1,11 +1,27 @@
-// The usual bootstrapping imports
-import { enableProdMode } from "@angular/core";
-import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { environment } from 'environments/environment';
+import { AppModule } from './app/app.module';
+import { StaticInjector } from 'ngx-launcher';
 
-import { AppModule } from "./app/app.module";
-
-if (process.env.ENV === "production") {
-  enableProdMode();
+export function main(): Promise<any> {
+	return platformBrowserDynamic()
+		.bootstrapModule(AppModule)
+		.then((modRef) => environment.decorateModuleRef(modRef))
+		.then((modRef) => StaticInjector.setInjector(modRef.injector))
+		.catch((err) => console.error(err));
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule);
+switch (document.readyState) {
+	case 'loading':
+		document.addEventListener('DOMContentLoaded', _domReadyHandler, false);
+		break;
+	case 'interactive':
+	case 'complete':
+	default:
+		main();
+}
+
+function _domReadyHandler() {
+	document.removeEventListener('DOMContentLoaded', _domReadyHandler, false);
+	main();
+}

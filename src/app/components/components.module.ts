@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, NgModule, ModuleWithProviders} from "@angular/core";
+import { APP_INITIALIZER, NgModule, ModuleWithProviders } from "@angular/core";
 
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
@@ -10,30 +10,30 @@ export * from './providers';
 import { RegistryService } from './providers';
 
 let COMPONENTS = [
-  AsciidoctorComponent
+	AsciidoctorComponent
 ];
 
 let PROVIDERS = [
-  RegistryService
+	RegistryService
 ]
 
 @NgModule({
-  declarations: [
-    ...COMPONENTS
-  ],
-  entryComponents: [
-    ...COMPONENTS
-  ],
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
-  exports: [
-    ...COMPONENTS
-  ],
-  providers: [
-    ...PROVIDERS
-  ]
+	declarations: [
+		...COMPONENTS
+	],
+	entryComponents: [
+		...COMPONENTS
+	],
+	imports: [
+		CommonModule,
+		FormsModule
+	],
+	exports: [
+		...COMPONENTS
+	],
+	providers: [
+		...PROVIDERS
+	]
 })
 export class ComponentsModule {
 
