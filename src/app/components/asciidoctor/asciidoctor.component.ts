@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, OnDestroy, ViewChild } from "@angular/core";
 
+declare var Asciidoctor;
+
 @Component({
 	selector: "asciidoctor",
 	templateUrl: "./asciidoctor.component.html",
@@ -22,12 +24,11 @@ export class AsciidoctorComponent implements OnInit, OnDestroy {
 
 	@Input("source")
 	set source(source: string) {
-		let asciidoctor = require('asciidoctor.js');
 		this._source = source;
 		let retries = 100;
 		let render = () => {
 			try {
-				this.rendered = asciidoctor().convert(source);
+				this.rendered = Asciidoctor().convert(source);
 				this.rendered = this.rendered.replace(/<a(?!.*class="anchor"[^>])([^>]+)href\s*=\s*([\"\'])(#[^\'\"]+)([\"\'])/g, `<a$1href=$2${window.location.pathname}$3$4`);
 			} catch (err) {
 				console.error("ASCIIDOC FAILED:", err);

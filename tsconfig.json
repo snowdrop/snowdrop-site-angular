@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "module": "es2015",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -32,6 +32,7 @@
     "src/**/*.e2e.ts"
   ],
   "angularCompilerOptions": {
+    "genDir":"aot",
     "skipMetadataEmit": true
   },
   "compileOnSave": false,

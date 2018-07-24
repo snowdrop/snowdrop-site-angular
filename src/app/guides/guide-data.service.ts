@@ -24,7 +24,7 @@ export class GuideDataService implements OnInit, OnDestroy {
 	}
 
 	getBackendUrl() {
-		return process.env.LAUNCHER_BACKEND_URL ? Location.stripTrailingSlash(process.env.LAUNCHER_BACKEND_URL) : "";
+		return (process.env.LAUNCHER_BACKEND_URL ? Location.stripTrailingSlash(process.env.LAUNCHER_BACKEND_URL) : "") + "/";
 	}
 
 	public ready() {
