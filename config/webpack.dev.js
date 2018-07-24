@@ -29,10 +29,10 @@ module.exports = function(options) {
     PUBLIC: process.env.PUBLIC_DEV || HOST + ':' + PORT,
     PUBLIC_PATH: process.env.PUBLIC_PATH || '/',
     LAUNCHER_JSON_SETTINGS: {
-      LAUNCHER_BACKEND_URL: process.env.LAUNCHER_BACKEND_URL || 'http://localhost:8080/api',
+      LAUNCHER_BACKEND_URL: process.env.LAUNCHER_BACKEND_URL || 'http://backend-public-devex.195.201.87.126.nip.io/api',
       LAUNCHER_KEYCLOAK_URL: process.env.LAUNCHER_KEYCLOAK_URL || '',
       LAUNCHER_KEYCLOAK_REALM: process.env.LAUNCHER_KEYCLOAK_REALM || '',
-      LAUNCHER_KEYCLOAK_CLIENT_ID: process.env.LAUNCHER_KEYCLOAK_CLIENT_ID || 'openshiftio-public',
+      LAUNCHER_KEYCLOAK_CLIENT_ID: process.env.LAUNCHER_KEYCLOAK_CLIENT_ID || '',
       LAUNCHER_FRONTEND_SENTRY_DSN: process.env.LAUNCHER_FRONTEND_SENTRY_DSN
     }
   });
