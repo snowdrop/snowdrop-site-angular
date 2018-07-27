@@ -23,12 +23,30 @@
         </div>
       </div>
       <div class="preview row">
-        <div (click)="openURL('https://docs.openshift.org/latest/minishift/getting-started/preparing-to-install.html')" class="col-sm-4 runtime link">
+        <a class="col-sm-4 runtime link btn btn-lg btn-secondary" [routerLink]="['guides','get-cloud-ready']">
           <h3 class="align-center">
+            <i class="fa fa-cloud"></i>
             Get Cloud Ready.
           </h3>
-        </div>
-        <div (click)="launch()" class="col-sm-4 runtime link">
+        </a>
+
+        <a class="col-sm-4 runtime link btn btn-lg btn-secondary" [routerLink]="['guides','get-started']">
+          <h3 class="align-center">
+            <i class="fa fa-bolt"></i>
+            Get Started.
+          </h3>
+        </a>
+
+        <a class="col-sm-4 runtime link btn btn-lg btn-secondary" [routerLink]="['guides','use-best-practices']">
+          <h3 class="align-center">
+            <i class="fa fa-book"></i>
+            Use Best Practices.
+          </h3>
+        </a>
+        <!-- <div (click)="openURL('https://docs.openshift.org/latest/minishift/getting-started/preparing-to-install.html')" class="col-sm-4 runtime link">
+            Get Cloud Ready.
+        </div> -->
+        <!-- <div (click)="launch()" class="col-sm-4 runtime link">
           <h3 class="align-center">
             Get Started.
           </h3>
@@ -37,7 +55,7 @@
           <h3 class="align-center">
             Use Best Practices.
           </h3>
-        </div>
+        </div> -->
       </div>
       <div class="preview row">
       </div>
