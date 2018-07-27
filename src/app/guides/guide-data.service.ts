@@ -119,19 +119,21 @@ export class GuideDataService implements OnInit, OnDestroy {
 		let related = [];
 		if (type) {
 			let guides = this.getGuides();
-			let prereqs = [];
 			if (guide && guide[type]) {
-				prereqs = guides.filter((g) => {
+				related = guides.filter((g) => {
 					let matched = false;
-					for (let p of guide[type]) {
+					for (let relatedTags of guide[type]) {
 						let include = true;
-						if (p.indexOf("-") === 0) {
-							include = false;
-							p = p.substr(1, p.length - 1);
+						if (g.tags && (g.tags.indexOf("internal") >= 0)) {
+							return false;
 						}
-						if (g.tags && g.tags.indexOf(p) >= 0) {
+						if (relatedTags.indexOf("-") === 0) {
+							include = false;
+							relatedTags = relatedTags.substr(1, relatedTags.length - 1);
+						}
+						if (g.tags && g.tags.indexOf(relatedTags) >= 0) {
 							if (include) {
-								matched = true;
+								matched = (guide.title !== g.title);
 							} else {
 								return false;
 							}
@@ -140,13 +142,13 @@ export class GuideDataService implements OnInit, OnDestroy {
 					return matched;
 				});
 			}
-			return prereqs;
 		} else {
 			if (guide && guide.tags) {
 				related = guides.filter((g) => {
 					for (let t of g.tags) {
 						if (guide.tags && guide.tags.indexOf(t) >= 0)
-							return guide.title !== g.title;
+							return (guide.title !== g.title) &&
+								(!g.tags || (g.tags.indexOf("hidden") === -1));
 					}
 					return false;
 				});
