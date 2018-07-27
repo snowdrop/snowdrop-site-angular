@@ -122,21 +122,28 @@ export class GuideDataService implements OnInit, OnDestroy {
 			if (guide && guide[type]) {
 				related = guides.filter((g) => {
 					let matched = false;
-					for (let relatedTags of guide[type]) {
-						let include = true;
+					for (let relatedTag of guide[type]) {
+						let exclude = false;
+						let required = false;
 						if (g.tags && (g.tags.indexOf("internal") >= 0)) {
 							return false;
+						} else if (relatedTag.indexOf("-") === 0) {
+							exclude = true;
+							relatedTag = relatedTag.substr(1, relatedTag.length - 1);
+						} else if (relatedTag.indexOf("+") === 0) {
+							required = true;
+							relatedTag = relatedTag.substr(1, relatedTag.length - 1);
 						}
-						if (relatedTags.indexOf("-") === 0) {
-							include = false;
-							relatedTags = relatedTags.substr(1, relatedTags.length - 1);
-						}
-						if (g.tags && g.tags.indexOf(relatedTags) >= 0) {
-							if (include) {
-								matched = (guide.title !== g.title);
-							} else {
+
+						if (g.tags && g.tags.indexOf(relatedTag) >= 0) {
+							if (exclude) {
 								return false;
+							} else {
+								matched = (guide.title !== g.title);
 							}
+						} else if (required) {
+							console.log(`Required tag [${relatedTag}] not found in Guide [${g.title}]`)
+							return false;
 						}
 					}
 					return matched;
