@@ -2,6 +2,7 @@ import { APP_INITIALIZER, NgModule } from "@angular/core";
 
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { RouterModule } from "@angular/router";
 import { AboutComponent } from './about.component';
 import { ComponentsModule } from '../components';
 
@@ -9,7 +10,8 @@ import { ComponentsModule } from '../components';
 	imports: [
 		CommonModule,
 		ComponentsModule,
-		FormsModule
+		FormsModule,
+		RouterModule
 	],
 	declarations: [
 		AboutComponent,
