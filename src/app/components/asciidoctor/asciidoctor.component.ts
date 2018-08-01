@@ -26,17 +26,24 @@ export class AsciidoctorComponent implements OnInit, OnDestroy {
 	set source(source: string) {
 		this._source = source;
 		let render = (retries) => {
-			try {
-				this.rendered = Asciidoctor().convert(source);
-				this.rendered = this.rendered.replace(/<a(?!.*class="anchor"[^>])([^>]+)href\s*=\s*([\"\'])(#[^\'\"]+)([\"\'])/g, `<a$1href=$2${window.location.pathname}$3$4`);
-			} catch (err) {
-				console.error("ASCIIDOC FAILED:", err);
+			let retry = () => {
 				if (retries > 0) {
 					console.log(retries, "retries remain.")
 					setTimeout(() => {
 						render(--retries);
 					}, 250);
 				}
+			}
+
+			try {
+				if (Asciidoctor) {
+					this.rendered = Asciidoctor().convert(source);
+					this.rendered = this.rendered.replace(/<a(?!.*class="anchor"[^>])([^>]+)href\s*=\s*([\"\'])(#[^\'\"]+)([\"\'])/g, `<a$1href=$2${window.location.pathname}$3$4`);
+				} else {
+					retry();
+				}
+			} catch (err) {
+				console.error("ASCIIDOC FAILED:", err);
 			}
 		}
 		render(25);
