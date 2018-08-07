@@ -23,6 +23,7 @@ export class GuidesComponent implements OnInit, OnDestroy {
 	}
 
 	actionsText: string = '';
+	filterText: string = ''
 	buffer: any[];
 	guides: any[];
 
@@ -31,13 +32,20 @@ export class GuidesComponent implements OnInit, OnDestroy {
 			this.guides = this.guideService.getGuides();
 
 			console.log(this.guides);
-
 			this.filterGuides();
+			this.route.queryParamMap.subscribe((params) => {
+				if (params.get("t")) {
+					this.filterText = params.get("t");
+					console.log("Filter text is", this.filterText)
+					this.filterGuides();
+				}
+			});
 		});
 	}
 
-	filterGuides(filter = "") {
-		let keywords = filter.toLowerCase().split(/\s+/gi);
+	filterGuides() {
+		let filter = this.filterText || "";
+		let keywords = filter.toLowerCase().split(/\W+/gi);
 		this.buffer = this.guides.filter((guide: any) => {
 			console.log(guide.title, guide.tags)
 			if (guide.tags && (guide.tags + "").toLowerCase().indexOf("hidden") >= 0) {

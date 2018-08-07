@@ -10,9 +10,13 @@
             </a>
             <h1>{{ guide?.title }}</h1>
             <p>{{ guide?.description }}</p>
-            <p class="tags">
-              <span *ngFor="let t of guide?.tags" class="tag {{t}}">{{t}}</span>
-            </p>
+            <div class="tags">
+              <span *ngFor="let t of guide?.tags" class="tag {{t}}">
+                <a [routerLink]="['/','guides']"  [queryParams]="{'t': t}" class="tag-link">
+                  {{t}}
+                </a>
+              </span>
+            </div>
           </div>
           <hr />
           <ng-container *ngIf="prerequisites?.length > 0">
