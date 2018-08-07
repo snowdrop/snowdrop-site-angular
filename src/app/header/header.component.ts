@@ -19,6 +19,11 @@ export class HeaderComponent {
 
 	pages: Page[] = [
 		{
+			id: "home",
+			name: "Home",
+			route: "/"
+		},
+		{
 			id: "get-started",
 			name: "Get Started",
 			route: "/wizard"
