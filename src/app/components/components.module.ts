@@ -10,6 +10,7 @@ export * from './providers';
 import { RegistryService } from './providers';
 import { GuideDataService } from './providers';
 import { ProjectDataService } from './providers';
+import { TagService } from './providers';
 
 let COMPONENTS = [
 	AsciidoctorComponent
@@ -18,7 +19,8 @@ let COMPONENTS = [
 let PROVIDERS = [
 	RegistryService,
 	GuideDataService,
-	ProjectDataService
+	ProjectDataService,
+	TagService
 ]
 
 @NgModule({

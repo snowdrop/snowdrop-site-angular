@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { Http } from '@angular/http';
 import { ActivatedRoute } from "@angular/router";
 
-import { GuideDataService, ProjectDataService } from '../../components/providers';
+import { GuideDataService, ProjectDataService, TagService } from '../../components/providers';
 
 @Component({
 	selector: "guide-view",
@@ -19,6 +19,7 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 	constructor(
 		private guideService: GuideDataService,
 		private projectService: ProjectDataService,
+		public tags: TagService,
 		private route: ActivatedRoute,
 		private http: Http,
 	) {
@@ -78,5 +79,4 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 		}
 		return this._ready;
 	}
-
 }

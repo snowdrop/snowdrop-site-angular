@@ -12,7 +12,8 @@
             <p>{{ guide?.description }}</p>
             <div class="tags">
               <span *ngFor="let t of guide?.tags" class="tag {{t}}">
-                <a [routerLink]="['/','guides']"  [queryParams]="{'t': t}" class="tag-link">
+                <a [routerLink]="['/','guides']"  [queryParams]="{'t': t}" class="tag-link"
+                  [style.background-color]="tags.getBgColor(t)" [style.color]="tags.getColor(t)">
                   {{t}}
                 </a>
               </span>
@@ -72,7 +73,14 @@
                   <div class="thumbnail project-logo">
                     <img *ngIf="project.urls?.logo" [src]="project.urls?.logo"/>
                   </div>
-                  <h3 class="title">{{project.name}}</h3>
+                  <h3 class="title">
+                    <a [routerLink]="['/','guides']"  [queryParams]="{'t': project.tag}" class="tag-link">
+                      <span class="project-color" [style.background-color]="tags.getBgColor(project.tag)" [style.color]="tags.getColor(project.tag)">
+                        &nbsp;
+                      </span>
+                      {{project.name}}
+                    </a>
+                  </h3>
                   <p class="description">{{project.description}}</p>
                   <p class="actions">
                     <a *ngIf="project.urls?.website" class="btn btn-lg btn-primary" href="project.urls?.website">
@@ -101,7 +109,7 @@
             <ng-container *ngFor="let guide of relatedGuides; let i = index">
               <div *ngIf="i < 4" class="col-sm-12 guide-block">
                 <div>
-                  <h3 class="title">{{guide.title}}</h3>
+                  <h4 class="title">{{guide.title}}</h4>
                   <p class="description">{{guide.description}}</p>
                   <p class="actions">
                     <a *ngIf="guide.urls?.local" class="btn btn-lg btn-primary" [routerLink]="['../',guide.urls.local]">

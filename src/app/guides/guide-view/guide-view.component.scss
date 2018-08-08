@@ -34,13 +34,13 @@ hr {
   .tags {
     .tag {
       display: inline-block;
-      background-color: #e2e2e2;
-      background-image: none;
-      border-radius: 5px;
-      margin-right: 5px;
       cursor: pointer;
+      margin-right: 5px;
 
       a {
+        background-color: #e2e2e2;
+        background-image: none;
+        border-radius: 5px;
         display: inline-block;
         padding: 5px;
         text-decoration: none;
@@ -59,6 +59,11 @@ hr {
     margin-bottom: 0;
   }
 
+  h3,
+  h4 {
+    font-weight: bold !important;
+  }
+
   &.guides {
     padding: 10px;
     border-radius: 5px;
@@ -70,12 +75,25 @@ hr {
     border-radius: 5px;
     background-color: #ebebeb;
 
+    a {
+      text-decoration: none;
+    }
+
     .project-logo {
       float: right;
       margin-left: 10px;
       margin-bottom: 5px;
+      margin-top: 0;
       border-radius: 5px;
       background-color: #fff;
+    }
+
+    .project-color {
+      display: inline-block;
+      padding: 2px;
+      text-align: center;
+      width: 27px;
+      border-radius: 3px;
     }
 
     .thumbnail {

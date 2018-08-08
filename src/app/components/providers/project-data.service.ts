@@ -65,6 +65,18 @@ export class ProjectDataService implements OnInit, OnDestroy {
 		return null;
 	}
 
+	public getProjectByTag(tag: string) {
+		if (this.projects && tag && tag.trim().length > 0) {
+			tag = tag.trim().toLowerCase();
+			for (let project of this.getProjects()) {
+				if (project && project.tag && project.tag.trim().toLowerCase() === tag) {
+					return project;
+				}
+			}
+		}
+		return null;
+	}
+
 	private urlify(value: string) {
 		if (!value) return value;
 		return value.toLowerCase().replace(/[^a-z0-9]/gi, "-").replace("-+", "-");
