@@ -1,13 +1,15 @@
 import { Injectable, OnInit, OnDestroy } from "@angular/core";
 import { Location } from '@angular/common';
 import { Http } from '@angular/http';
-import { RegistryService } from '../components';
+import { RegistryService } from './registry.service';
+import { ProjectDataService } from './project-data.service';
 
 @Injectable()
 export class GuideDataService implements OnInit, OnDestroy {
 
 	constructor(
 		private http: Http,
+		private projectService: ProjectDataService,
 		private registryService: RegistryService
 	) {
 	}
@@ -31,9 +33,11 @@ export class GuideDataService implements OnInit, OnDestroy {
 		if (!this._ready) {
 			console.log("GuideDataService starting up.");
 			this._ready = this.registryService.getRegistry().then((registry) => {
-				console.log("GuideDataService initialized.");
-				this.registry = registry;
-				this.getGuides();
+				return this.projectService.ready().then(() => {
+					console.log("GuideDataService initialized.");
+					this.registry = registry;
+					this.getGuides();
+				});
 			});
 		}
 		return this._ready;
@@ -164,6 +168,17 @@ export class GuideDataService implements OnInit, OnDestroy {
 		return related;
 	}
 
+	public getRelatedProjects(guide: any) {
+		let projects = this.projectService.getProjects();
+		let related = [];
+		if (guide && guide.tags) {
+			related = projects.filter((p) => {
+				return guide.tags && guide.tags.indexOf(p.tag) >= 0;
+			});
+		}
+		return related;
+	}
+
 	private getGuideIcon(guide: any) {
 		let result = "code";
 		if (guide && guide.type === "booster") {
@@ -216,6 +231,6 @@ export class GuideDataService implements OnInit, OnDestroy {
 
 	private urlify(value: string) {
 		if (!value) return value;
-		return value.toLowerCase().replace(/[^a-z0-9]/gi, "-").replace("-+", "-");
+		return value.toLowerCase().replace(/[^a-z0-9]+/gi, "-");
 	}
 }

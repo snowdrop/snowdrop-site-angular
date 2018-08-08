@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { Http } from '@angular/http';
 import { ActivatedRoute } from "@angular/router";
 
-import { GuideDataService } from '../guide-data.service';
+import { GuideDataService, ProjectDataService } from '../../components/providers';
 
 @Component({
 	selector: "guide-view",
@@ -12,11 +12,13 @@ import { GuideDataService } from '../guide-data.service';
 export class GuideViewComponent implements OnInit, OnDestroy {
 
 	relatedGuides: any[] = [];
+	relatedProjects: any[] = [];
 	prerequisites: any[] = [];
 	enablements: any[] = [];
 
 	constructor(
 		private guideService: GuideDataService,
+		private projectService: ProjectDataService,
 		private route: ActivatedRoute,
 		private http: Http,
 	) {
@@ -63,14 +65,15 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 						this.guide = this.guideService.getGuideByTitle(this.guideId);
 						console.log(`Loading ${this.guideId}`, this.guide);
 						this.relatedGuides = this.guideService.getRelatedGuides(this.guide);
+						this.relatedProjects = this.guideService.getRelatedProjects(this.guide);
 						this.prerequisites = this.guideService.getGuidePrerequisites(this.guide);
 						this.enablements = this.guideService.getGuideEnablements(this.guide);
 						return this.guideService.render(this.guide).then((source) => {
 							console.log(this.guide, source);
 							this.source = source;
 						});
-					})
-				})
+					});
+				});
 			});
 		}
 		return this._ready;

@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 
-import { GuideDataService } from './guide-data.service';
+import { GuideDataService } from '../components/providers';
 
 @Component({
 	selector: "guides",

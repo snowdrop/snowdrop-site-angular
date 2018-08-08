@@ -8,7 +8,6 @@ import { ComponentsModule } from '../components';
 
 import { GuidesComponent } from './guides.component';
 import { GuideViewComponent } from './guide-view/guide-view.component';
-import { GuideDataService } from './guide-data.service';
 
 
 import { Config, HelperService } from "ngx-launcher";
@@ -36,7 +35,6 @@ export class Helper extends HelperService {
 		GuideViewComponent,
 	],
 	providers: [
-		GuideDataService,
 	]
 })
 export class GuidesModule {

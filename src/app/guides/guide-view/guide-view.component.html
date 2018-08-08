@@ -54,6 +54,42 @@
             </div>
           </ng-container>
         </div>
+
+        <div *ngIf="relatedProjects?.length > 0" class="col-sm-4 padding-15">
+
+          <div class="row row-cards-pf projects">
+            <div class="col-sm-12">
+              <h2>What we're using</h2>
+              <p>
+                Learn more about the open-source projects used in this guide:
+              </p>
+              <hr />
+            </div>
+
+            <ng-container *ngFor="let project of relatedProjects; let i = index">
+              <div *ngIf="i < 4" class="col-sm-12 guide-block">
+                <div>
+                  <div class="thumbnail project-logo">
+                    <img *ngIf="project.urls?.logo" [src]="project.urls?.logo"/>
+                  </div>
+                  <h3 class="title">{{project.name}}</h3>
+                  <p class="description">{{project.description}}</p>
+                  <p class="actions">
+                    <a *ngIf="project.urls?.website" class="btn btn-lg btn-primary" href="project.urls?.website">
+                      <i class="fa fa-globe"></i>
+                      View website
+                    </a>
+                    <a *ngIf="project.urls?.source" class="btn btn-lg btn-secondary" href="project.urls?.source">
+                      <i class="fa fa-code"></i>
+                      Sources
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
         <div *ngIf="relatedGuides?.length > 0" class="col-sm-4 padding-15">
 
           <div class="row row-cards-pf guides">
@@ -78,6 +114,7 @@
             </ng-container>
           </div>
         </div>
+
       </div>
     </div>
     <div class="row padding-top-10">

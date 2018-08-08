@@ -8,13 +8,17 @@ import { AsciidoctorComponent } from './asciidoctor/asciidoctor.component';
 
 export * from './providers';
 import { RegistryService } from './providers';
+import { GuideDataService } from './providers';
+import { ProjectDataService } from './providers';
 
 let COMPONENTS = [
 	AsciidoctorComponent
 ];
 
 let PROVIDERS = [
-	RegistryService
+	RegistryService,
+	GuideDataService,
+	ProjectDataService
 ]
 
 @NgModule({
