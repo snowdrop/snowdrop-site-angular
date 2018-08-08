@@ -4,10 +4,6 @@
       <div *ngIf="guide" class="row">
         <div class="padding-15" [class.col-sm-8]="relatedGuides?.length" [class.col-sm-12]="!relatedGuides?.length">
           <div class="guide-header">
-            <a *ngIf="guide.urls?.booster" class="download" href="{{guide.urls.booster}}" target="_blank">
-              <i class="fa rocket"></i>
-              Download ZIP
-            </a>
             <h1>{{ guide?.title }}</h1>
             <p>{{ guide?.description }}</p>
             <div class="tags">
@@ -54,6 +50,35 @@
               </div>
             </div>
           </ng-container>
+        </div>
+
+
+        <div class="col-sm-4 padding-15">
+
+          <div class="row row-cards-pf metadata">
+            <div class="col-sm-12">
+              <h2>Get the code</h2>
+              <a *ngIf="guide.urls?.booster; else sources" class="btn btn-primary download" href="{{guide.urls.booster}}" target="_blank">
+                <i class="fa fa-save"></i>
+                Download ZIP
+              </a>
+              <ng-template #sources>
+                <a *ngIf="guide.urls?.source; else sources" class="btn btn-primary download repo" href="{{guide.urls.source}}" target="_blank">
+                  <i class="fa fa-code"></i>
+                  GitHub
+                </a>
+                <a *ngIf="guide.urls?.source; else sources" class="btn btn-secondary download zip" href="{{guide.urls.source}}/archive/master.zip" target="_blank">
+                  <i class="fa fa-save"></i>
+                  Zip
+                </a>
+              </ng-template>
+            </div>
+
+            <div class="col-sm-12">
+              &nbsp;
+            </div>
+
+          </div>
         </div>
 
         <div *ngIf="relatedProjects?.length > 0" class="col-sm-4 padding-15">

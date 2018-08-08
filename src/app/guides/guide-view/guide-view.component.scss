@@ -21,14 +21,8 @@ hr {
 }
 
 .guide-header {
-  .download {
-    float: right;
-    display: block;
-    text-align: right;
-    margin: 0 0 10px 10px;
-    background-color: #dbedff;
-    padding: 10px;
-    border-radius: 5px;
+  h1 {
+    margin-top: 0 !important;
   }
 
   .tags {
@@ -54,7 +48,14 @@ hr {
 }
 
 .guides,
+.metadata,
 .projects {
+  border-top: solid 3px #777;
+  background-color: #ebebeb;
+  padding: 0 !important;
+  margin-top: 0;
+  border-radius: 5px;
+
   hr {
     margin-bottom: 0;
   }
@@ -64,17 +65,28 @@ hr {
     font-weight: bold !important;
   }
 
-  &.guides {
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #ebebeb;
+  &.guides {}
+
+  &.metadata {
+    .download {
+      text-transform: uppercase;
+      display: block;
+      padding: 10px;
+      width: 100%;
+
+      &.repo {
+        float: left;
+        width: 60%;
+      }
+
+      &.zip {
+        float: right;
+        width: 35%;
+      }
+    }
   }
 
   &.projects {
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #ebebeb;
-
     a {
       text-decoration: none;
     }
