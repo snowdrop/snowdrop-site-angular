@@ -24,30 +24,54 @@ export class GuidesComponent implements OnInit, OnDestroy {
 
 	actionsText: string = '';
 	filterText: string = ''
-	buffer: any[];
-	guides: any[];
+	categories: any[];
 
 	ngOnInit(): void {
 		this.guideService.ready().then(() => {
-			this.guides = this.guideService.getGuides();
+			this.categories = this.guideService.getCategories();
 
-			console.log(this.guides);
-			this.filterGuides();
 			this.route.queryParamMap.subscribe((params) => {
 				if (params.get("t")) {
 					this.filterText = params.get("t");
-					console.log("Filter text is", this.filterText)
-					this.filterGuides();
 				}
 			});
 		});
 	}
 
-	filterGuides() {
+	getCategoryGuides(category) {
+		return this.filterGuides(this.guideService.getRelatedGuides(category));
+	}
+
+	getOtherGuides() {
+		return this.filterGuides(this.guideService.getGuides().filter((g) => {
+			return !this.guideIsCategorized(g);
+		}));
+	}
+
+	categoryHasGuides(category) {
+		return this.getCategoryGuides(category).length > 0;
+	}
+
+	guideIsCategorized(guide) {
+		if (guide) {
+			if (this.categories) {
+				for (let c of this.categories) {
+					for (let g of this.getCategoryGuides(c)) {
+						if (g.title === guide.title) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	filterGuides(guides?) {
+		if (!guides) return [];
 		let filter = this.filterText || "";
 		let keywords = filter.toLowerCase().split(/\W+/gi);
-		this.buffer = this.guides.filter((guide: any) => {
-			console.log(guide.title, guide.tags)
+		return guides.filter((guide: any) => {
 			if (guide.tags && (guide.tags + "").toLowerCase().indexOf("hidden") >= 0) {
 				return false;
 			}

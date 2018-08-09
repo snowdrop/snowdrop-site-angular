@@ -18,6 +18,7 @@ export class GuideDataService implements OnInit, OnDestroy {
 	}
 
 	private _ready: Promise<void> = null;
+	private categories: any[];
 	private guides: any[];
 	private registry: any;
 
@@ -52,6 +53,30 @@ export class GuideDataService implements OnInit, OnDestroy {
 		});
 	}
 
+
+	public getCategories() {
+		if (!this.categories) {
+			let result = [];
+			let notNullOrEmpty = (value) => {
+				return value && value.trim() !== 0;
+			};
+
+			if (this.registry) {
+				for (let category of this.registry.categories) {
+					let c: any = {
+						name: category.name,
+						description: category.description,
+						tags: this.getGuideTags(category, "tags"),
+					}
+					result.push(c);
+				}
+			}
+			this.categories = result;
+		}
+
+		return this.categories;
+	}
+
 	public getGuideByTitle(title: string) {
 		if (this.guides && title && title.trim().length > 0) {
 			title = this.urlify(title);
@@ -65,6 +90,7 @@ export class GuideDataService implements OnInit, OnDestroy {
 	}
 
 	public getGuides() {
+		if (!this.registry) return [];
 		if (!this.guides) {
 			let result = [];
 			let notNullOrEmpty = (value) => {

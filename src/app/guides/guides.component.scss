@@ -2,6 +2,18 @@ a.link {
   color: #1ebd1e;
 }
 
+.category {
+  border-top: solid 3px #ccc;
+  border-radius: 15px;
+  background-color: #ffffff;
+  padding: 15px;
+  margin-bottom: 20px;
+
+  h2 {
+    margin-top: 0;
+  }
+}
+
 .guide-block {
   min-height: 230px;
   height: 230px;
@@ -11,7 +23,7 @@ a.link {
 .guide-inner {
   height: 100%;
   width: 100%;
-  border-radius: 15px;
+  border-radius: 5px;
   background-color: #e6e6e6;
   padding: 15px;
 
