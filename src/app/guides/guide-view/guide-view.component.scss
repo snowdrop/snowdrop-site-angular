@@ -8,6 +8,30 @@ hr {
   background: #888;
   background-image: linear-gradient(to right, #ccc, #888, #ccc);
 }
+/* Only stick if you can fit */
+@media (min-height: 300px) {
+  .toc-container {
+    position: sticky;
+    top: 0;
+  }
+
+  .toc-inner {
+    min-height: calc(100vh);
+    padding-bottom: 20px;
+  }
+}
+
+.toc-inner {
+  h2 {
+    padding-left: 0;
+  }
+}
+
+.toc {
+  ul {
+    padding-left: 0 !important;
+  }
+}
 
 .documentation {
   h1,
@@ -212,4 +236,9 @@ hr {
       text-transform: uppercase;
     }
   }
+}
+
+.related {
+  position: sticky;
+  top: 0;
 }

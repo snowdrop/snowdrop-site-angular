@@ -1,15 +1,27 @@
-import { Component, Input, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, OnDestroy, Output, ViewChild, ViewEncapsulation } from "@angular/core";
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 
 declare var Asciidoctor;
 
 @Component({
+	encapsulation: ViewEncapsulation.None,
 	selector: "asciidoctor",
 	templateUrl: "./asciidoctor.component.html",
 	styleUrls: ["./asciidoctor.component.scss"]
 })
 export class AsciidoctorComponent implements OnInit, OnDestroy {
 
+	@Input("toc")
+	private toc: boolean = false;
+
+	@Output()
+	error: EventEmitter<AsciidoctorComponent> = new EventEmitter();
+
+	@Output()
+	loaded: EventEmitter<AsciidoctorComponent> = new EventEmitter();
+
 	constructor(
+		private sanitizer: DomSanitizer
 	) {
 	}
 
@@ -17,7 +29,7 @@ export class AsciidoctorComponent implements OnInit, OnDestroy {
 	}
 
 	_source: string = null;
-	rendered: string = "Loading...";
+	rendered: SafeHtml = null;
 
 	ngOnInit(): void {
 	}
@@ -37,13 +49,35 @@ export class AsciidoctorComponent implements OnInit, OnDestroy {
 
 			try {
 				if (Asciidoctor) {
-					this.rendered = Asciidoctor().convert(source);
-					this.rendered = this.rendered.replace(/<a(?!.*class="anchor"[^>])([^>]+)href\s*=\s*([\"\'])(#[^\'\"]+)([\"\'])/g, `<a$1href=$2${window.location.pathname}$3$4`);
+					let html = "";
+					if (!this.toc) {
+						html = Asciidoctor().convert(source).replace(/<a(?!.*class="anchor"[^>])([^>]+)href\s*=\s*([\"\'])(#[^\'\"]+)([\"\'])/g, `<a$1href=$2${window.location.pathname}$3$4`);
+						this.loaded.emit(this);
+					} else {
+						if (source.toLowerCase().indexOf(":toc:") == -1) {
+							source = `:toc:\n` + source;
+						}
+						html = Asciidoctor().convert(source).replace(/<a(?!.*class="anchor"[^>])([^>]+)href\s*=\s*([\"\'])(#[^\'\"]+)([\"\'])/g, `<a$1href=$2${window.location.pathname}$3$4`);
+						const div = document.createElement("div");
+						div.innerHTML = html;
+						const tocElements = div.getElementsByClassName("toc");
+						if (tocElements.length) {
+							const toc = tocElements.item(0);
+							const tocHtml = toc.outerHTML.replace(/<div[^>]*id="toctitle"[^>]*>[^<]*<\/div>/, "");
+							html = tocHtml;
+							this.loaded.emit(this);
+						} else {
+							html = "No table of contents.";
+							this.error.emit(this);
+						}
+					}
+					this.rendered = this.sanitizer.bypassSecurityTrustHtml(html);
 				} else {
 					retry();
 				}
 			} catch (err) {
 				console.error("ASCIIDOC FAILED:", err);
+				this.error.emit(this);
 			}
 		}
 		render(25);

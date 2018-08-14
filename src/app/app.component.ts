@@ -11,13 +11,16 @@ export class AppComponent {
 	@HostBinding('class.cards-pf') private intro: boolean;
 
 	constructor(private router: Router, private route: ActivatedRoute) {
-		router.events.subscribe((url: any) => {
-			this.intro = url.url !== '/' && url.url !== '/wizard';
-			window.scrollTo(0, 0);
-		});
+		// router.events.subscribe((url: any) => {
+		// 	this.intro = url.url !== '/' && url.url !== '/wizard';
+		// 	window.scrollTo(0, 0);
+		// });
 
 		router.events.pipe(distinctUntilChanged(((previous: any, current: any) => {
 			if (current instanceof NavigationEnd) {
+				if (previous.url.replace(/(#.*)/, "") !== current.url.replace(/(#.*)/, "")) {
+					window.scrollTo(0, 0);
+				}
 				return previous.url === current.url;
 			}
 			return true;

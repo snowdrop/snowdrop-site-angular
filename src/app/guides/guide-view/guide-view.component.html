@@ -123,9 +123,21 @@
           </div>
         </div>
 
-        <div *ngIf="relatedGuides?.length > 0" class="col-sm-4 padding-15">
+        <div class="col-sm-4 padding-15 toc-container">
 
-          <div class="row row-cards-pf guides">
+          <div [hidden]="!displayToc" class="row toc-inner">
+            <div class="col-sm-12">
+              <h2>Table of Contents</h2>
+              <hr />
+            </div>
+
+
+            <div class="col-sm-12 guide-block">
+              <asciidoctor [source]="source" [toc]=true (loaded)="showToc(true)" (error)="showToc(false)"></asciidoctor>
+            </div>
+          </div>
+
+          <div *ngIf="relatedGuides?.length > 0" class="row row-cards-pf related guides">
             <div class="col-sm-12">
               <h2>Keep learning</h2>
               <hr />

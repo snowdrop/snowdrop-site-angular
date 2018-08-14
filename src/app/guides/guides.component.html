@@ -1,36 +1,35 @@
 <div class="container">
   <div class="padding-15">
-    <div class="cards-pf">
-      <div class="row">
-        <div class="col-sm-12 padding-15">
-          <form>
-            <input [(ngModel)]="filterText" (change)="filterGuides(filter.value)" id="filter" #filter type="text" placeholder="Search guides..."  [ngModelOptions]="{standalone: true}"/>
-          </form>
-        </div>
-      </div>
-      <ng-container *ngFor="let category of categories">
-        <div *ngIf="categoryHasGuides(category)" class="row row-cards-pf category">
-            <div class="col-12">
-              <h2>{{category.name}}</h2>
-              <p>
-                {{category.description}}
-              </p>
-            </div>
-            <div *ngFor="let guide of getCategoryGuides(category)" class="col-sm-6 guide-block">
-              <ng-container *ngTemplateOutlet="guideTemplate;context:{'guide':guide}"></ng-container>
-            </div>
-        </div>
-      </ng-container>
-
-      <div *ngIf="getOtherGuides().length > 0" class="row row-cards-pf category">
-        <div class="col-12">
-          <h2>Other guides & topics</h2>
-        </div>
-        <div *ngFor="let guide of getOtherGuides()" class="col-sm-6 guide-block">
-          <ng-container *ngTemplateOutlet="guideTemplate;context:{'guide':guide}"></ng-container>
-        </div>
+    <div class="row">
+      <div class="col-sm-12 padding-15">
+        <form>
+          <input [(ngModel)]="filterText" (change)="filterGuides(filter.value)" id="filter" #filter type="text" placeholder="Search guides..."  [ngModelOptions]="{standalone: true}"/>
+        </form>
       </div>
     </div>
+    <ng-container *ngFor="let category of categories">
+      <div *ngIf="categoryHasGuides(category)" class="row row-cards-pf category">
+          <div class="col-12">
+            <h2>{{category.name}}</h2>
+            <p>
+              {{category.description}}
+            </p>
+          </div>
+          <div *ngFor="let guide of getCategoryGuides(category)" class="col-sm-6 guide-block">
+            <ng-container *ngTemplateOutlet="guideTemplate;context:{'guide':guide}"></ng-container>
+          </div>
+      </div>
+    </ng-container>
+
+    <div *ngIf="getOtherGuides().length > 0" class="row row-cards-pf category">
+      <div class="col-12">
+        <h2>Other guides & topics</h2>
+      </div>
+      <div *ngFor="let guide of getOtherGuides()" class="col-sm-6 guide-block">
+        <ng-container *ngTemplateOutlet="guideTemplate;context:{'guide':guide}"></ng-container>
+      </div>
+    </div>
+
     <div class="row padding-top-10">
       <div class="col-sm-12">
         <hr/>
