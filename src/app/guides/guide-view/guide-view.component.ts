@@ -104,6 +104,10 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 		this.displayToc = enabled;
 	}
 
+	goTop() {
+		window.scrollTo(0, 0);
+	}
+
 	private handler = this.throttle((event) => {
 		const fromTop = window.scrollY;
 		const links = Array.from(document.querySelectorAll(`.toc a`)) || [];

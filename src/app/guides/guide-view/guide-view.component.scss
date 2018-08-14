@@ -37,6 +37,23 @@ hr {
   }
 }
 
+.toc-top-link {
+  display: inline-block;
+  float: right;
+  font-size: 14px;
+  line-height: 14px;
+  padding: 5px;
+  margin-top: 2px;
+  background-color: #dfdfdf;
+  border-radius: 3px;
+  text-decoration: none !important;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #cfcfcf;
+  }
+}
+
 .toc {
   ul {
     padding-left: 0 !important;
