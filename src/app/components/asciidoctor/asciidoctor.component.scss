@@ -1,9 +1,15 @@
 .current {
-  font-weight: bold !important;
+  text-shadow: 0 0 1px black !important;
 }
 
 .sectlevel1 {
   font-size: 16px;
+  list-style: none;
+  padding-left: 10px;
+
+  li {
+    margin-top: 10px;
+  }
 }
 
 .sectlevel2 {

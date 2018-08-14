@@ -34,8 +34,8 @@
           </ng-container>
           <asciidoctor [source]="source"></asciidoctor>
 
-          <hr />
           <ng-container *ngIf="enablements?.length > 0">
+            <hr />
             <div class="prerequisites enablements">
               <div class="prereq prereq-label">
                 <span class="label">Now try this</span>
@@ -54,8 +54,7 @@
 
 
         <div class="col-sm-4 padding-15">
-
-          <div class="row row-cards-pf metadata">
+          <div *ngIf="guide.urls?.booster || guide.urls?.source" class="row row-cards-pf metadata">
             <div class="col-sm-12">
               <h2>Get the code</h2>
               <a *ngIf="guide.urls?.booster; else sources" class="btn btn-primary download" href="{{guide.urls.booster}}" target="_blank">
@@ -63,11 +62,11 @@
                 Download ZIP
               </a>
               <ng-template #sources>
-                <a *ngIf="guide.urls?.source; else sources" class="btn btn-primary download repo" href="{{guide.urls.source}}" target="_blank">
+                <a *ngIf="guide.urls?.source" class="btn btn-primary download repo" href="{{guide.urls.source}}" target="_blank">
                   <i class="fa fa-code"></i>
                   GitHub
                 </a>
-                <a *ngIf="guide.urls?.source; else sources" class="btn btn-secondary download zip" href="{{guide.urls.source}}/archive/master.zip" target="_blank">
+                <a *ngIf="guide.urls?.source" class="btn btn-secondary download zip" href="{{guide.urls.source}}/archive/master.zip" target="_blank">
                   <i class="fa fa-save"></i>
                   Zip
                 </a>
@@ -125,7 +124,7 @@
 
         <div class="col-sm-4 padding-15 toc-container">
 
-          <div [hidden]="!displayToc" class="row toc-inner">
+          <div [hidden]="!displayToc" class="row row-cards-pf toc-inner">
             <div class="col-sm-12">
               <h2>Table of Contents</h2>
               <hr />
@@ -146,14 +145,8 @@
             <ng-container *ngFor="let guide of relatedGuides; let i = index">
               <div *ngIf="i < 4" class="col-sm-12 guide-block">
                 <div>
-                  <h4 class="title">{{guide.title}}</h4>
+                  <h4 class="title"><a *ngIf="guide.urls?.local" [routerLink]="['../',guide.urls.local]"> {{guide.title}}  </a></h4>
                   <p class="description">{{guide.description}}</p>
-                  <p class="actions">
-                    <a *ngIf="guide.urls?.local" class="btn btn-lg btn-primary" [routerLink]="['../',guide.urls.local]">
-                      <i class="fa fa-book"></i>
-                      View guide
-                    </a>
-                  </p>
                 </div>
               </div>
             </ng-container>
