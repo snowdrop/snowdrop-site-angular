@@ -107,11 +107,11 @@
                   </h3>
                   <p class="description">{{project.description}}</p>
                   <p class="actions">
-                    <a *ngIf="project.urls?.website" class="btn btn-lg btn-primary" href="project.urls?.website">
+                    <a *ngIf="project.urls?.website" class="btn btn-lg btn-primary" href="{{project.urls.website}}">
                       <i class="fa fa-globe"></i>
                       View website
                     </a>
-                    <a *ngIf="project.urls?.source" class="btn btn-lg btn-secondary" href="project.urls?.source">
+                    <a *ngIf="project.urls?.source" class="btn btn-lg btn-secondary" href="{{project.urls.source}}">
                       <i class="fa fa-code"></i>
                       Sources
                     </a>
