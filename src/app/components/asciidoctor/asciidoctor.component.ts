@@ -11,6 +11,9 @@ declare var Asciidoctor;
 })
 export class AsciidoctorComponent implements OnInit, OnDestroy {
 
+	@Input("expandable")
+	private expandable: boolean = false;
+
 	@Input("toc")
 	private toc: boolean = false;
 
@@ -52,7 +55,9 @@ export class AsciidoctorComponent implements OnInit, OnDestroy {
 					let html = "";
 					if (!this.toc) {
 						html = Asciidoctor().convert(source).replace(/<a(?!.*class="anchor"[^>])([^>]+)href\s*=\s*([\"\'])(#[^\'\"]+)([\"\'])/g, `<a$1href=$2${window.location.pathname}$3$4`);
-						html = html.replace(/<div([^>]+)class="sect2([^"]*)"([^>]*)>/g, `<div$1class="sect2$2 expandable"$3>`);
+						if (this.expandable) {
+							html = html.replace(/<div([^>]+)class="sect2([^"]*)"([^>]*)>/g, `<div$1class="sect2$2 expandable"$3>`);
+						}
 						this.loaded.emit(this);
 					} else {
 						if (source.toLowerCase().indexOf(":toc:") == -1) {

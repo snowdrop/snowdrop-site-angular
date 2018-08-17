@@ -32,7 +32,7 @@
             </div>
             <hr />
           </ng-container>
-          <asciidoctor [source]="source"></asciidoctor>
+          <asciidoctor [source]="source" [expandable]=true ></asciidoctor>
 
           <ng-container *ngIf="enablements?.length > 0">
             <hr />
