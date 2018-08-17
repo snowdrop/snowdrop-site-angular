@@ -15,3 +15,68 @@
 .sectlevel2 {
   font-size: 14px;
 }
+
+.sect2.expandable {
+  transition: all 200ms;
+  margin-bottom: 10px;
+  border-radius: 3px;
+
+  div {
+    transition: all 200ms;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  > :first-child {
+    border-radius: 3px;
+    transition: all 200ms;
+    padding: 9px 10px;
+
+    &:hover {
+      background-color: #ccccff;
+    }
+  }
+
+  > :last-child {
+    padding-bottom: 10px;
+  }
+
+  > :not(div)::before {
+    content: "-";
+    height: 20px;
+    width: 20px;
+    font-size: 20px;
+    display: inline-block;
+    font-weight: bold;
+    font-family: courier;
+    color: #00cc00;
+  }
+
+  &:not(.expand) {
+    background-color: #ccffcc;
+    border-radius: 3px;
+    cursor: pointer;
+
+    div {
+      display: none;
+    }
+
+    > :not(div)::before {
+      content: "+";
+    }
+  }
+
+  &.expand {
+    background-color: #ddd;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+  }
+}

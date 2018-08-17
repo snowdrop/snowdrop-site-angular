@@ -33,6 +33,9 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 							behavior: "auto",
 							block: "start",
 						});
+						if (element.parentElement.classList.contains("expandable")) {
+							element.parentElement.classList.add("expand");
+						}
 					}
 				}, 150);
 			});
@@ -91,6 +94,9 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 						return this.guideService.render(this.guide).then((source) => {
 							console.log(this.guide, source);
 							this.source = source;
+							setTimeout(() => {
+								this.attachCollapseHandlers();
+							}, 200);
 							resolve();
 						});
 					}).catch(reject);
@@ -98,6 +104,22 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 			});
 		}
 		return this._ready;
+	}
+
+	attachCollapseHandlers() {
+		const sections = document.getElementsByClassName("sect2");
+		console.log("Sections", sections);
+		for (let i = 0; i < sections.length; i++) {
+			const section = sections[i];
+			section.children.item(0).addEventListener("click", (event: Event) => {
+				if (section.classList.contains("expand")) {
+					section.classList.remove("expand");
+				} else {
+					section.classList.add("expand");
+				}
+				console.log("Toggled section", section.classList.toString(), section);
+			});
+		}
 	}
 
 	showToc(enabled) {
