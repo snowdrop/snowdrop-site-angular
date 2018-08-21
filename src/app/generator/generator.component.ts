@@ -17,6 +17,8 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 	versions = [];
 	modules = [];
 
+	modulesSelected = [];
+
 	constructor(
 		private route: ActivatedRoute,
 		private http: Http,
@@ -71,6 +73,23 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 			version: [this.versions[0], [Validators.required]],
 			modules: [[]]
 		});
+		this.genForm.controls['modules'].valueChanges.subscribe((value) => {
+			this.moduleSelected(value);
+		});
+	}
+
+	moduleSelected(mod) {
+		console.log(mod)
+		if (this.modulesSelected.indexOf(mod) === -1) {
+			this.modulesSelected.push(mod);
+		}
+	}
+
+	removeModule(mod) {
+		const index = this.modulesSelected.indexOf(mod);
+		if (index > -1) {
+			this.modulesSelected.splice(index, 1);
+		}
 	}
 
 	generate() {

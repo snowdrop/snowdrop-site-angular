@@ -1,0 +1,22 @@
+.module {
+  background-color: #ccffcc;
+  color: #000;
+  font-weight: bold;
+  border-radius: 3px;
+  cursor: pointer;
+  float: left;
+  width: auto;
+  padding: 5px;
+  margin-bottom: 15px;
+  margin-right: 10px;
+
+  &:hover {
+    background-color: #ffcccc;
+    color: #000;
+  }
+}
+
+.clear {
+  clear: both;
+  float: none;
+}
