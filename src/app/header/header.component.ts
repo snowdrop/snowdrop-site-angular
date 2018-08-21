@@ -26,7 +26,7 @@ export class HeaderComponent {
 		{
 			id: "get-started",
 			name: "Get Started",
-			route: "/wizard"
+			route: "/guides/get-started"
 		},
 		{
 			id: "guides",

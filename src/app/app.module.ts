@@ -16,6 +16,7 @@ import { AboutModule } from "./about/about.module";
 import { ComponentsModule } from "./components/components.module";
 import { DocsModule } from "./docs/docs.module";
 import { NewsModule } from "./news/news.module";
+import { GeneratorModule } from "./generator/generator.module";
 import { GuidesModule } from "./guides/guides.module";
 
 @NgModule({
@@ -31,6 +32,7 @@ import { GuidesModule } from "./guides/guides.module";
 		AboutModule,
 		DocsModule,
 		NewsModule,
+		GeneratorModule,
 		GuidesModule
 	],
 	declarations: [

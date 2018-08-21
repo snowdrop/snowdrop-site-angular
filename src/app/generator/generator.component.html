@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="padding-15">
+    <div class="row">
+      <div class="col-sm-12 padding-15">
+        <h1>Generate a Spring Boot Project</h1>
+        <form [formGroup]="genForm" (ngSubmit)="generate()">
+          <div class="form-group">
+            <label for="modules">Spring Boot Version</label>
+            <select formControlName="version" class="form-control" id="version" aria-describedby="versionHelp">
+              <option *ngFor="let v of versions" [value]="v">{{v}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="groupId">Group ID</label>
+            <input formControlName="groupId" type="text" class="form-control" id="groupId" aria-describedby="groupIdHelp" placeholder="Enter group ID">
+            <small id="groupIdHelp" class="form-text text-muted">Typically this is your top-level domain.</small>
+          </div>
+          <div class="form-group">
+            <label for="artifactId">Artifact ID</label>
+            <input formControlName="artifactId" type="text" class="form-control" id="artifactId" aria-describedby="artifactIdHelp" placeholder="Artifact ID">
+            <small id="artifactIdHelp" class="form-text text-muted">Usually based on the name of your project.</small>
+          </div>
+          <div class="form-group">
+            <label for="modules">Modules & Integrations</label>
+            <select formControlName="modules" class="form-control" id="modules">
+              <option *ngFor="let m of modules" [value]="m.value">{{m.name}}</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Generate Project</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

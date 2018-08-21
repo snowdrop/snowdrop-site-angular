@@ -5,14 +5,11 @@ import { DocsComponent } from "./docs/docs.component";
 import { NewsComponent } from "./news/news.component";
 import { NewsViewComponent } from "./news/news-view/news-view.component";
 import { HomeComponent } from "./home/home.component";
+import { GeneratorComponent } from "./generator/generator.component";
 import { GuidesComponent } from "./guides/guides.component";
 import { GuideViewComponent } from "./guides/guide-view/guide-view.component";
 
 const routes: Routes = [
-	{
-		path: 'wizard',
-		loadChildren: './wizard/wizard.module#WizardModule'
-	},
 	{
 		path: "",
 		children: [{
@@ -46,6 +43,14 @@ const routes: Routes = [
 		}, {
 			path: ":articleId",
 			component: NewsViewComponent,
+			pathMatch: 'full'
+		}]
+	},
+	{
+		path: "start",
+		children: [{
+			path: "",
+			component: GeneratorComponent,
 			pathMatch: 'full'
 		}]
 	},
