@@ -1,39 +1,72 @@
 <div class="container">
   <div class="padding-15">
     <div class="row">
-      <div class="col-sm-12 padding-15">
+      <div class="col-sm-10 padding-15">
         <h1>Generate a Spring Boot Project</h1>
-        <form [formGroup]="genForm" (ngSubmit)="generate()">
+
+        <form *ngIf="genForm" [formGroup]="genForm" (ngSubmit)="generate()">
+
           <div class="form-group">
-            <label for="modules">Spring Boot Version</label>
-            <select formControlName="version" class="form-control" id="version" aria-describedby="versionHelp">
-              <option *ngFor="let v of versions" [value]="v">{{v}}</option>
+            <label for="modules">Snowdrop Version</label>
+            <select formControlName="bomVersion" class="form-control" id="snowdropVersion" aria-describedby="snowdropVersionHelp">
+              <option *ngFor="let v of snowdropVersions" [value]="v">{{v}}</option>
+            </select>
+            <small id="snowdropVersionHelp" class="form-text text-muted">Sets the Snowdrop version, including default Spring Boot version and other dependencies.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="modules" class="text-muted">Spring Boot Version (Override)</label>
+            <select formControlName="springbootVersion" class="form-control" id="springbootVersion" aria-describedby="springbootVersionHelp">
+              <option *ngFor="let v of springbootVersions" [value]="v">{{v}}</option>
             </select>
           </div>
+
+          <div class="form-group">
+            <label for="template">Application Type</label>
+            <div class="clear"></div>
+            <ng-container *ngFor="let t of templates">
+              <a (click)="selectTemplate(t.value)" class="template btn" [class.btn-primary]="genForm.controls['template'].value === t.value">
+                {{t.name}}
+              </a>
+            </ng-container>
+            <div class="clear"></div>
+            <small id="templateHelp" class="form-text text-muted">{{getTemplateDescription()}}.</small>
+          </div>
+
           <div class="form-group">
             <label for="groupId">Group ID</label>
             <input formControlName="groupId" type="text" class="form-control" id="groupId" aria-describedby="groupIdHelp" placeholder="Enter group ID">
             <small id="groupIdHelp" class="form-text text-muted">Typically this is your top-level domain.</small>
           </div>
+
           <div class="form-group">
             <label for="artifactId">Artifact ID</label>
             <input formControlName="artifactId" type="text" class="form-control" id="artifactId" aria-describedby="artifactIdHelp" placeholder="Artifact ID">
             <small id="artifactIdHelp" class="form-text text-muted">Usually based on the name of your project.</small>
           </div>
+
+          <div class="form-group">
+            <label for="artifactId" class="text-muted">Project Version</label>
+            <input formControlName="version" type="text" class="form-control" id="artifactId" aria-describedby="version" placeholder="1.0.0-SNAPSHOT">
+            <small id="versionHelp" class="form-text text-muted">The initial version number of your project.</small>
+          </div>
+
           <div class="form-group">
             <label for="modules">Modules & Integrations</label>
             <select formControlName="modules" class="form-control" id="modules">
-              <option *ngFor="let m of modules" [value]="m.name">{{m.name}}</option>
+              <ng-container *ngFor="let m of modules">
+                <option *ngIf="!isModuleSelected(m.name)" [value]="m.name">{{m.name}}</option>
+              </ng-container>
             </select>
           </div>
+
           <div class="form-group">
             <div (click)="removeModule(m)" *ngFor="let m of modulesSelected" class="module">
               {{m}} <i class="fa fa-close"></i>
             </div>
+            <div class="clear"></div>
           </div>
-          <div class="clear">
-            &nbsp;
-          </div>
+
           <button type="submit" class="btn btn-primary">Generate Project</button>
         </form>
       </div>

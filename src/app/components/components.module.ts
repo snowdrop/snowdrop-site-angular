@@ -8,6 +8,7 @@ import { AsciidoctorComponent } from './asciidoctor/asciidoctor.component';
 
 export * from './providers';
 import { RegistryService } from './providers';
+import { GeneratorService } from './providers';
 import { GuideDataService } from './providers';
 import { ProjectDataService } from './providers';
 import { TagService } from './providers';
@@ -17,9 +18,10 @@ let COMPONENTS = [
 ];
 
 let PROVIDERS = [
-	RegistryService,
+	GeneratorService,
 	GuideDataService,
 	ProjectDataService,
+	RegistryService,
 	TagService
 ]
 
