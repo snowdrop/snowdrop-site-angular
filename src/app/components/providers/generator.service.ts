@@ -26,8 +26,6 @@ export class GeneratorService {
 
 	private getGitHubHeaders() {
 		let headers = new Headers();
-		// headers.append("Authorization", "Token da35844b7325fefb1e879a9b5093c8350521095a");
-		// headers.append("Content-Type", "application/x-www-form-urlencoded");
 		return headers;
 	}
 
