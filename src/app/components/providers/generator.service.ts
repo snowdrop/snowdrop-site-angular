@@ -74,6 +74,7 @@ export class GeneratorService {
 		let queryStarted = false;
 		for (let key of Object.keys(opts)) {
 			let value = opts[key];
+			console.log("Key", key, "Value", value);
 			if (value && (value.length > 0 || (value.trim && value.trim().length > 0))) {
 				if (queryStarted) {
 					query += "&";
@@ -81,7 +82,13 @@ export class GeneratorService {
 					query += "?";
 				}
 				if (Array.isArray(value)) {
-					query += `${key}=` + value.join(",");
+					for (let i = 0; i < value.length; i++) {
+						const v = value[i];
+						query += `${key}=${v}`;
+						if (i < value.length - 1) {
+							query += "&";
+						}
+					}
 				} else {
 					query += `${key}=${value}`;
 				}

@@ -167,7 +167,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 				values.version = "1.0.0-SNAPSHOT";
 			}
 			if (this.dependencySelected && this.dependenciesSelected.length) {
-				values.dependencies = this.dependenciesSelected;
+				values.dependencies = this.dependenciesSelected.map(d => d.value);
 			}
 			this.gs.generate(values);
 		}
