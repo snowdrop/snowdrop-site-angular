@@ -24,7 +24,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 		},
 		{
 			name: "CRUD",
-			description: "An application with database connectivity and basic access methods for CREATE, READ, UPDATE, DELETE.",
+			description: "An application with database connectivity and basic access methods.",
 			value: "crud"
 		},
 		{
@@ -33,30 +33,25 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 			value: "rest"
 		}
 	];
-	modules = [
+	dependencies = [
 		{
-			name: "Web",
-			value: "org.example.web"
+			name: "Web & MVC",
+			description: "Tomcat and Spring Web MVC",
+			value: "web"
 		},
 		{
-			name: "Security",
-			value: "org.example.security"
+			name: "Web Sockets",
+			description: "Websockets and streaming of messages",
+			value: "websocket"
 		},
 		{
-			name: "Database - Relational",
-			value: "org.example.hibernate"
-		},
-		{
-			name: "Database - Object",
-			value: "org.example.mongodb"
-		},
-		{
-			name: "Messaging - JMS",
-			value: "org.example.messaging"
-		},
+			name: "REST (JAX-RS)",
+			description: "Apache CXF JAX-RS specification",
+			value: "jax-rs"
+		}
 	];
 
-	modulesSelected = [];
+	dependenciesSelected = [];
 
 	constructor(
 		private route: ActivatedRoute,
@@ -78,9 +73,6 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 			this.gs.getSnowdropVersions().then((versions) => {
 				this.snowdropVersions = versions.map((v) => v.name);
 			}),
-			this.gs.getSpringBootVersions().then((versions) => {
-				this.springbootVersions = versions.map((t) => t.name);
-			})
 		]).then(() => {
 			this.initForm();
 		});
@@ -96,43 +88,57 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 	}
 
 	initForm() {
+		const gaPattern = /^([a-z0-9-_]+\.)*[a-z0-9-_]+$/i;
+		const vPattern = /^([a-z0-9-_]+\.)*[a-z0-9-_]+$/i;
 		this.genForm = this.fb.group({
-			groupId: ['io.snowdrop', [Validators.required]],
-			artifactId: ['starter', [Validators.required]],
-			version: [null, []],
+			groupId: ['io.snowdrop', [Validators.required, Validators.pattern(gaPattern)]],
+			artifactId: ['starter', [Validators.required, Validators.pattern(gaPattern)]],
+			version: [null, [Validators.pattern(vPattern)]],
 			bomVersion: [this.snowdropVersions[0], [Validators.required]],
-			springbootVersion: [this.springbootVersions[0], [Validators.required]],
 			template: [this.templates[0].value, [Validators.required]],
-			modules: [[]]
+			dependencies: [[]]
 		});
-		this.genForm.controls['modules'].valueChanges.subscribe((value) => {
-			this.moduleSelected(value);
+		this.genForm.controls['dependencies'].valueChanges.subscribe((value) => {
+			this.dependencySelected(this.getDependency(value));
 		});
 	}
 
-	moduleSelected(mod) {
-		console.log(mod)
-		if (mod && mod.trim() !== "" && mod.trim().length > 0) {
-			if (this.modulesSelected.indexOf(mod) === -1) {
-				this.modulesSelected.push(mod);
-				this.genForm.controls['modules'].setValue(null);
+	getDependency(value) {
+		for (let d of this.dependencies) {
+			if (d.value === value) {
+				return d;
+			}
+		}
+		return null;
+	}
+
+	isDependenciesEnabled() {
+		return this.genForm && this.genForm.controls['template'].value === "simple";
+	}
+
+	dependencySelected(d) {
+		console.log("Selected", d);
+		if (d) {
+			if (this.dependenciesSelected.indexOf(d) === -1) {
+				this.dependenciesSelected.push(d);
+				this.genForm.controls['dependencies'].setValue(null);
 			}
 		}
 	}
 
-	isModuleSelected(mod) {
-		if (mod) {
-			if (this.modulesSelected.indexOf(mod.trim()) > -1) {
+	isDependencySelected(d) {
+		if (d) {
+			if (this.dependenciesSelected.indexOf(d) > -1) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	removeModule(mod) {
-		const index = this.modulesSelected.indexOf(mod);
+	removeDependency(d) {
+		const index = this.dependenciesSelected.indexOf(d);
 		if (index > -1) {
-			this.modulesSelected.splice(index, 1);
+			this.dependenciesSelected.splice(index, 1);
 		}
 	}
 
@@ -149,12 +155,21 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 		return "";
 	}
 
+	canGenerate() {
+		return this.genForm.valid;
+	}
+
 	generate() {
-		console.log("Generating", this.genForm.value);
-		let values = JSON.parse(JSON.stringify(this.genForm.value));
-		if (!values.version) {
-			values.version = "1.0.0-SNAPSHOT";
+		if (this.canGenerate()) {
+			console.log("Generating", this.genForm.value);
+			let values = JSON.parse(JSON.stringify(this.genForm.value));
+			if (!values.version) {
+				values.version = "1.0.0-SNAPSHOT";
+			}
+			if (this.dependencySelected && this.dependenciesSelected.length) {
+				values.dependencies = this.dependenciesSelected;
+			}
+			this.gs.generate(values);
 		}
-		this.gs.generate(values);
 	}
 }

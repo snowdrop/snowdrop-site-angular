@@ -7,7 +7,7 @@
         <form *ngIf="genForm" [formGroup]="genForm" (ngSubmit)="generate()">
 
           <div class="form-group">
-            <label for="modules">Snowdrop Version</label>
+            <label for="snowdropVersion">Snowdrop / Spring Boot Version</label>
             <select formControlName="bomVersion" class="form-control" id="snowdropVersion" aria-describedby="snowdropVersionHelp">
               <option *ngFor="let v of snowdropVersions" [value]="v">{{v}}</option>
             </select>
@@ -15,14 +15,7 @@
           </div>
 
           <div class="form-group">
-            <label for="modules" class="text-muted">Spring Boot Version (Override)</label>
-            <select formControlName="springbootVersion" class="form-control" id="springbootVersion" aria-describedby="springbootVersionHelp">
-              <option *ngFor="let v of springbootVersions" [value]="v">{{v}}</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="template">Application Type</label>
+            <label for="template">Application Template</label>
             <div class="clear"></div>
             <ng-container *ngFor="let t of templates">
               <a (click)="selectTemplate(t.value)" class="template btn" [class.btn-primary]="genForm.controls['template'].value === t.value">
@@ -51,23 +44,25 @@
             <small id="versionHelp" class="form-text text-muted">The initial version number of your project.</small>
           </div>
 
-          <div class="form-group">
-            <label for="modules">Modules & Integrations</label>
-            <select formControlName="modules" class="form-control" id="modules">
-              <ng-container *ngFor="let m of modules">
-                <option *ngIf="!isModuleSelected(m.name)" [value]="m.name">{{m.name}}</option>
-              </ng-container>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <div (click)="removeModule(m)" *ngFor="let m of modulesSelected" class="module">
-              {{m}} <i class="fa fa-close"></i>
+          <ng-container *ngIf="isDependenciesEnabled()">
+            <div class="form-group">
+              <label for="dependencies">Modules / Dependencies</label>
+              <select formControlName="dependencies" class="form-control" id="dependencies">
+                <ng-container *ngFor="let m of dependencies">
+                  <option *ngIf="!isDependencySelected(m)" [value]="m.value">{{m.name}}</option>
+                </ng-container>
+              </select>
             </div>
-            <div class="clear"></div>
-          </div>
 
-          <button type="submit" class="btn btn-primary btn-submit">Generate Project: &nbsp; Ctrl + ⏎</button>
+            <div class="form-group">
+              <div (click)="removeDependency(m)" *ngFor="let m of dependenciesSelected" class="module">
+                {{m.name}} <i class="fa fa-close"></i>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </ng-container>
+
+          <button [disabled]="!canGenerate()" type="submit" class="btn btn-primary btn-submit">Generate Project: &nbsp; Ctrl + ⏎</button>
         </form>
       </div>
     </div>

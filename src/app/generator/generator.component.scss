@@ -13,13 +13,21 @@
   cursor: pointer;
   float: left;
   width: auto;
-  padding: 5px;
+  padding: 5px 5px 5px 10px;
   margin-bottom: 15px;
   margin-right: 10px;
+
+  .fa-close {
+    opacity: 0;
+  }
 
   &:hover {
     background-color: #ffcccc;
     color: #000;
+
+    .fa-close {
+      opacity: 1;
+    }
   }
 }
 

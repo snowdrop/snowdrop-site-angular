@@ -59,10 +59,15 @@ export class GeneratorService {
 
 	public generate(opts: {
 		template?: string
+		dependencies?: any
 	} = {}) {
 
 		if (!opts.template) {
 			opts.template = "simple";
+		}
+
+		if (opts.template && opts.template !== "simple") {
+			opts.dependencies = undefined;
 		}
 
 		let query = "";
