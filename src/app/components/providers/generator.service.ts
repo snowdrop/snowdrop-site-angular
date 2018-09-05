@@ -115,7 +115,7 @@ export class GeneratorService {
 			}
 		}
 
-		let finalURL = `${this.serviceURL}/template/${opts.template}` + query;
+		let finalURL = `${this.serviceURL}/app` + query;
 		console.log("Generator URL", finalURL);
 		window.open(finalURL, "_blank");
 

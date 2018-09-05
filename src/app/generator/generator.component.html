@@ -7,9 +7,9 @@
         <form *ngIf="genForm" [formGroup]="genForm" (ngSubmit)="generate()">
 
           <div class="form-group">
-            <label for="snowdropVersion">Snowdrop / Spring Boot Version</label>
+            <label for="snowdropVersion">Spring Boot Version ({{genForm.controls['bomVersion'].value}})</label>
             <select formControlName="bomVersion" class="form-control" id="snowdropVersion" aria-describedby="snowdropVersionHelp">
-              <option *ngFor="let v of snowdropVersions" [value]="v">{{v}}</option>
+              <option *ngFor="let v of snowdropVersions" [value]="v.snowdrop">{{v.community}}</option>
             </select>
             <small id="snowdropVersionHelp" class="form-text text-muted">Sets the Snowdrop version, including default Spring Boot version and other dependencies.</small>
           </div>
@@ -23,7 +23,7 @@
               </a>
             </ng-container>
             <div class="clear"></div>
-            <small id="templateHelp" class="form-text text-muted">{{getTemplateDescription()}}.</small>
+            <small id="templateHelp" class="form-text text-muted">{{getTemplateDescription()}}</small>
           </div>
 
           <div class="form-group">
@@ -65,7 +65,7 @@
                   <option *ngIf="!isDependencySelected(m)" [value]="m.value">{{m.name}} - {{m.description}}</option>
                 </ng-container>
               </select>
-              <small id="dependenciesHelp" class="form-text text-muted">Modules allow you to add components to your application configuration (e.g. REST, Streaming APIs, Databases, etc).</small>
+              <small id="dependenciesHelp" class="form-text text-muted">`Modules allow you to add Spring Boot starters and Maven dependencies to your application configuration (e.g. Web, Persistence, etc).`</small>
             </div>
 
             <div class="form-group">

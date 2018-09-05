@@ -21,7 +21,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 	templates = [
 		{
 			name: "Simple",
-			description: "A minimal application with no extra dependencies or frameworks.",
+			description: "A minimal application - modules & dependencies can be added below.",
 			value: "simple"
 		},
 		{
@@ -61,11 +61,10 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 					if (config.bomversions) {
 						for (let version of config.bomversions) {
 							console.log("Version", version);
-							this.snowdropVersions.push(version.community);
-							this.snowdropVersions.push(version.snowdrop);
+							this.snowdropVersions.push(version);
 
 							if (version.default) {
-								this.snowdropVersionDefault = version.community;
+								this.snowdropVersionDefault = version;
 							}
 						}
 					}
@@ -98,11 +97,11 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 		const pPattern = /^([a-z0-9-_$]+\.)*[a-z0-9-_$]+$/i;
 		console.log("Default SD version", this.snowdropVersionDefault);
 		this.genForm = this.fb.group({
-			groupId: ['io.snowdrop', [Validators.required, Validators.pattern(gaPattern)]],
-			artifactId: ['starter', [Validators.required, Validators.pattern(gaPattern)]],
-			version: [null, [Validators.pattern(vPattern)]],
-			packageName: [null, [Validators.pattern(pPattern)]],
-			bomVersion: [this.snowdropVersionDefault, [Validators.required]],
+			groupId: ['com.example', [Validators.required, Validators.pattern(gaPattern)]],
+			artifactId: ['demo', [Validators.required, Validators.pattern(gaPattern)]],
+			version: ["0.0.1-SNAPSHOT", [Validators.required, Validators.pattern(vPattern)]],
+			packageName: ["com.example.demo", [Validators.required, Validators.pattern(pPattern)]],
+			bomVersion: [this.snowdropVersionDefault.snowdrop, [Validators.required]],
 			template: [this.templates[0].value, [Validators.required]],
 			dependencies: [[]]
 		});
@@ -169,17 +168,14 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 
 	generate() {
 		if (this.canGenerate()) {
-			console.log("Generating", this.genForm.value);
 			let values = JSON.parse(JSON.stringify(this.genForm.value));
-			if (!values.version) {
-				values.version = "1.0.0-SNAPSHOT";
-			}
-			if (!this.advancedMode) {
-				values.packageName
-			}
+
+			console.log("Submitted", values);
+
 			if (this.dependencySelected && this.dependenciesSelected.length) {
-				values.dependencies = this.dependenciesSelected.map(d => d.value);
+				values.modules = this.dependenciesSelected.map(d => d.value);
 			}
+			console.log("Generating", values);
 			this.gs.generate(values);
 		}
 	}
