@@ -97,11 +97,11 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 		const pPattern = /^([a-z0-9-_$]+\.)*[a-z0-9-_$]+$/i;
 		console.log("Default SD version", this.snowdropVersionDefault);
 		this.genForm = this.fb.group({
-			groupId: ['com.example', [Validators.required, Validators.pattern(gaPattern)]],
-			artifactId: ['demo', [Validators.required, Validators.pattern(gaPattern)]],
+			groupid: ['com.example', [Validators.required, Validators.pattern(gaPattern)]],
+			artifactid: ['demo', [Validators.required, Validators.pattern(gaPattern)]],
 			version: ["0.0.1-SNAPSHOT", [Validators.required, Validators.pattern(vPattern)]],
-			packageName: ["com.example.demo", [Validators.required, Validators.pattern(pPattern)]],
-			bomVersion: [this.snowdropVersionDefault.snowdrop, [Validators.required]],
+			packagename: ["com.example.demo", [Validators.required, Validators.pattern(pPattern)]],
+			springbootversion: [this.snowdropVersionDefault.community, [Validators.required]],
 			template: [this.templates[0].value, [Validators.required]],
 			dependencies: [[]]
 		});

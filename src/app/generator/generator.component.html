@@ -8,8 +8,8 @@
 
           <div class="form-group">
             <label for="snowdropVersion">Spring Boot Version ({{genForm.controls['bomVersion'].value}})</label>
-            <select formControlName="bomVersion" class="form-control" id="snowdropVersion" aria-describedby="snowdropVersionHelp">
-              <option *ngFor="let v of snowdropVersions" [value]="v.snowdrop">{{v.community}}</option>
+            <select formControlName="springbootversion" class="form-control" id="snowdropVersion" aria-describedby="snowdropVersionHelp">
+              <option *ngFor="let v of snowdropVersions" [value]="v.community">{{v.community}}</option>
             </select>
             <small id="snowdropVersionHelp" class="form-text text-muted">Sets the Snowdrop version, including default Spring Boot version and other dependencies.</small>
           </div>
@@ -28,13 +28,13 @@
 
           <div class="form-group">
             <label for="groupId">Group ID</label>
-            <input formControlName="groupId" type="text" class="form-control" id="groupId" aria-describedby="groupIdHelp" placeholder="Enter group ID">
+            <input formControlName="groupid" type="text" class="form-control" id="groupId" aria-describedby="groupIdHelp" placeholder="Enter group ID">
             <small id="groupIdHelp" class="form-text text-muted">Typically this is your top-level domain.</small>
           </div>
 
           <div class="form-group">
             <label for="artifactId">Artifact ID</label>
-            <input formControlName="artifactId" type="text" class="form-control" id="artifactId" aria-describedby="artifactIdHelp" placeholder="Artifact ID">
+            <input formControlName="artifactid" type="text" class="form-control" id="artifactId" aria-describedby="artifactIdHelp" placeholder="Artifact ID">
             <small id="artifactIdHelp" class="form-text text-muted">Usually based on the name of your project.</small>
           </div>
 
@@ -45,14 +45,14 @@
 
           <ng-container *ngIf="advancedMode">
             <div class="form-group">
-              <label for="artifactId" class="text-muted">Project Version</label>
-              <input formControlName="version" type="text" class="form-control" id="artifactId" aria-describedby="versionHelp" placeholder="1.0.0-SNAPSHOT">
+              <label for="version" class="text-muted">Project Version</label>
+              <input formControlName="version" type="text" class="form-control" id="version" aria-describedby="versionHelp" placeholder="1.0.0-SNAPSHOT">
               <small id="versionHelp" class="form-text text-muted">The initial version number of your project.</small>
             </div>
 
             <div class="form-group">
               <label for="packageName" class="text-muted">Project Package</label>
-              <input formControlName="packageName" type="text" class="form-control" id="packageName" aria-describedby="packageHelp" placeholder="org.example">
+              <input formControlName="packagename" type="text" class="form-control" id="packageName" aria-describedby="packageHelp" placeholder="org.example">
               <small id="packageHelp" class="form-text text-muted">The Java package name in which your sources will reside.</small>
             </div>
           </ng-container>
