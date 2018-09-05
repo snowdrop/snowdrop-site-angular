@@ -65,6 +65,7 @@
                   <option *ngIf="!isDependencySelected(m)" [value]="m.value">{{m.name}} - {{m.description}}</option>
                 </ng-container>
               </select>
+              <small id="dependenciesHelp" class="form-text text-muted">Modules allow you to add components to your application configuration (e.g. REST, Streaming APIs, Databases, etc).</small>
             </div>
 
             <div class="form-group">
