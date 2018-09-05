@@ -7,7 +7,7 @@
         <form *ngIf="genForm" [formGroup]="genForm" (ngSubmit)="generate()">
 
           <div class="form-group">
-            <label for="snowdropVersion">Spring Boot Version ({{genForm.controls['bomVersion'].value}})</label>
+            <label for="snowdropVersion">Spring Boot Version</label>
             <select formControlName="springbootversion" class="form-control" id="snowdropVersion" aria-describedby="snowdropVersionHelp">
               <option *ngFor="let v of snowdropVersions" [value]="v.community">{{v.community}}</option>
             </select>
