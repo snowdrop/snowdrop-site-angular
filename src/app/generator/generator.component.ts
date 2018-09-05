@@ -13,9 +13,11 @@ import { GeneratorService } from '../components/providers';
 })
 export class GeneratorComponent implements OnInit, OnDestroy {
 
+	advancedMode = false;
 	genForm = null;
 	springbootVersions = [];
 	snowdropVersions = [];
+	snowdropVersionDefault = null;
 	templates = [
 		{
 			name: "Simple",
@@ -33,23 +35,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 			value: "rest"
 		}
 	];
-	dependencies = [
-		{
-			name: "Web & MVC",
-			description: "Tomcat and Spring Web MVC",
-			value: "web"
-		},
-		{
-			name: "Web Sockets",
-			description: "Websockets and streaming of messages",
-			value: "websocket"
-		},
-		{
-			name: "REST (JAX-RS)",
-			description: "Apache CXF JAX-RS specification",
-			value: "jax-rs"
-		}
-	];
+	dependencies = [];
 
 	dependenciesSelected = [];
 
@@ -70,8 +56,27 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		Promise.all([
-			this.gs.getSnowdropVersions().then((versions) => {
-				this.snowdropVersions = versions.map((v) => v.name);
+			this.gs.getGeneratorConfig().then((config) => {
+				if (config) {
+					if (config.bomversions) {
+						for (let version of config.bomversions) {
+							console.log("Version", version);
+							this.snowdropVersions.push(version.community);
+							this.snowdropVersions.push(version.snowdrop);
+
+							if (version.default) {
+								this.snowdropVersionDefault = version.community;
+							}
+						}
+					}
+					if (config.modules) {
+						for (let m of config.modules) {
+							m.value = m.name;
+							console.log("Module", m);
+							this.dependencies.push(m);
+						}
+					}
+				}
 			}),
 		]).then(() => {
 			this.initForm();
@@ -90,11 +95,14 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 	initForm() {
 		const gaPattern = /^([a-z0-9-_]+\.)*[a-z0-9-_]+$/i;
 		const vPattern = /^([a-z0-9-_]+\.)*[a-z0-9-_]+$/i;
+		const pPattern = /^([a-z0-9-_$]+\.)*[a-z0-9-_$]+$/i;
+		console.log("Default SD version", this.snowdropVersionDefault);
 		this.genForm = this.fb.group({
 			groupId: ['io.snowdrop', [Validators.required, Validators.pattern(gaPattern)]],
 			artifactId: ['starter', [Validators.required, Validators.pattern(gaPattern)]],
 			version: [null, [Validators.pattern(vPattern)]],
-			bomVersion: [this.snowdropVersions[0], [Validators.required]],
+			packageName: [null, [Validators.pattern(pPattern)]],
+			bomVersion: [this.snowdropVersionDefault, [Validators.required]],
 			template: [this.templates[0].value, [Validators.required]],
 			dependencies: [[]]
 		});
@@ -165,6 +173,9 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 			let values = JSON.parse(JSON.stringify(this.genForm.value));
 			if (!values.version) {
 				values.version = "1.0.0-SNAPSHOT";
+			}
+			if (!this.advancedMode) {
+				values.packageName
 			}
 			if (this.dependencySelected && this.dependenciesSelected.length) {
 				values.dependencies = this.dependenciesSelected.map(d => d.value);
