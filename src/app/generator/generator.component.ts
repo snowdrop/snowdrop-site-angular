@@ -9,9 +9,11 @@ import { GeneratorService } from '../components/providers';
 @Component({
 	selector: "generator",
 	templateUrl: "./generator.component.html",
-	styleUrls: ["./generator.component.scss"]
+	styleUrls: ["./generator.component.scss", "./generator.component.select.scss"]
 })
 export class GeneratorComponent implements OnInit, OnDestroy {
+
+	// https://ng-select.github.io/ng-select#/multiselect-checkbox
 
 	advancedMode = false;
 	genForm = null;
@@ -105,48 +107,15 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 			template: [this.templates[0].value, [Validators.required]],
 			dependencies: [[]]
 		});
-		this.genForm.controls['dependencies'].valueChanges.subscribe((value) => {
-			this.dependencySelected(this.getDependency(value));
-		});
-	}
-
-	getDependency(value) {
-		for (let d of this.dependencies) {
-			if (d.value === value) {
-				return d;
-			}
-		}
-		return null;
 	}
 
 	isDependenciesEnabled() {
 		return this.genForm && this.genForm.controls['template'].value === "simple";
 	}
 
-	dependencySelected(d) {
-		console.log("Selected", d);
-		if (d) {
-			if (this.dependenciesSelected.indexOf(d) === -1) {
-				this.dependenciesSelected.push(d);
-				this.genForm.controls['dependencies'].setValue(null);
-			}
-		}
-	}
-
-	isDependencySelected(d) {
-		if (d) {
-			if (this.dependenciesSelected.indexOf(d) > -1) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	removeDependency(d) {
-		const index = this.dependenciesSelected.indexOf(d);
-		if (index > -1) {
-			this.dependenciesSelected.splice(index, 1);
-		}
+	searchDependencies(term: string, item) {
+		term = term.toLocaleLowerCase();
+		return item.name.toLocaleLowerCase().indexOf(term) > -1 || item.description.toLocaleLowerCase().indexOf(term) > -1;
 	}
 
 	selectTemplate(t) {
@@ -172,8 +141,9 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 
 			console.log("Submitted", values);
 
-			if (this.dependencySelected && this.dependenciesSelected.length) {
-				values.modules = this.dependenciesSelected.map(d => d.value);
+			if (values.dependencies) {
+				values.module = values.dependencies.map(d => d.value);
+				values.dependencies = undefined;
 			}
 			console.log("Generating", values);
 			this.gs.generate(values);

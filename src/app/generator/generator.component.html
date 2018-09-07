@@ -59,20 +59,39 @@
 
           <ng-container *ngIf="isDependenciesEnabled()">
             <div class="form-group">
-              <label for="dependencies">Modules / Dependencies</label>
-              <select formControlName="dependencies" class="form-control" id="dependencies">
-                <ng-container *ngFor="let m of dependencies">
-                  <option *ngIf="!isDependencySelected(m)" [value]="m.value">{{m.name}} - {{m.description}}</option>
-                </ng-container>
-              </select>
-              <small id="dependenciesHelp" class="form-text text-muted">`Modules allow you to add Spring Boot starters and Maven dependencies to your application configuration (e.g. Web, Persistence, etc).`</small>
-            </div>
 
-            <div class="form-group">
-              <div (click)="removeDependency(m)" *ngFor="let m of dependenciesSelected" class="module">
-                {{m.name}} <i class="fa fa-close"></i>
-              </div>
-              <div class="clear"></div>
+              <label for="dependencies">Modules / Dependencies</label>
+
+              <ng-select id="dependencies" formControlName="dependencies" placeholder="Click / type to find modules"
+                [clearSearchOnAdd]="false"
+                [closeOnSelect]="false"
+                [items]="dependencies"
+                [bindLabel]="value"
+                [bindValue]="value"
+                [searchFn]="searchDependencies"
+                [multiple]="true">
+
+                <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                  <span class="ng-value-label"><strong>{{item.name}}</strong></span>
+                  <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                </ng-template>
+
+                <!-- <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                  <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.gender | uppercase}}
+                </ng-template> -->
+
+                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                  <div class="ng-value-select-icon">
+                    <i *ngIf="item$.selected" class="fa fa-check-circle"></i>
+                  </div>
+                  <span class="ng-value-label">{{item.name}}<br />
+                    <small class="form-text text-muted">{{item.description}}</small>
+                  </span>
+                </ng-template>
+
+              </ng-select>
+
+              <small id="dependenciesHelp" class="form-text text-muted">`Modules allow you to add Spring Boot starters and Maven dependencies to your application configuration (e.g. Web, Persistence, etc).`</small>
             </div>
           </ng-container>
 
