@@ -29,7 +29,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 		private route: ActivatedRoute,
 		private http: Http,
 		private fb: FormBuilder,
-		private gs: GeneratorService
+		private gs: GeneratorService,
 	) {
 	}
 
@@ -90,15 +90,36 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 		const vPattern = /^([a-z0-9-_]+\.)*[a-z0-9-_]+$/i;
 		const pPattern = /^([a-z0-9-_$]+\.)*[a-z0-9-_$]+$/i;
 		console.log("Default SD version", this.snowdropVersionDefault);
-		this.genForm = this.fb.group({
-			groupid: ['com.example', [Validators.required, Validators.pattern(gaPattern)]],
-			artifactid: ['demo', [Validators.required, Validators.pattern(gaPattern)]],
-			version: ["0.0.1-SNAPSHOT", [Validators.required, Validators.pattern(vPattern)]],
-			packagename: ["com.example.demo", [Validators.required, Validators.pattern(pPattern)]],
-			springbootversion: [this.snowdropVersionDefault.community, [Validators.required]],
-			template: [this.templates[0].value, [Validators.required]],
-			dependencies: [[]]
+
+		this.route.queryParams.subscribe((params) => {
+			console.log("Initializing Form")
+			this.genForm = this.fb.group({
+				groupid: [params["groupid"] || 'com.example', [Validators.required, Validators.pattern(gaPattern)]],
+				artifactid: [params["artifactid"] || 'demo', [Validators.required, Validators.pattern(gaPattern)]],
+				version: [params["version"] || "0.0.1-SNAPSHOT", [Validators.required, Validators.pattern(vPattern)]],
+				packagename: [params["packagename"] || "com.example.demo", [Validators.required, Validators.pattern(pPattern)]],
+				springbootversion: [params["springbootversion"] || this.snowdropVersionDefault.community, [Validators.required]],
+				template: [params["template"] || this.templates[0].value, [Validators.required]],
+				dependencies: [this.getDependencies(params["module"]) || null, []]
+			});
 		});
+
+	}
+
+	getDependencies(names) {
+		console.log("Dependency", names);
+		let result = [];
+		if (!Array.isArray(names)) {
+			names = [names];
+		}
+		for (let dep of this.dependencies) {
+			for (let name of names) {
+				if (dep.value === name) {
+					result.push(dep);
+				}
+			}
+		}
+		return result;
 	}
 
 	isDependenciesEnabled() {
