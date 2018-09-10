@@ -20,23 +20,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 	springbootVersions = [];
 	snowdropVersions = [];
 	snowdropVersionDefault = null;
-	templates = [
-		{
-			name: "Simple",
-			description: "A minimal application - modules & dependencies can be added below.",
-			value: "simple"
-		},
-		{
-			name: "CRUD",
-			description: "An application with database connectivity and basic access methods.",
-			value: "crud"
-		},
-		{
-			name: "REST",
-			description: "An application with database connectivity and a scaffolded REST API.",
-			value: "rest"
-		}
-	];
+	templates = [];
 	dependencies = [];
 
 	dependenciesSelected = [];
@@ -75,6 +59,14 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 							m.value = m.name;
 							console.log("Module", m);
 							this.dependencies.push(m);
+						}
+					}
+					if (config.templates) {
+						config.templates.reverse();
+						for (let t of config.templates) {
+							t.value = t.name.toLocaleLowerCase();
+							console.log("Template", t);
+							this.templates.push(t);
 						}
 					}
 				}
