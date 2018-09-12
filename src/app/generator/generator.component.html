@@ -80,14 +80,14 @@
                 </ng-template>
 
                 <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
-                  <span class="module-tag">{{item.tag}}</span>
+                  <span class="module-tag-group">{{item.tag}}</span>
                 </ng-template>
 
                 <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                   <div class="ng-value-select-icon">
                     <i *ngIf="item$.selected" class="fa fa-check-circle"></i>
                   </div>
-                  <span class="ng-value-label">{{item.name}}<br />
+                  <span class="ng-value-label"><span [class.bold]="item$.selected">{{item.name}}</span><span *ngFor="let t of item.tags" class="module-tag">{{t}}</span><br />
                     <small class="form-text text-muted">{{item.description}}</small>
                   </span>
                 </ng-template>

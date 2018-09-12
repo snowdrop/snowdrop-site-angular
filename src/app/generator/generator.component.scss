@@ -1,3 +1,7 @@
+.bold {
+  font-weight: bold;
+}
+
 .btn-submit {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -11,6 +15,16 @@
 }
 
 .module-tag {
+  display: inline-block;
+  background-color: #ddffdd;
+  border-radius: 4px;
+  font-size: 10px;
+  line-height: 10px;
+  padding: 2px;
+  margin-left: 5px;
+}
+
+.module-tag-group {
   text-transform: uppercase;
 }
 

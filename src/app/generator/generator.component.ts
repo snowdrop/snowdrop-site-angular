@@ -150,7 +150,15 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 
 	searchModules(term: string, item) {
 		term = term.toLocaleLowerCase();
-		return item.name.toLocaleLowerCase().indexOf(term) > -1 || item.description.toLocaleLowerCase().indexOf(term) > -1;
+		let tagMatched = false;
+		if (item.tags) {
+			for (let t of item.tags) {
+				if (t.toLocaleLowerCase().indexOf(term) > -1) {
+					tagMatched = true;
+				}
+			}
+		}
+		return tagMatched || item.name.toLocaleLowerCase().indexOf(term) > -1 || item.description.toLocaleLowerCase().indexOf(term) > -1;
 	}
 
 	selectTemplate(t) {
