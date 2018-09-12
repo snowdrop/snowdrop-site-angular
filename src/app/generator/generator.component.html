@@ -57,18 +57,21 @@
             </div>
           </ng-container>
 
-          <ng-container *ngIf="isDependenciesEnabled()">
+          <ng-container *ngIf="isModulesEnabled()">
             <div class="form-group">
 
-              <label for="dependencies">Modules / Dependencies</label>
+              <label for="modules">Modules / Components</label>
 
-              <ng-select id="dependencies" formControlName="dependencies" placeholder="Click / type to find modules"
+              <ng-select id="modules" formControlName="modules" placeholder="Click / type to find modules"
                 [clearSearchOnAdd]="false"
                 [closeOnSelect]="false"
-                [items]="dependencies"
+                [items]="modules"
                 [bindLabel]="value"
                 [bindValue]="value"
-                [searchFn]="searchDependencies"
+                groupBy="tag"
+                [searchFn]="searchModules"
+                [selectableGroup]="false"
+                [selectableGroupAsModel]="false"
                 [multiple]="true">
 
                 <ng-template ng-label-tmp let-item="item" let-clear="clear">
@@ -76,9 +79,9 @@
                   <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
                 </ng-template>
 
-                <!-- <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
-                  <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.gender | uppercase}}
-                </ng-template> -->
+                <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                  <span class="module-tag">{{item.tag}}</span>
+                </ng-template>
 
                 <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                   <div class="ng-value-select-icon">
@@ -91,7 +94,7 @@
 
               </ng-select>
 
-              <small id="dependenciesHelp" class="form-text text-muted">`Modules allow you to add Spring Boot starters and Maven dependencies to your application configuration (e.g. Web, Persistence, etc).`</small>
+              <small id="modulesHelp" class="form-text text-muted">`Modules allow you to add Spring Boot starters and Maven dependencies to your application configuration (e.g. Web, Persistence, etc).`</small>
             </div>
           </ng-container>
 
