@@ -123,7 +123,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 	}
 
 	isDependenciesEnabled() {
-		return this.genForm && this.genForm.controls['template'].value === "simple";
+		return this.genForm && this.genForm.controls['template'].value === "custom";
 	}
 
 	searchDependencies(term: string, item) {
