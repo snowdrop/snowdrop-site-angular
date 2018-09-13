@@ -145,7 +145,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 	}
 
 	isModulesEnabled() {
-		return this.genForm && this.genForm.controls['template'].value === "simple";
+		return this.genForm && this.genForm.controls['template'].value === "custom";
 	}
 
 	searchModules(term: string, item) {
