@@ -21,9 +21,9 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 	snowdropVersions = [];
 	snowdropVersionDefault = null;
 	templates = [];
-	dependencies = [];
+	modules = [];
 
-	dependenciesSelected = [];
+	modulesSelected = [];
 
 	constructor(
 		private route: ActivatedRoute,
@@ -55,10 +55,32 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 						}
 					}
 					if (config.modules) {
+						let tags = {};
 						for (let m of config.modules) {
 							m.value = m.name;
+							if (m.tags) {
+								for (let t of m.tags) {
+									if (!tags[t]) tags[t] = 1;
+									else tags[t]++;
+								}
+							}
 							console.log("Module", m);
-							this.dependencies.push(m);
+							this.modules.push(m);
+						}
+						for (let m of this.modules) {
+							if (m.tags) {
+								let largest = null;
+								let largestCount = 0;
+								for (let t of m.tags) {
+									if (tags[t] > largestCount) {
+										largest = t;
+										largestCount = tags[t];
+									}
+								}
+								if (largest) {
+									m.tag = largest;
+								}
+							}
 						}
 					}
 					if (config.templates) {
@@ -100,19 +122,19 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 				packagename: [params["packagename"] || "com.example.demo", [Validators.required, Validators.pattern(pPattern)]],
 				springbootversion: [params["springbootversion"] || this.snowdropVersionDefault.community, [Validators.required]],
 				template: [params["template"] || this.templates[0].value, [Validators.required]],
-				dependencies: [this.getDependencies(params["module"]) || null, []]
+				modules: [this.getModules(params["module"]) || null, []]
 			});
 		});
 
 	}
 
-	getDependencies(names) {
+	getModules(names) {
 		console.log("Dependency", names);
 		let result = [];
 		if (!Array.isArray(names)) {
 			names = [names];
 		}
-		for (let dep of this.dependencies) {
+		for (let dep of this.modules) {
 			for (let name of names) {
 				if (dep.value === name) {
 					result.push(dep);
@@ -122,13 +144,21 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 		return result;
 	}
 
-	isDependenciesEnabled() {
+	isModulesEnabled() {
 		return this.genForm && this.genForm.controls['template'].value === "custom";
 	}
 
-	searchDependencies(term: string, item) {
+	searchModules(term: string, item) {
 		term = term.toLocaleLowerCase();
-		return item.name.toLocaleLowerCase().indexOf(term) > -1 || item.description.toLocaleLowerCase().indexOf(term) > -1;
+		let tagMatched = false;
+		if (item.tags) {
+			for (let t of item.tags) {
+				if (t.toLocaleLowerCase().indexOf(term) > -1) {
+					tagMatched = true;
+				}
+			}
+		}
+		return tagMatched || item.name.toLocaleLowerCase().indexOf(term) > -1 || item.description.toLocaleLowerCase().indexOf(term) > -1;
 	}
 
 	selectTemplate(t) {
@@ -154,9 +184,9 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 
 			console.log("Submitted", values);
 
-			if (values.dependencies) {
-				values.module = values.dependencies.map(d => d.value);
-				values.dependencies = undefined;
+			if (values.modules) {
+				values.module = values.modules.map(d => d.value);
+				values.modules = undefined;
 			}
 			console.log("Generating", values);
 			this.gs.generate(values);

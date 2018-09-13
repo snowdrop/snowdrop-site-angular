@@ -1,3 +1,7 @@
+.bold {
+  font-weight: bold;
+}
+
 .btn-submit {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -10,30 +14,18 @@
   cursor: pointer;
 }
 
-.module {
-  background-color: #ccffcc;
-  color: #000;
-  font-weight: bold;
-  border-radius: 3px;
-  cursor: pointer;
-  float: left;
-  width: auto;
-  padding: 5px 5px 5px 10px;
-  margin-bottom: 15px;
-  margin-right: 10px;
+.module-tag {
+  display: inline-block;
+  background-color: #ddffdd;
+  border-radius: 4px;
+  font-size: 10px;
+  line-height: 10px;
+  padding: 2px;
+  margin-left: 5px;
+}
 
-  .fa-close {
-    opacity: 0;
-  }
-
-  &:hover {
-    background-color: #ffcccc;
-    color: #000;
-
-    .fa-close {
-      opacity: 1;
-    }
-  }
+.module-tag-group {
+  text-transform: uppercase;
 }
 
 .template {
