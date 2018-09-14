@@ -4,40 +4,26 @@
       <img class="header-logo" src="../../assets/img/snowdrop-logo-text.png" alt="Snowdrop">
     </a>
     <ul class="nav navbar-nav navbar-right">
-      <ng-container *ngIf="!inLauncher">
-        <li *ngFor="let p of pages" [id]="p.id">
-          <a [id]="p.id + '-link'" [routerLink]="p.route">
-            {{p.name}}
-          </a>
-        </li>
-      </ng-container>
+      <li *ngFor="let p of pages" [id]="p.id" class="standard">
+        <a [id]="p.id + '-link'" [routerLink]="p.route">
+          {{p.name}}
+        </a>
+      </li>
 
-      <ng-container *ngIf="false">
-        <!-- TODO Use this for an example of dropdown support for mobile? -->
-        <li id="loggedout" *ngIf="!keycloak.isAuthenticated()">
-          <a id="login" href="javascript:void(0)" (click)="keycloak.login()">
-            <i class="pficon pficon-user"></i> Log In
-          </a>
-        </li>
-        <li class="dropdown" [class.open]="collapse" id="loggedin" *ngIf="keycloak.isAuthenticated()">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" (click)="collapse = !collapse">
-            <div id="header_dropdownToggle_header">
-              <span class="nav-item-icon">
-                <span class="pficon pficon-user" id="nouserimage"></span>
-                {{keycloak.user}}
-              </span>
-              <span class="nav-item-text" id="name"></span> <b class="caret"></b>
-            </div>
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-              <a id="logout" href="javascript:void(0)" (click)="keycloak.logout()">
-                <span class="nav-item-text">Sign out</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ng-container>
+      <li class="dropdown" [class.open]="collapse">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" (click)="collapse = !collapse">
+          <span class="dropdown-icon">
+            <i class="fa fa-bars"></i>
+          </span>
+        </a>
+        <ul class="dropdown-menu">
+          <li *ngFor="let p of pages" [id]="p.id + '-dropdown'" class="dropdown">
+            <a [id]="p.id + '-dropdown-link'" [routerLink]="p.route" (click)="collapse = true">
+              {{p.name}}
+            </a>
+          </li>
+        </ul>
+      </li>
     </ul>
   </div>
 </nav>

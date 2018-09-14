@@ -47,9 +47,11 @@ export class HeaderComponent {
 
 	constructor(private router: Router) {
 		router.events.subscribe((url: any) => {
+			this.collapse = false;
 			if (url && url.url) {
 				this.wizard = url.url.indexOf("wizard") > -1;
 			}
 		});
+
 	}
 }

@@ -15,12 +15,13 @@ a.link {
 }
 
 .guide-block {
-  min-height: 230px;
-  height: 230px;
+  min-height: 270px;
+  height: 270px;
   padding: 15px;
 }
 
 .guide-inner {
+  position: relative;
   height: 100%;
   width: 100%;
   border-radius: 5px;
@@ -33,6 +34,12 @@ a.link {
 
   .description {
     min-height: 55px;
+  }
+
+  .actions {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 15px;
   }
 }
 

@@ -6,6 +6,7 @@ img.header-logo {
   color: #ddd;
   border-top: solid 5px #00cc00;
   font-size: 16px;
+  transition: all 0.2s ease-in-out;
 
   .navbar-brand {
     padding-top: 10px;
@@ -13,6 +14,10 @@ img.header-logo {
 
   li {
     padding-top: 5px;
+
+    &.dropdown {
+      display: none;
+    }
   }
 }
 
@@ -38,20 +43,56 @@ nav.wizard {}
   margin: 0;
 }
 @media (max-width: 768px) {
-  .dropdown {
-    font-size: smaller;
-  }
+  .navbar {
+    li {
+      text-align: right;
 
-  .navbar-fixed-top {
-    position: fixed;
-    top: auto;
-  }
+      &:last-child {
+        margin-bottom: 10px;
+      }
 
-  .navbar-collapse {
-    max-height: none;
-  }
+      &.dropdown {
+        display: block;
+        font-size: 16px;
+        min-height: 40px;
 
-  body {
-    margin: 0;
+        &:hover {
+          color: #fff;
+        }
+
+        .dropdown-icon {
+          position: relative;
+          top: 8px;
+          font-size: 26px;
+        }
+
+        .dropdown-menu {
+          display: block !important;
+          overflow: hidden;
+          transition: opacity 0.2s ease-in;
+          opacity: 0;
+          height: 0;
+          padding: 0;
+          margin: 0;
+          overflow: hidden;
+        }
+
+        .dropdown-toggle {
+          margin-top: -8px;
+          height: 60px;
+        }
+
+        &.open {
+          .dropdown-menu {
+            opacity: 1;
+            height: auto;
+          }
+        }
+      }
+
+      &.standard {
+        display: none;
+      }
+    }
   }
 }
