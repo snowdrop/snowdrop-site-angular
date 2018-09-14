@@ -8,26 +8,36 @@
       </h3>
     </div>
     <div class="container workflow">
-      <a class="col-md-4 col-sm-12 action link btn btn-lg btn-secondary" [routerLink]="['guides','get-cloud-ready']">
-        <h3 class="align-center">
-          <i class="fa fa-cloud"></i>
-          Get Cloud Ready.
-        </h3>
-      </a>
+      <div class="row align-center">
 
-      <a class="col-md-4 col-sm-12 action link btn btn-lg btn-secondary" [routerLink]="['guides','get-started']">
-        <h3 class="align-center">
-          <i class="fa fa-bolt"></i>
-          Get Started.
-        </h3>
-      </a>
+        <div class="col-md-4">
+          <a class="action link btn btn-lg btn-secondary" [routerLink]="['guides','get-cloud-ready']">
+            <h3 class="align-center">
+              <i class="fa fa-cloud"></i>
+              Get Cloud Ready.
+            </h3>
+          </a>
+        </div>
 
-      <a class="col-md-4 col-sm-12 action link btn btn-lg btn-secondary" [routerLink]="['guides','use-best-practices']">
-        <h3 class="align-center">
-          <i class="fa fa-book"></i>
-          Best Practices.
-        </h3>
-      </a>
+        <div class="col-md-4">
+          <a class="action link btn btn-lg btn-secondary" [routerLink]="['guides','get-started']">
+            <h3 class="align-center">
+              <i class="fa fa-bolt"></i>
+              Get Started.
+            </h3>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a class="action link btn btn-lg btn-secondary" [routerLink]="['guides','use-best-practices']">
+            <h3 class="align-center">
+              <i class="fa fa-book"></i>
+              Best Practices.
+            </h3>
+          </a>
+        </div>
+
+      </div>
     </div>
   </section>
 

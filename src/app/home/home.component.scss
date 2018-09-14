@@ -45,11 +45,15 @@ $assetPath: "../../assets/img/project-select-icons/";
     background: #fff none;
     border-color: #fff;
     color: #c00;
-    padding: 9px 40px;
+    padding: 9px 10px;
     margin-top: 40px;
     line-height: 1.44;
     font-size: 18px;
     text-transform: uppercase;
+  }
+
+  .project-logo {
+    max-width: 100%;
   }
 
   .try-box {
@@ -77,24 +81,28 @@ $assetPath: "../../assets/img/project-select-icons/";
 }
 
 .workflow {
-  display: flex;
-  flex: 1;
   margin-bottom: 25px;
+
+  a {
+    margin-top: 20px !important;
+  }
 
   a:hover {
     color: #0088ce;
   }
 
+  .row {
+    width: 100%;
+    margin: 0;
+  }
+
   .action {
+    width: 100%;
+    background-color: white;
+
     h3 {
       color: #0088ce !important;
     }
-    flex-shrink: 2;
-    background-color: white;
-    margin-right: 20px;
-    display: flex;
-    flex-direction: column;
-    padding: 40px 20px;
   }
 }
 
