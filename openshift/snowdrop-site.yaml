@@ -1,44 +1,6 @@
-kind: Template
 apiVersion: v1
-metadata:
-  name: snowdrop-site-angular
-  annotations:
-    openshift.io/display-name: "Snowdrop Site - Angular"
-    description: This application contains the website for the Snowdrop project
-    tags: instant-app,snowdrop-site
-    iconClass: icon-shadowman
-    template.openshift.io/long-description: This application contains the website for the Snowdrop project
-    template.openshift.io/provider-display-name: Red Hat, Inc.
-    template.openshift.io/documentation-url: https://github.com/snowdrop/snowdrop-site-angular
-    template.openshift.io/support-url: https://access.redhat.com
-message: "The following service has been created in your project: snowdrop-site-angular.\n\nFor more information about using this template, including OpenShift considerations, see https://github.com/snowdrop/snowdrop-site-angular"
-labels:
-  template: snowdrop-site-angular
-parameters:
-  - name: SOURCE_REPOSITORY_URL
-    description: The source URL for the application
-    displayName: Source URL
-    required: true
-    value: https://github.com/snowdrop/snowdrop-site-angular
-  - name: SOURCE_REPOSITORY_REF
-    description: The branch name for the application
-    displayName: Source Branch
-    value: master
-    required: true
-  - name: GITHUB_WEBHOOK_SECRET
-    description: Secret to be used by Github and BuildConfig to trigger a build from Github
-    value: changeme
-    required: false
-  - name: NODE_ENV
-    description: NODE env var used during BuildConfig build. Default is development
-    value: development
-    required: false
-  - name: LAUNCHER_BACKEND_URL
-    description: The backend URL for launcher functionality
-    displayName: Launcher Backend URL
-    required: true
-    value: http://backend-public-devex.195.201.87.126.nip.io/api
-objects:
+kind: List
+items:
   - apiVersion: v1
     kind: ImageStream
     metadata:
@@ -67,8 +29,8 @@ objects:
       resources: {}
       source:
         git:
-          uri: '${SOURCE_REPOSITORY_URL}'
-          ref: '${SOURCE_REPOSITORY_REF}'
+          uri: 'https://github.com/snowdrop/snowdrop-site-angular'
+          ref: 'master'
         type: Git
       strategy:
         type: Source
@@ -79,12 +41,10 @@ objects:
           incremental: true
           env:
             - name: "NODE_ENV"
-              value: '${NODE_ENV}'
-            - name: "LAUNCHER_BACKEND_URL"
-              value: '${LAUNCHER_BACKEND_URL}'
+              value: "false"
       triggers:
         - github:
-            secret: '${GITHUB_WEBHOOK_SECRET}'
+            secret: 'changeme'
           type: GitHub
         - type: ConfigChange
         - imageChange: {}
@@ -125,8 +85,6 @@ objects:
             env:
             - name: "NODE_ENV"
               value: "production"
-            - name: "LAUNCHER_BACKEND_URL"
-              value: '${LAUNCHER_BACKEND_URL}'
             resources: {}
             terminationMessagePath: /dev/termination-log
             readinessProbe:
@@ -180,7 +138,6 @@ objects:
       labels:
         project: snowdrop-site-angular
         provider: nodeshift
-        version: 2.0.0
       name: snowdrop-site-angular
     spec:
       port:
