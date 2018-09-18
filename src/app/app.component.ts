@@ -34,11 +34,10 @@ export class AppComponent {
 				}
 			}
 
-			if (window['analytics']) {
-				window['analytics'].page({
-					name: snapshot.data.name + (snapshot.params.step || ''),
-					properties: snapshot.params
-				});
+			if (window['ga']) {
+				console.log("Sending pageview to GA:", snapshot.url);
+				window['ga']('set', 'page', snapshot.url);
+				window['ga']('send', 'pageview');
 			}
 		});
 	}
