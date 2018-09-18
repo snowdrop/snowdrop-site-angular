@@ -140,6 +140,7 @@ items:
         provider: nodeshift
       name: snowdrop-site-angular
     spec:
+      host: snowdrop.me
       port:
         targetPort: 8080
       to:
