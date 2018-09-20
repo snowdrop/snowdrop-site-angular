@@ -67,6 +67,10 @@ export class GuidesComponent implements OnInit, OnDestroy {
 		return false;
 	}
 
+	setFilter(term) {
+		this.filterText = term;
+	}
+
 	filterGuides(guides?) {
 		if (!guides) return [];
 		let filter = this.filterText || "";
