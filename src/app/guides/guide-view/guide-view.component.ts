@@ -106,16 +106,39 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 		return this._ready;
 	}
 
+
 	attachCollapseHandlers() {
 		const sections = document.getElementsByClassName("sect2");
 		console.log("Sections", sections);
+
+		const removeLinks = (parent: Element) => {
+			const nodes = parent.childNodes;
+			if (nodes && nodes.length) {
+				for (let i = 0; i < nodes.length; i++) {
+					const child = nodes.item(i);
+					if (child.nodeName.match(/H\d/i)) {
+						(<Element>child).innerHTML = child.textContent;
+						return;
+					}
+				}
+			}
+		}
+
+		/*
+		 * WARNING:This method applies a good amount of DOM manipulation magic to:
+		 *
+	   * 1. Ensure that links do not appear in headers (causing external page loads)
+		 * 2. Attach click event listeners to handle collapse/expand functionality
+		 * 3. Change styles on section headers in the DOM to perform collapse/expand
+		 */
 		for (let i = 0; i < sections.length; i++) {
 			const section = sections[i];
-			section.children.item(0).addEventListener("click", (event: Event) => {
+			/* 1. */ removeLinks(section);
+			/* 2. */ section.children.item(0).addEventListener("click", (event: Event) => {
 				if (section.classList.contains("expand")) {
-					section.classList.remove("expand");
+					/* 3. */ section.classList.remove("expand");
 				} else {
-					section.classList.add("expand");
+					/* 3. */ section.classList.add("expand");
 				}
 				console.log("Toggled section", section.classList.toString(), section);
 			});

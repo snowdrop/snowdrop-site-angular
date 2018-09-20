@@ -65,6 +65,7 @@ export class AsciidoctorComponent implements OnInit, OnDestroy {
 						}
 						html = Asciidoctor().convert(source).replace(/<a(?!.*class="anchor"[^>])([^>]+)href\s*=\s*([\"\'])(#[^\'\"]+)([\"\'])/g, `<a$1href=$2${window.location.pathname}$3$4`);
 						const div = document.createElement("div");
+						html = html.replace(/(<a[^>]+>)\s*<a[^>]+>([^<]+)<\/a>\s*(<\/a>)/gi, "$1$2$3");
 						div.innerHTML = html;
 						const tocElements = div.getElementsByClassName("toc");
 						if (tocElements.length) {
