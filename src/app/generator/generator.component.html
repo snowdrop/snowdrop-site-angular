@@ -25,22 +25,13 @@
             <input formControlName="artifactid" type="text" class="form-control" id="artifactId" aria-describedby="artifactIdHelp" placeholder="Artifact ID">
             <small id="artifactIdHelp" class="form-text text-muted">Usually based on the name of your project.</small>
           </div>
-          
-          <div class="form-group">
-            <label for="template">Application Template</label>
-            <div class="clear"></div>
-            <ng-container *ngFor="let t of templates">
-              <a *ngIf="t.value !== 'custom'" (click)="selectTemplate(t.value)" class="template btn" [class.btn-primary]="genForm.controls['template'].value === t.value">
-                {{t.name}}
-              </a>
-            </ng-container>
-            <div class="clear"></div>
-            <small id="templateHelp" class="form-text text-muted">{{getTemplateDescription()}}</small>
-          </div>
 
+          <div class="form-group">
+            <label for="template">Application Type</label>
+          </div>
           <div class="row">
+
             <div class="col-sm-2">
-              - OR -&nbsp;&nbsp;
               <a (click)="selectTemplate('custom')" class="template btn" [class.btn-primary]="isModulesEnabled()">
                 custom
               </a>
@@ -92,6 +83,17 @@
             </div>
           </div>
 
+          <div class="form-group">
+            <label for="template">Or choose an Application Template</label>
+            <div class="clear"></div>
+            <ng-container *ngFor="let t of templates">
+              <a *ngIf="t.value !== 'custom'" (click)="selectTemplate(t.value)" class="template btn" [class.btn-primary]="genForm.controls['template'].value === t.value">
+                {{t.name}}
+              </a>
+            </ng-container>
+            <div class="clear"></div>
+            <small id="templateHelp" class="form-text text-muted">{{getTemplateDescription()}}</small>
+          </div>
 
           <div class="form-group">
             <a *ngIf="advancedMode" (click)="advancedMode = false" class="link">Show fewer options</a>
