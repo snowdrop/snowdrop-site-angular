@@ -121,7 +121,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 				version: [params["version"] || "0.0.1-SNAPSHOT", [Validators.required, Validators.pattern(vPattern)]],
 				packagename: [params["packagename"] || "com.example.demo", [Validators.required, Validators.pattern(pPattern)]],
 				springbootversion: [params["springbootversion"] || this.snowdropVersionDefault.community, [Validators.required]],
-				template: [params["template"] || this.templates[0].value, [Validators.required]],
+				template: [params["template"] || 'custom', [Validators.required]],
 				modules: [this.getModules(params["module"]) || null, []]
 			});
 		});
