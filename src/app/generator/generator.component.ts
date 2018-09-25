@@ -84,7 +84,6 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 						}
 					}
 					if (config.templates) {
-						config.templates.reverse();
 						for (let t of config.templates) {
 							t.value = t.name.toLocaleLowerCase();
 							console.log("Template", t);
