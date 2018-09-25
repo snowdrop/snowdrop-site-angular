@@ -122,3 +122,39 @@
     </div>
   </div>
 </div>
+
+<!-- Recommended Guides overlay -->
+<div class="guides-overlay" [class.active]="showGuidesOverlay">
+  <div class="guides-overlay-inner">
+    <div class="padding-15">
+      <h1>
+        What next?
+        <a class="pull-right link" (click)="showGuidesOverlay = false">
+          <i class="fa fa-close"></i>
+          Close
+        </a>
+      </h1>
+      <p>
+        Now that you've got your application, check out some guides to see what you can do next!
+      </p>
+
+      <div *ngIf="relatedGuides?.length > 0" class="row row-cards-pf related guides">
+        <ng-container *ngFor="let guide of relatedGuides; let i = index">
+          <div *ngIf="i < 4" class="col-sm-12 guide-block">
+            <div>
+              <h4 class="title"><a *ngIf="guide.urls?.local" [routerLink]="['../',guide.urls.local]"> {{guide.title}}  </a></h4>
+              <p class="description">{{guide.description}}</p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div *ngIf="!relatedGuides?.length" class="row row-cards-pf related guides align-center">
+        <a class="btn btn-primary download" href="/guides">
+          <i class="fa fa-save"></i>
+          Browse Guides
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

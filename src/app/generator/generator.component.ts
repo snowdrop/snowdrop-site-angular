@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 
-import { GeneratorService } from '../components/providers';
+import { GeneratorService, GuideDataService } from '../components/providers';
 
 @Component({
 	selector: "generator",
@@ -24,12 +24,15 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 	modules = [];
 
 	modulesSelected = [];
+	relatedGuides = [];
+	showGuidesOverlay = false;
 
 	constructor(
 		private route: ActivatedRoute,
 		private http: Http,
 		private fb: FormBuilder,
 		private gs: GeneratorService,
+		private guideService: GuideDataService,
 	) {
 	}
 
@@ -106,6 +109,11 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	@HostListener('document:keydown.escape', ['$event']) onEscapePressed(event: KeyboardEvent) {
+		console.log(event);
+		this.showGuidesOverlay = false;
+	}
+
 	initForm() {
 		const gaPattern = /^([a-z0-9-_]+\.)*[a-z0-9-_]+$/i;
 		const vPattern = /^([a-z0-9-_]+\.)*[a-z0-9-_]+$/i;
@@ -164,13 +172,17 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 		this.genForm.controls['template'].setValue(t);
 	}
 
-	getTemplateDescription() {
+	getTemplate() {
 		for (let t of this.templates) {
 			if (t.value === this.genForm.controls['template'].value) {
-				return t.description;
+				return t;
 			}
 		}
-		return "";
+		return { description: "", tags: [] };
+	}
+
+	getTemplateDescription() {
+		return this.getTemplate().description;
 	}
 
 	canGenerate() {
@@ -187,8 +199,37 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 				values.module = values.modules.map(d => d.value);
 				values.modules = undefined;
 			}
-			console.log("Generating", values);
-			this.gs.generate(values);
+			setTimeout(() => {
+				this.gs.generate(values);
+			}, 600);
+
+			return this.displayRelatedGuides(values.module).then(() => {
+				console.log("Generating", values);
+			});
 		}
+	}
+
+	displayRelatedGuides(modules) {
+		return this.guideService.ready().then(() => {
+			let guideData = {
+				tags: []
+			};
+			console.log("Modules selected", modules)
+			for (let selected of modules) {
+				for (let m of this.modules) {
+					if (m.value === selected) {
+						console.log("Module matched", m)
+						guideData.tags = guideData.tags.concat(m.tags);
+					}
+				}
+			}
+			if (!guideData.tags) {
+				guideData.tags = this.getTemplate().tags;
+			}
+			console.log("Guide data", guideData)
+			this.relatedGuides = this.guideService.getRelatedGuides(guideData);
+			this.showGuidesOverlay = true;
+			console.log("Related guides", this.relatedGuides)
+		});
 	}
 }
