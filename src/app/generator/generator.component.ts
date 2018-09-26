@@ -228,6 +228,9 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 			}
 			console.log("Guide data", guideData)
 			this.relatedGuides = this.guideService.getRelatedGuides(guideData);
+			if (this.relatedGuides && this.relatedGuides.length > 4) {
+				this.relatedGuides.length = 4;
+			}
 			this.showGuidesOverlay = true;
 			console.log("Related guides", this.relatedGuides)
 		});
