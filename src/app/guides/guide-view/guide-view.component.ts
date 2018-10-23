@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { Http } from '@angular/http';
 import { ActivatedRoute } from "@angular/router";
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { GuideDataService, ProjectDataService, TagService } from '../../components/providers';
 
@@ -17,6 +18,7 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 	enablements: any[] = [];
 
 	constructor(
+		private _sanitizer: DomSanitizer,
 		private guideService: GuideDataService,
 		private projectService: ProjectDataService,
 		public tags: TagService,
@@ -78,6 +80,8 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 		this.ready();
 	}
 
+	katacodaHTML = null;
+
 	ready() {
 		if (!this._ready) {
 			this._ready = new Promise((resolve, reject) => {
@@ -86,6 +90,24 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 					this.guideId = params.get("guideId");
 					return this.guideService.ready().then(() => {
 						this.guide = this.guideService.getGuideByTitle(this.guideId);
+
+						// this.guide.urls.katacoda = "openshift/courses/introduction/developing-with-odo";
+						// this.guide.urls.katacodaCover = "http://snowdrop.me/guides";
+						//
+						if (this.guide.urls.katacoda)
+							this.katacodaHTML = this._sanitizer.bypassSecurityTrustHtml(`
+							<script src="//katacoda.com/embed.js"></script>
+							<div id="katacoda-scenario-1"
+							data-katacoda-id="${this.guide.urls.katacoda}"
+							data-katacoda-ctatext="More Scenarios"
+							${this.guide.urls.katacodaCover ? 'data-katacoda-ctaurl="' + this.guide.urls.katacodaCover : '"'}
+							data-katacoda-color="1a1a1a"
+							data-katacoda-secondary="cc0000"
+							data-katacoda-font="Open Sans"
+							data-katacoda-fontheader="Open Sans"
+							style="height: calc(100vh - 130px);">
+						</div>`);
+
 						console.log(`Loading ${this.guideId}`, this.guide);
 						this.relatedGuides = this.guideService.getRelatedGuides(this.guide);
 						this.relatedProjects = this.guideService.getRelatedProjects(this.guide);
@@ -94,9 +116,6 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 						return this.guideService.render(this.guide).then((source) => {
 							console.log(this.guide, source);
 							this.source = source;
-							setTimeout(() => {
-								this.attachCollapseHandlers();
-							}, 200);
 							resolve();
 						});
 					}).catch(reject);
@@ -109,13 +128,14 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 
 	attachCollapseHandlers() {
 		const sections = document.getElementsByClassName("sect2");
-		console.log("Sections", sections);
+		console.log("Attaching collapse handlers", sections);
 
 		const removeLinks = (parent: Element) => {
 			const nodes = parent.childNodes;
 			if (nodes && nodes.length) {
 				for (let i = 0; i < nodes.length; i++) {
 					const child = nodes.item(i);
+					console.log("Removing links from section header", i);
 					if (child.nodeName.match(/H\d/i)) {
 						(<Element>child).innerHTML = child.textContent;
 						return;
@@ -133,6 +153,7 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 		 */
 		for (let i = 0; i < sections.length; i++) {
 			const section = sections[i];
+			console.log("Adding click handler to section", i);
 			/* 1. */ removeLinks(section);
 			/* 2. */ section.children.item(0).addEventListener("click", (event: Event) => {
 				if (section.classList.contains("expand")) {

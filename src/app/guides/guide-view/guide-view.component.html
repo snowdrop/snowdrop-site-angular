@@ -2,7 +2,7 @@
   <div class="padding-15">
     <div class="documentation">
       <div *ngIf="guide" class="row">
-        <div class="padding-15" [class.col-sm-8]="true">
+        <div class="padding-15" [class.col-sm-8]="!katacodaHTML" [class.col-sm-12]="katacodaHTML">
           <div class="guide-header">
             <h1>{{ guide?.title }}</h1>
             <p>{{ guide?.description }}</p>
@@ -32,7 +32,15 @@
             </div>
             <hr />
           </ng-container>
-          <asciidoctor [source]="source" [expandable]=true ></asciidoctor>
+          <asciidoctor [source]="source" [expandable]=true (loaded)="attachCollapseHandlers()"></asciidoctor>
+
+          <div class="row" *ngIf="guide?.urls?.katacoda">
+            <div class="col-sm-12">
+              <div id="katacoda" [innerHTML]="katacodaHTML">
+
+              </div>
+            </div>
+          </div>
 
           <ng-container *ngIf="enablements?.length > 0">
             <hr />
@@ -52,106 +60,107 @@
           </ng-container>
         </div>
 
-
-        <div class="col-sm-4 padding-15">
-          <div *ngIf="guide.urls?.booster || guide.urls?.source" class="row row-cards-pf metadata">
-            <div class="col-sm-12">
-              <h2>Get the code</h2>
-              <a *ngIf="guide.urls?.booster; else sources" class="btn btn-primary download" href="{{guide.urls.booster}}" target="_blank">
-                <i class="fa fa-save"></i>
-                Download ZIP
-              </a>
-              <ng-template #sources>
-                <a *ngIf="guide.urls?.source" class="btn btn-primary download repo" href="{{guide.urls.source}}" target="_blank">
-                  <i class="fa fa-code"></i>
-                  GitHub
-                </a>
-                <a *ngIf="guide.urls?.source" class="btn btn-secondary download zip" href="{{guide.urls.source}}/archive/master.zip" target="_blank">
+        <ng-container *ngIf="!katacodaHTML">
+          <div class="col-sm-4 padding-15">
+            <div *ngIf="guide.urls?.booster || guide.urls?.source" class="row row-cards-pf metadata">
+              <div class="col-sm-12">
+                <h2>Get the code</h2>
+                <a *ngIf="guide.urls?.booster; else sources" class="btn btn-primary download" href="{{guide.urls.booster}}" target="_blank">
                   <i class="fa fa-save"></i>
-                  Zip
+                  Download ZIP
                 </a>
-              </ng-template>
-            </div>
+                <ng-template #sources>
+                  <a *ngIf="guide.urls?.source" class="btn btn-primary download repo" href="{{guide.urls.source}}" target="_blank">
+                    <i class="fa fa-code"></i>
+                    GitHub
+                  </a>
+                  <a *ngIf="guide.urls?.source" class="btn btn-secondary download zip" href="{{guide.urls.source}}/archive/master.zip" target="_blank">
+                    <i class="fa fa-save"></i>
+                    Zip
+                  </a>
+                </ng-template>
+              </div>
 
-            <div class="col-sm-12">
-              &nbsp;
-            </div>
+              <div class="col-sm-12">
+                &nbsp;
+              </div>
 
+            </div>
           </div>
-        </div>
 
-        <div *ngIf="relatedProjects?.length > 0" class="col-sm-4 padding-15">
+          <div *ngIf="relatedProjects?.length > 0" class="col-sm-4 padding-15">
 
-          <div class="row row-cards-pf projects">
-            <div class="col-sm-12">
-              <h2>What we're using</h2>
-              <p>
-                Learn more about the open-source projects used in this guide:
-              </p>
-              <hr />
-            </div>
+            <div class="row row-cards-pf projects">
+              <div class="col-sm-12">
+                <h2>What we're using</h2>
+                <p>
+                  Learn more about the open-source projects used in this guide:
+                </p>
+                <hr />
+              </div>
 
-            <ng-container *ngFor="let project of relatedProjects; let i = index">
-              <div *ngIf="i < 4" class="col-sm-12 guide-block">
-                <div>
-                  <div class="thumbnail project-logo">
-                    <img *ngIf="project.urls?.logo" [src]="project.urls?.logo"/>
+              <ng-container *ngFor="let project of relatedProjects; let i = index">
+                <div *ngIf="i < 4" class="col-sm-12 guide-block">
+                  <div>
+                    <div class="thumbnail project-logo">
+                      <img *ngIf="project.urls?.logo" [src]="project.urls?.logo"/>
+                    </div>
+                    <h3 class="title">
+                      <a [routerLink]="['/','guides']"  [queryParams]="{'t': project.tag}" class="tag-link">
+                        <span class="project-color" [style.background-color]="tags.getBgColor(project.tag)" [style.color]="tags.getColor(project.tag)">
+                          &nbsp;
+                        </span>
+                        {{project.name}}
+                      </a>
+                    </h3>
+                    <p class="description">{{project.description}}</p>
+                    <p class="actions">
+                      <a *ngIf="project.urls?.website" class="btn btn-lg btn-primary" href="{{project.urls.website}}">
+                        <i class="fa fa-globe"></i>
+                        View website
+                      </a>
+                      <a *ngIf="project.urls?.source" class="btn btn-lg btn-secondary" href="{{project.urls.source}}">
+                        <i class="fa fa-code"></i>
+                        Sources
+                      </a>
+                    </p>
                   </div>
-                  <h3 class="title">
-                    <a [routerLink]="['/','guides']"  [queryParams]="{'t': project.tag}" class="tag-link">
-                      <span class="project-color" [style.background-color]="tags.getBgColor(project.tag)" [style.color]="tags.getColor(project.tag)">
-                        &nbsp;
-                      </span>
-                      {{project.name}}
-                    </a>
-                  </h3>
-                  <p class="description">{{project.description}}</p>
-                  <p class="actions">
-                    <a *ngIf="project.urls?.website" class="btn btn-lg btn-primary" href="{{project.urls.website}}">
-                      <i class="fa fa-globe"></i>
-                      View website
-                    </a>
-                    <a *ngIf="project.urls?.source" class="btn btn-lg btn-secondary" href="{{project.urls.source}}">
-                      <i class="fa fa-code"></i>
-                      Sources
-                    </a>
-                  </p>
                 </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="col-sm-4 padding-15 toc-container">
+
+            <div [hidden]="!displayToc" class="row row-cards-pf toc-inner">
+              <div class="col-sm-12">
+                <h2>Table of Contents <a (click)="goTop()" class="toc-top-link">Top</a></h2>
+                <hr />
               </div>
-            </ng-container>
-          </div>
-        </div>
 
-        <div class="col-sm-4 padding-15 toc-container">
 
-          <div [hidden]="!displayToc" class="row row-cards-pf toc-inner">
-            <div class="col-sm-12">
-              <h2>Table of Contents <a (click)="goTop()" class="toc-top-link">Top</a></h2>
-              <hr />
+              <div class="col-sm-12 guide-block">
+                <asciidoctor [source]="source" [toc]=true (loaded)="showToc(true)" (error)="showToc(false)"></asciidoctor>
+              </div>
             </div>
 
+            <div *ngIf="relatedGuides?.length > 0" class="row row-cards-pf related guides">
+              <div class="col-sm-12">
+                <h2>Keep learning</h2>
+                <hr />
+              </div>
 
-            <div class="col-sm-12 guide-block">
-              <asciidoctor [source]="source" [toc]=true (loaded)="showToc(true)" (error)="showToc(false)"></asciidoctor>
-            </div>
-          </div>
-
-          <div *ngIf="relatedGuides?.length > 0" class="row row-cards-pf related guides">
-            <div class="col-sm-12">
-              <h2>Keep learning</h2>
-              <hr />
-            </div>
-
-            <ng-container *ngFor="let guide of relatedGuides; let i = index">
-              <div *ngIf="i < 4" class="col-sm-12 guide-block">
-                <div>
-                  <h4 class="title"><a *ngIf="guide.urls?.local" [routerLink]="['../',guide.urls.local]"> {{guide.title}}  </a></h4>
-                  <p class="description">{{guide.description}}</p>
+              <ng-container *ngFor="let guide of relatedGuides; let i = index">
+                <div *ngIf="i < 4" class="col-sm-12 guide-block">
+                  <div>
+                    <h4 class="title"><a *ngIf="guide.urls?.local" [routerLink]="['../',guide.urls.local]"> {{guide.title}}  </a></h4>
+                    <p class="description">{{guide.description}}</p>
+                  </div>
                 </div>
-              </div>
-            </ng-container>
+              </ng-container>
+            </div>
           </div>
-        </div>
+        </ng-container>
 
       </div>
     </div>
