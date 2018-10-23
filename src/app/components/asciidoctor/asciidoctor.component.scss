@@ -2,6 +2,42 @@
   text-shadow: 0 0 1px black !important;
 }
 
+.admonitionblock {
+  padding-top: 15px;
+
+  table {
+    width: 80%;
+    background-color: #bbc7c7;
+    margin: 15px;
+    width: 100%;
+    overflow-x: scroll;
+
+    .icon {
+      font-weight: bold;
+    }
+  }
+}
+
+table {
+  width: 100% !important;
+  white-space: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+
+  thead {
+    width: 100%;
+    background-color: #bbc7c7;
+
+    th {
+      padding: 5px;
+    }
+  }
+
+  td {
+    padding: 5px;
+  }
+}
+
 .sectlevel1 {
   font-size: 16px;
   list-style: none;
@@ -21,7 +57,8 @@
   margin-bottom: 10px;
   border-radius: 3px;
 
-  div {
+  & > div,
+  table {
     transition: all 200ms;
     padding-left: 15px;
     padding-right: 15px;
@@ -33,7 +70,7 @@
     padding: 9px 10px;
 
     &:hover {
-      background-color: #ccccff;
+      background-color: #ccccff !important;
     }
   }
 
@@ -41,7 +78,7 @@
     padding-bottom: 10px;
   }
 
-  > :not(div)::before {
+  > :not(table):not(div)::before {
     content: "-";
     height: 20px;
     width: 20px;
@@ -53,15 +90,16 @@
   }
 
   &:not(.expand) {
-    background-color: #ccffcc;
+    background-color: #99ff9978;
     border-radius: 3px;
     cursor: pointer;
 
-    div {
+    div,
+    table {
       display: none;
     }
 
-    > :not(div)::before {
+    > :not(table):not(div)::before {
       content: "+";
     }
   }
@@ -77,6 +115,10 @@
     h6 {
       cursor: pointer;
       margin-bottom: 15px;
+    }
+
+    > :first-child {
+      background-color: #ccccdd;
     }
   }
 }

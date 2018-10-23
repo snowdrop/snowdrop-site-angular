@@ -43,9 +43,10 @@ export class AsciidoctorComponent implements OnInit, OnDestroy {
 		let render = (retries) => {
 			let retry = () => {
 				if (retries > 0) {
-					console.log(retries, "retries remain.")
 					setTimeout(() => {
-						render(--retries);
+						retries--;
+						console.log(retries, "retries remain.")
+						render(retries);
 					}, 250);
 				}
 			}
@@ -58,7 +59,6 @@ export class AsciidoctorComponent implements OnInit, OnDestroy {
 						if (this.expandable) {
 							html = html.replace(/<div([^>]+)class="sect2([^"]*)"([^>]*)>/g, `<div$1class="sect2$2 expandable"$3>`);
 						}
-						this.loaded.emit(this);
 					} else {
 						if (source.toLowerCase().indexOf(":toc:") == -1) {
 							source = `:toc:\n` + source;
@@ -72,19 +72,25 @@ export class AsciidoctorComponent implements OnInit, OnDestroy {
 							const toc = tocElements.item(0);
 							const tocHtml = toc.outerHTML.replace(/<div[^>]*id="toctitle"[^>]*>[^<]*<\/div>/, "");
 							html = tocHtml;
-							this.loaded.emit(this);
 						} else {
 							html = "No table of contents.";
 							this.error.emit(this);
 						}
 					}
+					if (!this.rendered) {
+						setTimeout(() => {
+							this.loaded.emit(this);
+						}, 200);
+					}
 					this.rendered = this.sanitizer.bypassSecurityTrustHtml(html);
+
 				} else {
 					retry();
 				}
 			} catch (err) {
 				console.error("ASCIIDOC FAILED:", err);
 				this.error.emit(this);
+				retry();
 			}
 		}
 		render(25);
