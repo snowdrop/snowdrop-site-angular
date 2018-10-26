@@ -34,17 +34,18 @@ export class HeaderComponent {
 			route: "/guides"
 		},
 		{
-			id: "news",
-			name: "News",
-			route: "/news"
-		},
-		{
 			id: "about",
 			name: "About",
 			route: "/about"
 		},
 	];
 
+  // 	{
+	//		id: "news",
+	//		name: "News",
+	//		route: "/news"
+	//	},
+  
 	constructor(private router: Router) {
 		router.events.subscribe((url: any) => {
 			this.collapse = false;
