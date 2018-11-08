@@ -1,0 +1,19 @@
+= Snowdrop website
+
+This app serves the guides and informational content for the RHOAR Snowdrop runtime.
+
+Site configuration & guides content: https://github.com/snowdrop/snowdrop-docs
+
+Config file: https://github.com/snowdrop/snowdrop-docs/blob/master/site/config.json
+Guides content: https://github.com/snowdrop/snowdrop-docs/tree/master/site/guides
+
+== How to install & run locally
+
+* Install node.js: https://nodejs.org/en/download/
+* Clone this repository
+* Run `npm i`
+* Run `npm run start:dev`
+
+== How to deploy to snowdrop.me
+
+Push to `master` branch in this repository. The site is configured with a commit hook that kicks off the OKD build & deployment process. The site does not need to be redeployed for config changes, rather you just need to push to the docs repository and wait for the GitHub cache to be invalidated (usually takes less than a minute, but sometimes a force-refresh CTRL-SHIFT-R is necessary in the browser.)
