@@ -44,8 +44,14 @@
     <p class="description">{{ guide?.description | slice:0:150 }}{{guide?.description.length > 150 ? '...' : ''}}</p>
     <p class="actions">
       <a *ngIf="guide?.urls?.local" class="btn btn-lg btn-primary" [routerLink]="[guide?.urls?.local]">
-        <i class="fa fa-book"></i>
-        Read guide
+        <ng-container *ngIf="guide?.urls?.content && !guide?.urls?.katacoda">
+          <i class="fa fa-book"></i>
+          Read guide
+        </ng-container>
+        <ng-container *ngIf="guide?.urls?.katacoda">
+          <i class="fa fa-rocket"></i>
+          Run scenario
+        </ng-container>
       </a>
       <a *ngIf="guide?.urls?.booster" class="btn btn-lg btn-secondary" href="{{guide?.urls?.booster}}" target="_blank">
         <i class="fa rocket"></i>
