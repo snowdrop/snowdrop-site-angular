@@ -91,22 +91,22 @@ export class GuideViewComponent implements OnInit, OnDestroy {
 					return this.guideService.ready().then(() => {
 						this.guide = this.guideService.getGuideByTitle(this.guideId);
 
-						// this.guide.urls.katacoda = "openshift/courses/introduction/developing-with-odo";
-						// this.guide.urls.katacodaCover = "http://snowdrop.me/guides";
-						//
-						if (this.guide.urls.katacoda)
+						if (this.guide.urls.katacoda) {
+							let katacodaCtaURL = this.guide.urls.katacodaCtaURL ? this.guide.urls.katacodaCtaURL : "http://snowdrop.me/guides";
+							let katacodaScenarioURL = this.guide.urls.katacoda;
 							this.katacodaHTML = this._sanitizer.bypassSecurityTrustHtml(`
 							<script src="//katacoda.com/embed.js"></script>
 							<div id="katacoda-scenario-1"
-							data-katacoda-id="${this.guide.urls.katacoda}"
-							data-katacoda-ctatext="More Scenarios"
-							${this.guide.urls.katacodaCover ? 'data-katacoda-ctaurl="' + this.guide.urls.katacodaCover : '"'}
+							data-katacoda-id="${katacodaScenarioURL}"
+							data-katacoda-ctatext="More Guides"
+							data-katacoda-ctaurl="${katacodaCtaURL}"
 							data-katacoda-color="1a1a1a"
-							data-katacoda-secondary="cc0000"
+							data-katacoda-secondary="00cc00"
 							data-katacoda-font="Open Sans"
 							data-katacoda-fontheader="Open Sans"
-							style="height: calc(100vh - 130px);">
+							style="height: calc(100vh - 142px);">
 						</div>`);
+						}
 
 						console.log(`Loading ${this.guideId}`, this.guide);
 						this.relatedGuides = this.guideService.getRelatedGuides(this.guide);
