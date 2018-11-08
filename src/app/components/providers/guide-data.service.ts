@@ -116,6 +116,9 @@ export class GuideDataService implements OnInit, OnDestroy {
 						if (notNullOrEmpty(urls.booster)) {
 							g.urls.booster = this.getBackendUrl() + "launcher/zip?" + guide.urls.booster;
 						}
+						if (notNullOrEmpty(urls.katacoda)) {
+							g.urls.katacoda = urls.katacoda.trim();
+						}
 						if (notNullOrEmpty(urls.source)) {
 							g.urls.source = urls.source.trim();
 						}
