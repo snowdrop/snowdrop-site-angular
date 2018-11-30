@@ -119,6 +119,9 @@ export class GuideDataService implements OnInit, OnDestroy {
 						if (notNullOrEmpty(urls.katacoda)) {
 							g.urls.katacoda = urls.katacoda.trim();
 						}
+						if (notNullOrEmpty(urls.generator)) {
+							g.urls.generator = urls.generator.trim();
+						}
 						if (notNullOrEmpty(urls.source)) {
 							g.urls.source = urls.source.trim();
 						}

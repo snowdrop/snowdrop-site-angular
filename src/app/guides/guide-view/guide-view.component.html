@@ -67,27 +67,34 @@
 
           <ng-container *ngIf="!katacodaHTML">
             <div class="col-sm-4 padding-15">
-              <div *ngIf="guide.urls?.booster || guide.urls?.source" class="row row-cards-pf metadata">
+              <div *ngIf="guide.urls?.generator || guide.urls?.booster || guide.urls?.source" class="row row-cards-pf metadata">
                 <div class="col-sm-12">
                   <h2>Get the code</h2>
-                  <a *ngIf="guide.urls?.booster; else sources" class="btn btn-primary download" href="{{guide.urls.booster}}" target="_blank">
-                    <i class="fa fa-save"></i>
-                    Download ZIP
-                  </a>
-                  <ng-template #sources>
+                  <ng-container *ngIf="guide.urls?.booster">
+                    <a class="btn btn-primary download" href="{{guide.urls.booster}}" target="_blank">
+                      <i class="fa fa-save"></i>
+                      Demo ZIP
+                    </a>
+                    <br>
+                  </ng-container>
+                  <ng-container *ngIf="guide.urls?.generator">
+                    <a class="btn btn-primary download" href="/start?{{guide.urls.generator}}" target="_blank">
+                      <i class="fa fa-gear"></i>
+                      Sample Project
+                    </a>
+                    <br>
+                  </ng-container>
+                  <ng-container *ngIf="guide.urls?.source">
                     <a *ngIf="guide.urls?.source" class="btn btn-primary download repo" href="{{guide.urls.source}}" target="_blank">
                       <i class="fa fa-code"></i>
                       GitHub
                     </a>
                     <a *ngIf="guide.urls?.source" class="btn btn-secondary download zip" href="{{guide.urls.source}}/archive/master.zip" target="_blank">
                       <i class="fa fa-save"></i>
-                      Zip
+                      Save
                     </a>
-                  </ng-template>
-                </div>
-
-                <div class="col-sm-12">
-                  &nbsp;
+                    <br>
+                  </ng-container>
                 </div>
 
               </div>
