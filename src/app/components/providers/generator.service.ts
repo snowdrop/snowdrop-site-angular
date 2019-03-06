@@ -10,7 +10,8 @@ export class GeneratorService {
 	}
 
 	private _ready: Promise<GeneratorService> = null;
-	private serviceURL = "http://spring-boot-generator.195.201.87.126.nip.io";
+	// private serviceURL = "http://spring-boot-generator.195.201.87.126.nip.io";
+	private serviceURL = "http://localhost:8000";
 
 	ngOnInit(): void {
 		this.ready();
