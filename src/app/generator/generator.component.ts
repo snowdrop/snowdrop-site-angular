@@ -16,7 +16,7 @@ export class GeneratorComponent implements OnInit {
   advancedMode = false;
   genForm = null;
   snowdropVersions = [];
-  snowdropVersionDefault = null;
+  defaultSpringBootVersion: string = null;
   templates = [];
   modules: UIModule[] = [];
   supported = false;
@@ -34,35 +34,30 @@ export class GeneratorComponent implements OnInit {
   categories: any[];
 
   ngOnInit(): void {
-    this.gs.getGeneratorConfig().subscribe((config) => {
-      if (config) {
+    let configObservable = this.gs.getGeneratorConfig()
+      .map(config => {
         if (config.bomversions) {
           for (let version of config.bomversions) {
             console.log("Version", version);
             this.snowdropVersions.push(version);
 
             if (version.default) {
-              this.snowdropVersionDefault = version;
+              this.defaultSpringBootVersion = version.community;
             }
           }
         }
-        if (config.modules) {
-          for (let m of config.modules) {
-            let uiModule = new UIModule(m);
-            console.log("Module", uiModule);
-            this.modules.push(uiModule);
-          }
-        }
-        if (config.templates) {
-          for (let t of config.templates) {
-            console.log("Template", t);
-            this.templates.push(t);
-          }
-        }
-      }
 
-      this.initForm();
-    })
+        this.templates = config.templates;
+
+        this.initForm();
+
+        return this.defaultSpringBootVersion
+      });
+
+    // use the output of the configObservable which produces the defined default SB version as input to
+    // populate compatible modules with that version
+    configObservable.switchMap(version => this.gs.getModulesFor(version))
+      .subscribe(gsModules => this.setModules(gsModules));
   }
 
   @HostListener('document:keypress', ['$event'])
@@ -83,7 +78,6 @@ export class GeneratorComponent implements OnInit {
     const gaPattern = /^([a-z0-9-_]+\.)*[a-z0-9-_]+$/i;
     const vPattern = /^([a-z0-9-_]+\.)*[a-z0-9-_]+$/i;
     const pPattern = /^([a-z0-9-_$]+\.)*[a-z0-9-_$]+$/i;
-    console.log("Default SD version", this.snowdropVersionDefault);
 
     this.route.queryParams.subscribe((params) => {
       console.log("Initializing Form");
@@ -92,7 +86,7 @@ export class GeneratorComponent implements OnInit {
         artifactid: [params["artifactid"] || 'demo', [Validators.required, Validators.pattern(gaPattern)]],
         version: [params["version"] || "0.0.1-SNAPSHOT", [Validators.required, Validators.pattern(vPattern)]],
         packagename: [params["packagename"] || "com.example.demo", [Validators.required, Validators.pattern(pPattern)]],
-        springbootversion: [params["springbootversion"] || this.snowdropVersionDefault.community, [Validators.required]],
+        springbootversion: [params["springbootversion"] || this.defaultSpringBootVersion, [Validators.required]],
         supported: [params["supported"]],
         template: [params["template"] || 'custom', [Validators.required]],
         modules: [this.getModules(params["module"]) || null, []]
@@ -202,26 +196,26 @@ export class GeneratorComponent implements OnInit {
     });
   }
 
-  onVersionChange(value: string) {
-    if (this.genForm) {
-      // disable supported checkbox if this version is not supported
-      if (!this.isSupportedVersion(value)) {
-        document.getElementById("supported").setAttribute("disabled", "true")
-      } else {
-        document.getElementById("supported").removeAttribute("disabled")
-      }
-
-      // refresh compatible modules list
-      this.gs.getModulesFor(value).subscribe(modules => {
-        this.modules = [];
-        let i = 0;
-        for (let m of modules) {
-          this.modules[i++] = new UIModule(m)
-        }
-      })
+  onVersionChange(newVersion: string) {
+    // disable supported checkbox if this version is not supported
+    if (!this.isSupportedVersion(newVersion)) {
+      document.getElementById("supported").setAttribute("disabled", "true")
+    } else {
+      document.getElementById("supported").removeAttribute("disabled")
     }
+
+    // refresh compatible modules list
+    this.refreshModulesFor(newVersion);
   }
-  
+
+  private refreshModulesFor(version: string) {
+    this.gs.getModulesFor(version).subscribe(gsModules => this.setModules(gsModules))
+  }
+
+  private setModules(gsModules: Module[]) {
+    this.modules = gsModules.map(m => new UIModule(m))
+  }
+
   private getSupportedVersionFor(sbVersion: string): string {
     for (let version of this.snowdropVersions) {
       if (sbVersion === version.community) {
@@ -247,7 +241,7 @@ class UIModule extends Module {
   tag: string;
 
   constructor(module: Module) {
-    super(module)
+    super(module);
     this.value = module.name;
     this.tag = module.tags[0];
   }
