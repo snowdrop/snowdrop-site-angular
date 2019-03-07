@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit} from "@angular/core";
+import {Component, HostListener, OnInit} from "@angular/core";
 import {FormBuilder, Validators} from '@angular/forms';
 import {ActivatedRoute} from "@angular/router";
 
@@ -9,7 +9,7 @@ import {GeneratorService, GuideDataService, Module} from '../components/provider
   templateUrl: "./generator.component.html",
   styleUrls: ["./generator.component.scss", "./generator.component.select.scss"]
 })
-export class GeneratorComponent implements OnInit, OnDestroy {
+export class GeneratorComponent implements OnInit {
 
   // https://ng-select.github.io/ng-select#/multiselect-checkbox
 
@@ -29,9 +29,6 @@ export class GeneratorComponent implements OnInit, OnDestroy {
     private gs: GeneratorService,
     private guideService: GuideDataService,
   ) {
-  }
-
-  ngOnDestroy() {
   }
 
   categories: any[];
