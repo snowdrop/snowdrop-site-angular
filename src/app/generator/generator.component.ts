@@ -1,9 +1,8 @@
 import {Component, HostListener, OnDestroy, OnInit} from "@angular/core";
-import {Http} from '@angular/http';
 import {FormBuilder, Validators} from '@angular/forms';
 import {ActivatedRoute} from "@angular/router";
 
-import {GeneratorService, GuideDataService} from '../components/providers';
+import {GeneratorService, GuideDataService, Module} from '../components/providers';
 
 @Component({
   selector: "generator",
@@ -16,20 +15,16 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 
   advancedMode = false;
   genForm = null;
-  springbootVersions = [];
   snowdropVersions = [];
   snowdropVersionDefault = null;
   templates = [];
-  modules = [];
+  modules: UIModule[] = [];
   supported = false;
-
-  modulesSelected = [];
   relatedGuides = [];
   showGuidesOverlay = false;
 
   constructor(
     private route: ActivatedRoute,
-    private http: Http,
     private fb: FormBuilder,
     private gs: GeneratorService,
     private guideService: GuideDataService,
@@ -39,65 +34,38 @@ export class GeneratorComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
-  actionsText: string = '';
-  filterText: string = ''
   categories: any[];
 
   ngOnInit(): void {
-    Promise.all([
-      this.gs.getGeneratorConfig().then((config) => {
-        if (config) {
-          if (config.bomversions) {
-            for (let version of config.bomversions) {
-              console.log("Version", version);
-              this.snowdropVersions.push(version);
+    this.gs.getGeneratorConfig().subscribe((config) => {
+      if (config) {
+        if (config.bomversions) {
+          for (let version of config.bomversions) {
+            console.log("Version", version);
+            this.snowdropVersions.push(version);
 
-              if (version.default) {
-                this.snowdropVersionDefault = version;
-              }
-            }
-          }
-          if (config.modules) {
-            let tags = {};
-            for (let m of config.modules) {
-              m.value = m.name;
-              if (m.tags) {
-                for (let t of m.tags) {
-                  if (!tags[t]) tags[t] = 1;
-                  else tags[t]++;
-                }
-              }
-              console.log("Module", m);
-              this.modules.push(m);
-            }
-            for (let m of this.modules) {
-              if (m.tags) {
-                let largest = null;
-                let largestCount = 0;
-                for (let t of m.tags) {
-                  if (tags[t] > largestCount) {
-                    largest = t;
-                    largestCount = tags[t];
-                  }
-                }
-                if (largest) {
-                  m.tag = largest;
-                }
-              }
-            }
-          }
-          if (config.templates) {
-            for (let t of config.templates) {
-              t.value = t.name.toLocaleLowerCase();
-              console.log("Template", t);
-              this.templates.push(t);
+            if (version.default) {
+              this.snowdropVersionDefault = version;
             }
           }
         }
-      }),
-    ]).then(() => {
+        if (config.modules) {
+          for (let m of config.modules) {
+            let uiModule = new UIModule(m);
+            console.log("Module", uiModule);
+            this.modules.push(uiModule);
+          }
+        }
+        if (config.templates) {
+          for (let t of config.templates) {
+            console.log("Template", t);
+            this.templates.push(t);
+          }
+        }
+      }
+
       this.initForm();
-    });
+    })
   }
 
   @HostListener('document:keypress', ['$event'])
@@ -215,11 +183,11 @@ export class GeneratorComponent implements OnInit, OnDestroy {
       let guideData = {
         tags: []
       };
-      console.log("Modules selected", modules)
+      console.log("Modules selected", modules);
       for (let selected of modules) {
         for (let m of this.modules) {
           if (m.value === selected) {
-            console.log("Module matched", m)
+            console.log("Module matched", m);
             guideData.tags = guideData.tags.concat(m.tags);
           }
         }
@@ -227,7 +195,7 @@ export class GeneratorComponent implements OnInit, OnDestroy {
       if (!guideData.tags) {
         guideData.tags = this.getTemplate().tags;
       }
-      console.log("Guide data", guideData)
+      console.log("Guide data", guideData);
       this.relatedGuides = this.guideService.getRelatedGuides(guideData);
       if (this.relatedGuides && this.relatedGuides.length > 4) {
         this.relatedGuides.length = 4;
@@ -239,11 +207,21 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 
   onVersionChange(value: string) {
     if (this.genForm) {
+      // disable supported checkbox if this version is not supported
       if (!this.isSupportedVersion(value)) {
         document.getElementById("supported").setAttribute("disabled", "true")
       } else {
         document.getElementById("supported").removeAttribute("disabled")
       }
+
+      // refresh compatible modules list
+      this.gs.getModulesFor(value).subscribe(modules => {
+        this.modules = [];
+        let i = 0;
+        for (let m of modules) {
+          this.modules[i++] = new UIModule(m)
+        }
+      })
     }
   }
   
@@ -264,5 +242,16 @@ export class GeneratorComponent implements OnInit, OnDestroy {
     if (target.checked) {
       this.genForm.controls['supported'].setValue('true');
     }
+  }
+}
+
+class UIModule extends Module {
+  value: string;
+  tag: string;
+
+  constructor(module: Module) {
+    super(module)
+    this.value = module.name;
+    this.tag = module.tags[0];
   }
 }
