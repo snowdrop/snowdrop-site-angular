@@ -11,7 +11,7 @@ export class GeneratorService {
   }
 
   private _ready: Promise<GeneratorService> = null;
-  private serviceURL = "http://spring-boot-generator.195.201.87.126.nip.io";
+  private serviceURL = "https://generator.snowdrop.me";
 
   ngOnInit(): void {
     this.ready();
