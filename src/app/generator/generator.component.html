@@ -93,7 +93,8 @@
             <label for="template">Or choose an Application Template</label>
             <div class="clear"></div>
             <ng-container *ngFor="let t of templates">
-              <a *ngIf="t.value !== 'custom'" (click)="selectTemplate(t.value)" class="template btn" [class.btn-primary]="genForm.controls['template'].value === t.value">
+              <a *ngIf="t.name !== 'custom'" (click)="selectTemplate(t.name)" class="template btn"
+                 [class.btn-primary]="genForm.controls['template'].value === t.name">
                 {{t.name}}
               </a>
             </ng-container>

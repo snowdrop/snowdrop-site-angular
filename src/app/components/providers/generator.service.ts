@@ -96,7 +96,7 @@ interface Config {
   modules: Module[];
 }
 
-interface Template {
+export interface Template {
   name: string;
   description: string;
 }

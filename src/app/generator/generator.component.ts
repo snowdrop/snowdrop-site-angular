@@ -2,7 +2,7 @@ import {Component, HostListener, OnInit} from "@angular/core";
 import {FormBuilder, Validators} from '@angular/forms';
 import {ActivatedRoute} from "@angular/router";
 
-import {GeneratorService, GuideDataService, Module} from '../components/providers';
+import {GeneratorService, GuideDataService, Module, Template} from '../components/providers';
 
 @Component({
   selector: "generator",
@@ -17,7 +17,7 @@ export class GeneratorComponent implements OnInit {
   genForm = null;
   snowdropVersions = [];
   defaultSpringBootVersion: string = null;
-  templates = [];
+  templates: Template[];
   modules: UIModule[] = [];
   supported = false;
   relatedGuides = [];
@@ -134,7 +134,7 @@ export class GeneratorComponent implements OnInit {
 
   getTemplate() {
     for (let t of this.templates) {
-      if (t.value === this.genForm.controls['template'].value) {
+      if (t.name === this.genForm.controls['template'].value) {
         return t;
       }
     }
@@ -183,9 +183,7 @@ export class GeneratorComponent implements OnInit {
           }
         }
       }
-      if (!guideData.tags) {
-        guideData.tags = this.getTemplate().tags;
-      }
+
       console.log("Guide data", guideData);
       this.relatedGuides = this.guideService.getRelatedGuides(guideData);
       if (this.relatedGuides && this.relatedGuides.length > 4) {
