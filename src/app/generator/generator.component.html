@@ -33,10 +33,10 @@
           </div>
 
           <div class="form-group">
-            <label for="template">Application Type</label>
+            <label>Application Type</label>
           </div>
-          <div class="row">
 
+          <div class="row">
             <div class="col-sm-2">
               <a (click)="selectTemplate('custom')" class="template btn" [class.btn-primary]="isModulesEnabled()">
                 custom
@@ -90,7 +90,7 @@
           </div>
 
           <div class="form-group">
-            <label for="template">Or choose an Application Template</label>
+            <label>Or choose an Application Template</label>
             <div class="clear"></div>
             <ng-container *ngFor="let t of templates">
               <a *ngIf="t.name !== 'custom'" (click)="selectTemplate(t.name)" class="template btn"
