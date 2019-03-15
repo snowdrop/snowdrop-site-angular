@@ -21,6 +21,13 @@
           </div>
 
           <div class="form-group">
+            <input formControlName="ap4k" type="checkbox" class="checkbox-inline" id="ap4k"
+                   (change)="onAp4kChange($event.target)">
+            <label for="ap4k" class="checkbox-label">Use <a href="https://github.com/ap4k/ap4k" target="_blank">ap4k</a>
+              to generate OpenShift / Kubernetes resources</label>
+          </div>
+
+          <div class="form-group">
             <label for="groupId">Group ID</label>
             <input formControlName="groupid" type="text" class="form-control" id="groupId" aria-describedby="groupIdHelp" placeholder="Enter group ID">
             <small id="groupIdHelp" class="form-text text-muted">Typically this is your top-level domain.</small>

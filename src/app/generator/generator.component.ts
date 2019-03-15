@@ -88,6 +88,7 @@ export class GeneratorComponent implements OnInit {
         packagename: [params["packagename"] || "com.example.demo", [Validators.required, Validators.pattern(pPattern)]],
         springbootversion: [params["springbootversion"] || this.defaultSpringBootVersion, [Validators.required]],
         supported: [params["supported"]],
+        ap4k: [params["ap4k"]],
         template: [params["template"] || 'custom', [Validators.required]],
         modules: [this.getModules(params["module"]) || null, []]
       });
@@ -230,6 +231,12 @@ export class GeneratorComponent implements OnInit {
   onSupportedChange(target) {
     if (target.checked) {
       this.genForm.controls['supported'].setValue('true');
+    }
+  }
+
+  onAp4kChange(target) {
+    if (target.checked) {
+      this.genForm.controls['ap4k'].setValue('true');
     }
   }
 }
