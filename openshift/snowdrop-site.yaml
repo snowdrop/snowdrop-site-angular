@@ -5,7 +5,6 @@ items:
     kind: ImageStream
     metadata:
       name: snowdrop-site-angular
-    spec: {}
   - apiVersion: v1
     kind: ImageStream
     metadata:
@@ -25,8 +24,6 @@ items:
         to:
           kind: ImageStreamTag
           name: 'snowdrop-site-angular:latest'
-      postCommit: {}
-      resources: {}
       source:
         git:
           uri: 'https://github.com/snowdrop/snowdrop-site-angular'
@@ -49,8 +46,6 @@ items:
         - type: ConfigChange
         - imageChange: {}
           type: ImageChange
-    status:
-      lastVersion: 0
   - kind: DeploymentConfig
     apiVersion: v1
     metadata:
@@ -62,7 +57,6 @@ items:
       selector:
         service: snowdrop-site-angular
       strategy:
-        resources: {}
         rollingParams:
           intervalSeconds: 1
           maxSurge: 25%
