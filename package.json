@@ -48,7 +48,7 @@
     "core-js": "~2.5.7",
     "express": "4.16.3",
     "jssha": "~2.3.1",
-    "morgan": "1.9.0",
+    "morgan": "1.9.1",
     "ngx-base": "2.3.2",
     "ngx-bootstrap": "3.0.1",
     "ngx-launcher": "1.0.1",
