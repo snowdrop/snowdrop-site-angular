@@ -1,6 +1,6 @@
 = Snowdrop website
 
-This app serves the guides and informational content for the RHOAR Snowdrop runtime.
+This app serves the guides and informational content for the Snowdrop Spring Boot runtime.
 
 Site configuration & guides content: https://github.com/snowdrop/snowdrop-docs
 
