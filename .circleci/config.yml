@@ -29,13 +29,12 @@ jobs:
     machine: true
     steps:
       - checkout
-
       - run:
           name: Build & Push Docker image
           command: |
-            VERSION=${BASH_REMATCH[1]}
+            VERSION="999"
 
-            docker build -t angular-site:${VERSION} -f openshift/Dockerfile --build-arg VERSION=${VERSION} --build-arg GITCOMMIT=$(git rev-parse --short HEAD 2>/dev/null) .
+            docker build -t angular-site:${VERSION} -f openshift/Dockerfile .
             TAG_ID=$(docker images -q angular-site:${VERSION})
             docker tag ${TAG_ID} quay.io/snowdrop/angular-site:${VERSION}
             docker tag ${TAG_ID} quay.io/snowdrop/angular-site:latest
