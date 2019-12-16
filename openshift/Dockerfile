@@ -9,8 +9,9 @@ COPY package*.json ./
 # Development mode
 RUN npm install
 
-# Bundle app source
-COPY . .
+# Bundle app source and the generated dist folder
+COPY . ./
+COPY dist ./
 
 EXPOSE 8080
 
