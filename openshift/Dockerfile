@@ -4,14 +4,14 @@ FROM node:10
 WORKDIR /usr/src/app
 
 # Install app dependencies
-COPY package*.json ./
+COPY package*.json /usr/src/app
 
 # Development mode
 RUN npm install
 
 # Bundle app source and the generated dist folder
-COPY . ./
-COPY dist ./
+COPY . /usr/src/app
+COPY dist /usr/src/app
 
 EXPOSE 8080
 
