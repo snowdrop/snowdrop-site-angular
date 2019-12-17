@@ -7,9 +7,7 @@ WORKDIR /usr/src/app
 COPY . ./
 
 # Development mode
-RUN npm install
-
-
+RUN npm install --unsafe-perm
 
 EXPOSE 8080
 
