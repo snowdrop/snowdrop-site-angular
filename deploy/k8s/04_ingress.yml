@@ -22,8 +22,8 @@ spec:
             path: /
   tls:
     - hosts:
-        - snowdrop.me
+      - snowdrop.me
       secretName: www-snowdrop-me-tls
     - hosts:
-        - snowdrop.dev
+      - snowdrop.dev
       secretName: www-snowdrop-dev-tls
