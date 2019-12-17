@@ -35,7 +35,7 @@ jobs:
           command: |
             VERSION="999"
 
-            docker build -t angular-site:${VERSION} -f openshift/Dockerfile .
+            docker build -t angular-site:${VERSION} -f deploy/Dockerfile .
             TAG_ID=$(docker images -q angular-site:${VERSION})
             docker tag ${TAG_ID} quay.io/snowdrop/angular-site:${VERSION}
             docker tag ${TAG_ID} quay.io/snowdrop/angular-site:latest

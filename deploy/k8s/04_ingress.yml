@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  name: snowdrop-site-angular
+spec:
+  rules:
+    - host: angular.snowdrop.me
+      http:
+        paths:
+          - backend:
+              serviceName: snowdrop-site-angular
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - angular.snowdrop.me
+      secretName: angular-snowdrop-me-tls

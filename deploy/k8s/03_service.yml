@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: snowdrop-site-angular
+  name: snowdrop-site-angular
+spec:
+  selector:
+    app: snowdrop-site-angular
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080 # Container port
+      protocol: TCP

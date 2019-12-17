@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snowdrop-site-angular
+  labels:
+    app: snowdrop-site-angular
+spec:
+  selector:
+    matchLabels:
+      app: snowdrop-site-angular
+  template:
+    metadata:
+      labels:
+        app: snowdrop-site-angular
+    spec:
+      containers:
+      - image:  quay.io/snowdrop/angular-site:latest
+        imagePullPolicy: Always
+        name: snowdrop-site-angular
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        env:
+        - name: "NODE_ENV"
+          value: "production"
+        terminationMessagePath: /dev/termination-log
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 15
+          timeoutSeconds: 10
+          periodSeconds: 20
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+          periodSeconds: 20

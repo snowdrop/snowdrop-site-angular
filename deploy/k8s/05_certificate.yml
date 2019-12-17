@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: angular-snowdrop-me
+spec:
+  keySize: 2048
+  keyAlgorithm: rsa
+  dnsNames:
+    - angular.snowdrop.me
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-staging
+  secretName: angular-snowdrop-me-tls
