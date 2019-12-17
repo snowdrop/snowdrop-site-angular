@@ -6,7 +6,14 @@ metadata:
   name: snowdrop-site-angular
 spec:
   rules:
-    - host: angular.snowdrop.me
+    - host: snowdrop.me
+      http:
+        paths:
+          - backend:
+              serviceName: snowdrop-site-angular
+              servicePort: 80
+            path: /
+    - host: snowdrop.dev
       http:
         paths:
           - backend:
@@ -15,5 +22,8 @@ spec:
             path: /
   tls:
     - hosts:
-        - angular.snowdrop.me
-      secretName: angular-snowdrop-me-tls
+        - snowdrop.me
+      secretName: www-snowdrop-me-tls
+    - hosts:
+        - snowdrop.dev
+      secretName: www-snowdrop-dev-tls
