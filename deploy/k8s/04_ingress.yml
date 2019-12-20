@@ -6,7 +6,7 @@ metadata:
     nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       if ($host = 'start.snowdrop.me' ) {
-        rewrite ^ https://snowdrop.me/star$request_uri permanent;
+        rewrite ^ https://snowdrop.me/start$request_uri permanent;
       }
   name: snowdrop-site-angular
 spec:
