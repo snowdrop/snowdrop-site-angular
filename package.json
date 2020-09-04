@@ -103,7 +103,7 @@
     "karma-webpack": "~3.0.0",
     "mini-css-extract-plugin": "^0.4.1",
     "ngc-webpack": "~4.1.2",
-    "node-sass": "~4.9.0",
+    "node-sass": "~4.13.1",
     "postcss-loader": "~2.1.5",
     "precss": "~3.1.2",
     "raw-loader": "~0.5.1",
