@@ -1,0 +1,23 @@
+name: "Update Image in Quay.io"
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+jobs:
+  push:
+    name: Push Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      - name: push
+        run: |
+          VERSION="999"
+
+          docker build -t angular-site:${VERSION} -f deploy/Dockerfile .
+          TAG_ID=$(docker images -q angular-site:${VERSION})
+          docker tag ${TAG_ID} quay.io/snowdrop/angular-site:${VERSION}
+          docker tag ${TAG_ID} quay.io/snowdrop/angular-site:latest
+          docker login quay.io -u="${{secrets.QUAY_USER}}" -p="${{secrets.QUAY_TOKEN}}"
+          docker push quay.io/snowdrop/angular-site:${VERSION}
+          docker push quay.io/snowdrop/angular-site:latest
